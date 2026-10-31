@@ -1,4 +1,9 @@
-"""Binance: candles diários do par USDT/BRL pela API pública de mercado."""
+"""Binance: candles diários do par USDT/BRL pela API pública de mercado.
+
+Além do preço, cada candle traz dados de comportamento usados na análise 3:
+número de negócios e volume comprado por quem aceitou o preço pedido
+("taker"), um indicador de urgência ou pressão compradora.
+"""
 
 from __future__ import annotations
 
@@ -11,6 +16,17 @@ from agio.http import get_json
 # Espelho público da Binance só para dados de mercado; não exige chave.
 KLINES_URL = "https://data-api.binance.vision/api/v3/klines"
 LIMITE = 1000
+
+# Posições no array de cada candle, segundo a documentação da Binance.
+COLUNAS_KLINE = [
+    "abertura_ms", "abertura", "maxima", "minima", "fechamento", "volume_base",
+    "fechamento_ms", "volume_brl", "num_negocios", "volume_compra_taker",
+    "volume_compra_taker_brl", "ignorar",
+]
+COLUNAS_SAIDA = [
+    "data", "fonte", "abertura", "maxima", "minima", "fechamento", "volume_base",
+    "volume_brl", "num_negocios", "volume_compra_taker",
+]
 
 
 def _ms(d: date) -> int:
@@ -38,14 +54,13 @@ def baixar(simbolo: str, inicio: date, fim: date) -> list[list]:
 
 
 def tratar(bruto: list[list], fonte: str = "binance") -> pd.DataFrame:
-    """Formato padrão: data, fonte, abertura, maxima, minima, fechamento, volume_base."""
-    colunas = ["data", "fonte", "abertura", "maxima", "minima", "fechamento", "volume_base"]
+    """Formato padrão de preços, com as colunas de comportamento."""
     if not bruto:
-        return pd.DataFrame(columns=colunas)
-    df = pd.DataFrame(bruto).iloc[:, :6]
-    df.columns = ["abertura_ms", "abertura", "maxima", "minima", "fechamento", "volume_base"]
+        return pd.DataFrame(columns=COLUNAS_SAIDA)
+    df = pd.DataFrame([linha[: len(COLUNAS_KLINE)] for linha in bruto],
+                      columns=COLUNAS_KLINE[: len(bruto[0])])
     df["data"] = pd.to_datetime(df["abertura_ms"], unit="ms", utc=True).dt.date
-    for c in ["abertura", "maxima", "minima", "fechamento", "volume_base"]:
-        df[c] = pd.to_numeric(df[c], errors="coerce")
+    for c in COLUNAS_SAIDA[2:]:
+        df[c] = pd.to_numeric(df[c], errors="coerce") if c in df else float("nan")
     df["fonte"] = fonte
-    return df[colunas]
+    return df[COLUNAS_SAIDA]

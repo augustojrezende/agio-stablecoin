@@ -4,6 +4,7 @@
     agio coletar --inicio 2026-01-01 --fim 2026-10-30
     agio calcular                              # gera o ágio a partir do tratado
     agio grafico                               # salva dados/grafico_agio.png
+    agio importar-trends                       # lê os CSVs de dados/manual/google_trends
 """
 
 from __future__ import annotations
@@ -14,8 +15,11 @@ from datetime import date
 import pandas as pd
 
 from agio import armazenamento as arm
-from agio.fontes import bcb, binance, mercadobitcoin
+from agio.comportamento import painel_diario, sinais_mercado
+from agio.fontes import bcb, binance, google_trends, mercadobitcoin
 from agio.indicador import calcular_agio, consolidar
+
+PASTA_TRENDS = arm.RAIZ / "manual" / "google_trends"
 
 CORRETORAS = {
     "binance": (binance, "USDTBRL"),
@@ -52,13 +56,32 @@ def coletar(inicio: date, fim: date) -> None:
         print(f"Preços: {len(precos)} linhas na base")
 
 
+def importar_trends() -> None:
+    buscas = google_trends.importar_pasta(PASTA_TRENDS)
+    buscas.to_csv(arm.TRATADO / "google_trends.csv", index=False)
+    print(f"Google Trends: {buscas['data'].nunique()} dias, termos: "
+          f"{', '.join(sorted(buscas['termo'].unique()))}")
+
+
 def calcular() -> None:
-    agio = calcular_agio(arm.ler_tratado("precos_usdt_brl"), arm.ler_tratado("ptax"))
+    precos = arm.ler_tratado("precos_usdt_brl")
+    agio = calcular_agio(precos, arm.ler_tratado("ptax"))
     agio.to_csv(arm.TRATADO / "agio_por_fonte.csv", index=False)
     dia = consolidar(agio)
     dia.to_csv(arm.TRATADO / "agio_diario.csv", index=False)
     print(f"Ágio calculado para {len(dia)} dias úteis.")
-    print(dia.tail(10).to_string(index=False))
+
+    sinais = sinais_mercado(precos)
+    sinais.to_csv(arm.TRATADO / "sinais_comportamento.csv", index=False)
+    try:
+        buscas = arm.ler_tratado("google_trends")
+    except FileNotFoundError:
+        buscas = None
+        print("Sem Google Trends ainda; rode `agio importar-trends` para incluir as buscas.")
+    painel = painel_diario(dia, sinais, buscas)
+    painel.to_csv(arm.TRATADO / "painel_diario.csv", index=False)
+    print(f"Painel diário (ágio + comportamento): {len(painel)} dias.")
+    print(painel.tail(10).to_string(index=False))
 
 
 def grafico() -> None:
@@ -86,11 +109,14 @@ def main() -> None:
     c.add_argument("--fim", type=date.fromisoformat, default=date.today())
     sub.add_parser("calcular")
     sub.add_parser("grafico")
+    sub.add_parser("importar-trends")
     args = p.parse_args()
     if args.comando == "coletar":
         coletar(args.inicio, args.fim)
     elif args.comando == "calcular":
         calcular()
+    elif args.comando == "importar-trends":
+        importar_trends()
     else:
         grafico()
 
