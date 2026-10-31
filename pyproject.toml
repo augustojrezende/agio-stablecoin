@@ -1,0 +1,23 @@
+[project]
+name = "agio-stablecoin"
+version = "0.1.0"
+description = "Indicador diário do ágio da stablecoin de dólar negociada em reais sobre a PTAX"
+requires-python = ">=3.10"
+dependencies = ["requests>=2.31", "pandas>=2.1", "matplotlib>=3.8"]
+
+[project.optional-dependencies]
+dev = ["pytest>=8"]
+
+[project.scripts]
+agio = "agio.cli:main"
+
+[build-system]
+requires = ["setuptools>=68"]
+build-backend = "setuptools.build_meta"
+
+[tool.setuptools.packages.find]
+where = ["src"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+pythonpath = ["src"]
