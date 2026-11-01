@@ -61,7 +61,7 @@ def test_encadear_reescala_pela_sobreposicao():
     d = [date(2026, 10, i) for i in range(1, 6)]
     a = janela(d[:3], [10.0, 20.0, 40.0])
     b = janela(d[1:], [50.0, 100.0, 80.0, 60.0])  # mesma realidade, escala 2,5x
-    serie = google_trends.encadear([b, a]).set_index("data")["interesse"]
+    serie = google_trends.encadear([b, a], minimo_dias_validos=1).set_index("data")["interesse"]
     assert serie[d[0]] == pytest.approx(10.0)
     assert serie[d[3]] == pytest.approx(32.0)
     assert serie[d[4]] == pytest.approx(24.0)
@@ -72,6 +72,27 @@ def test_encadear_sem_sobreposicao_falha():
     b = pd.DataFrame({"data": [date(2026, 6, 1)], "termo": "x", "interesse": [10.0]})
     with pytest.raises(ValueError):
         google_trends.encadear([a, b])
+
+
+def test_encadear_termos_em_arquivos_separados():
+    dias = pd.date_range("2026-01-01", periods=60).date
+    def j(termo, ini, fim, fator):
+        return pd.DataFrame({"data": dias[ini:fim], "termo": termo,
+                             "interesse": [fator * (10 + i % 7) for i in range(ini, fim)]})
+    janelas = [j("dólar", 0, 40, 1.0), j("dólar", 20, 60, 2.0),
+               j("USDT", 0, 40, 1.0), j("USDT", 20, 60, 3.0)]
+    serie = google_trends.encadear(janelas)
+    assert set(serie["termo"]) == {"dólar", "USDT"}
+    usdt = serie[serie["termo"] == "USDT"].set_index("data")["interesse"]
+    assert usdt[dias[50]] == pytest.approx(10 + 50 % 7)
+
+
+def test_encadear_descarta_termo_quase_sem_busca(capsys):
+    dias = pd.date_range("2026-01-01", periods=60).date
+    a = pd.DataFrame({"data": dias[:40], "termo": "raro", "interesse": 0.0})
+    b = pd.DataFrame({"data": dias[20:], "termo": "raro", "interesse": 0.0})
+    assert google_trends.encadear([a, b]).empty
+    assert "volume baixo demais" in capsys.readouterr().out
 
 
 def test_painel_diario():
