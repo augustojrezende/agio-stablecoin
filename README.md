@@ -3,8 +3,10 @@
 Indicador diário do ágio do USDT negociado em reais sobre o dólar oficial (PTAX): um termômetro do estresse fiscal no Brasil (2020–2026). Código e dados abertos do TCC em Economia *O ágio da stablecoin em reais: um termômetro do estresse fiscal no Brasil (2020–2026)*.
 
 ```
-ágio = fechamento do USDT/BRL na corretora / PTAX de venda − 1
+ágio = preço do USDT/BRL na janela da PTAX (10h às 13h de Brasília) / PTAX de venda − 1
 ```
+
+A PTAX é formada entre 10h e 13h; o candle diário das corretoras fecha às 21h. Em dias de crise o câmbio muda muito nesse intervalo, então a medida principal usa o preço médio do USDT, ponderado pelo volume, **na mesma janela da PTAX**. O ágio de fechamento (21h) continua sendo calculado para comparação.
 
 ## Fontes (todas gratuitas, sem chave)
 
@@ -22,9 +24,10 @@ Indicador diário do ágio do USDT negociado em reais sobre o dólar oficial (PT
 python -m venv .venv
 source .venv/bin/activate          # Windows: .venv\Scripts\activate
 pip install -e ".[dev]"
-pytest                             # 13 testes, sem rede
+pytest                             # 17 testes, sem rede
 
-agio coletar --inicio 2020-10-01   # baixa até hoje
+agio coletar --inicio 2020-10-01          # diário: PTAX, Selic, preços, comportamento
+agio coletar-horario --inicio 2020-10-01  # horário: preço na janela da PTAX
 agio calcular                      # gera dados/tratado/agio_*.csv
 agio grafico                       # salva dados/grafico_agio.png
 agio importar-trends               # opcional: lê os CSVs do Google Trends
@@ -57,11 +60,14 @@ src/agio/
   fontes/          um módulo por fonte: baixar() bruto, tratar() padronizado
   armazenamento.py camadas bruto e tratado
   indicador.py     cálculo do ágio e consolidação ponderada por volume
+  janela.py        preço do USDT na janela da PTAX (10h às 13h de Brasília)
   comportamento.py sinais de comportamento coletivo e painel diário
   cli.py           linha de comando
 dados/
   bruto/           respostas das APIs como vieram, com horário da coleta (não editar)
-  tratado/         ptax.csv, selic.csv, precos_usdt_brl.csv, agio_por_fonte.csv, agio_diario.csv,
+  tratado/         ptax.csv, selic.csv, precos_usdt_brl.csv, precos_janela_ptax.csv,
+                   agio_por_fonte.csv, agio_diario.csv (medida principal),
+                   agio_fechamento_por_fonte.csv, agio_fechamento_diario.csv (comparação),
                    sinais_comportamento.csv, google_trends.csv, painel_diario.csv
   manual/          CSVs exportados do Google Trends (originais, não editar)
 docs/decisoes.md   diário de decisões metodológicas
