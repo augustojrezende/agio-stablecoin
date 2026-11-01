@@ -19,7 +19,10 @@ from scipy import stats
 JANELA_NORMAL = 60          # dias úteis usados para definir o "normal"
 MINIMO_NORMAL = 30
 JANELA_EVENTO = (-1, 3)     # do dia anterior até 3 dias úteis depois
-EXCLUSAO_PLACEBO = 10       # dias úteis em torno de eventos fora do sorteio
+# Datas placebo não podem ter a janela (-1 a +3) cruzando a janela de um evento:
+# ficam de fora as posições a até 4 dias úteis de qualquer evento. (Era 10 com
+# 15 eventos; com a lista fechada, ~150 eventos, 10 esgotaria o sorteio.)
+EXCLUSAO_PLACEBO = 4
 DOMESTICOS = {"fiscal", "politico"}
 EXTERNOS = {"externo"}
 
@@ -135,6 +138,8 @@ def estudo_evento(base: pd.DataFrame, eventos: pd.DataFrame, coluna: str = "agio
 
     linhas = []
     grupos_teste = [(tipo, g) for tipo, g in ev.groupby("tipo")] + [("todos", ev)]
+    if "agendado" in ev:
+        grupos_teste += [(f"agendado={v}", g) for v, g in ev.groupby("agendado")]
     for tipo, g in grupos_teste:
         n, media = len(g), g["car"].mean()
         t, p_t = (stats.ttest_1samp(g["car"], 0.0) if n > 1 else (np.nan, np.nan))
@@ -144,6 +149,7 @@ def estudo_evento(base: pd.DataFrame, eventos: pd.DataFrame, coluna: str = "agio
         linhas.append({"tipo": tipo, "n": n, "car_medio": media, "t": t,
                        "p_valor_t": p_t, "p_valor_permutacao": p_perm})
     grupos = pd.DataFrame(linhas)
+    grupos.attrs["n_placebo"] = len(car_placebo)
 
     dom = ev[ev["tipo"].isin(DOMESTICOS)]["car"].to_numpy()
     ext = ev[ev["tipo"].isin(EXTERNOS)]["car"].to_numpy()

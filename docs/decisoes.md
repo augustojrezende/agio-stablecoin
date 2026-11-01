@@ -129,3 +129,22 @@ R² = 0,095; curtose dos resíduos = 15,3 (poucos dias extremos pesam muito).
 - **Efeito mecânico do dólar:** negativo e forte em todas as especificações alinhadas à PTAX.
 - **Peso da Binance:** a especificação só Binance é praticamente idêntica à principal; o indicador consolidado é, na prática, a Binance, que concentra o volume. Registrar na metodologia.
 - **Decisão:** pela regra fixada antes do teste, a hipótese original (o ágio como termômetro do estresse fiscal) é rejeitada; o resultado principal passa a ser a sensibilidade do ágio ao medo global. Falta fechar a lista de eventos para concluir o estudo de evento e a parte comportamental.
+
+## 2026-11-01 — Lista de eventos fechada por regra
+
+- **Motivo:** a lista provisória tinha 15 eventos escolhidos um a um, e os resultados já tinham sido vistos. Para não escolher, mesmo sem querer, os dias que "funcionam", a lista passa a sair de uma regra fixa, aplicada a todo o período (out/2020 a out/2026), gerada por `scripts/montar_eventos.py`.
+- **Regra:**
+  - **Monetário (agendado):** toda decisão do Copom.
+  - **Externo (agendado):** toda decisão do Fed (FOMC).
+  - **Fiscal (agendado):** envio do PLDO (até 15/04) e do PLOA (até 31/08) e cada Relatório de Avaliação de Receitas e Despesas Primárias (22º dia após o bimestre). Relatórios extemporâneos ficam de fora.
+  - **Fiscal (não agendado):** anúncios de mudança nas regras fiscais ou de medida extraordinária para cumprir a meta, com notícia que comprove a data: teto/Auxílio Brasil (21/10/2021), PEC da Transição (16/11/2022), arcabouço (30/03/2023), pacote fiscal (27/11/2024), IOF (22/05/2025). Nenhum anúncio desse tipo encontrado em 2026.
+  - **Político (agendado):** os turnos das eleições presidenciais de 2022 e 2026.
+  - **Externo (não agendado):** os choques da lista provisória, com fonte.
+  - **Regulatório:** normas do Banco Central sobre criptoativos e stablecoins (publicação, vigência, início de obrigações e adiamentos).
+- **Data do evento:** primeiro dia em que a janela da PTAX (10h-13h) pode reagir. Anúncio depois das 13h ou fora do pregão vai para o dia seguinte. Copom (18h30) e Fed (14h de Nova York) caem sempre no dia útil seguinte. `data_anuncio` guarda a data original.
+- **Resultado:** 158 eventos (55 externos, 48 monetários, 47 fiscais, 4 políticos, 4 regulatórios); 145 agendados e 13 não agendados.
+- **Sobreposição:** 93 eventos têm outro evento de tipo diferente a até 4 dias úteis (sobretudo Copom e Fed na mesma semana). O teste roda com a lista completa e sem os sobrepostos.
+- **Placebo:** a exclusão em torno dos eventos passa de 10 para 4 dias úteis (o mínimo para a janela placebo não cruzar a de um evento); com 10, quase não sobrariam datas para sortear.
+- **Correções da lista provisória:** a pausa nas tarifas dos EUA foi anunciada às 14h de 09/04/2025, depois da janela, e passa para 10/04. O evento de 04/05/2026 era o início previsto das obrigações de informação da Resolução 521; a Resolução 574 (18/06/2026) adiou o reporte de operações com ativos virtuais no câmbio para 03/11/2026. O corte de robustez em 04/05/2026 continua, mas deve ser lido como "início previsto", não como mudança efetiva.
+- **Pendente de conferência:** as datas do PLDO, do PLOA e dos relatórios bimestrais seguem o prazo legal; a data efetiva de cada um ainda precisa ser conferida (a janela de −1 a +3 tolera pequenas diferenças).
+- **Compromisso:** rodar `agio testar` uma vez com esta lista e aceitar o resultado. Mudanças posteriores na lista precisam de registro aqui, com o motivo.
