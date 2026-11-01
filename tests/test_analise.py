@@ -267,3 +267,34 @@ def test_testar_por_periodo_e_relatorio(tmp_path, monkeypatch):
 def test_holm():
     from agio.analise import holm
     assert holm([0.01, 0.04, 0.03]) == pytest.approx([0.03, 0.06, 0.06])
+
+
+def test_episodio_compara_corretoras_e_horarios(tmp_path, monkeypatch):
+    from agio import armazenamento as arm
+    from agio import episodio
+
+    rng = np.random.default_rng(9)
+    datas = pd.bdate_range("2026-01-02", "2026-08-31").date
+    n = len(datas)
+    ptax = pd.DataFrame({"data": datas, "ptax_venda": 5 + rng.normal(0, .01, n).cumsum()})
+    agio = rng.normal(0.3, 0.1, n)
+    agio[(pd.to_datetime(datas) >= "2026-06-24") & (pd.to_datetime(datas) < "2026-07-20")] += 1.0
+    por_fonte = pd.concat([
+        pd.DataFrame({"data": datas, "fonte": f, "agio_pct": agio, "preco_janela": 5.0})
+        for f in ("binance", "mercadobitcoin")])
+    tabelas = {"ptax": ptax, "agio_por_fonte": por_fonte, "agio_fechamento_por_fonte": por_fonte,
+               "agio_diario": pd.DataFrame({"data": datas, "agio_pct": agio}),
+               "precos_janela_ptax": por_fonte.assign(horas_janela=3, volume_janela=1e6),
+               "sinais_comportamento": pd.DataFrame({
+                   "data": datas, "fonte": "binance", "num_negocios": 50_000,
+                   "pressao_compradora": 0.5, "ticket_medio_brl": 6_000.0})}
+    monkeypatch.setattr(arm, "ler_tratado", lambda nome: tabelas[nome].copy())
+    monkeypatch.setattr(episodio, "RESULTADOS", tmp_path / "res")
+    monkeypatch.setattr(episodio, "FIGURAS", tmp_path / "fig")
+    base = episodio.montar(date(2026, 6, 24), date(2026, 7, 20))
+    durante = base[base["no_episodio"]]
+    assert durante["agio_janela_binance"].mean() > 1.0
+    assert (~base["no_episodio"]).sum() > 50  # 90 dias de contexto
+    assert "Correlação entre corretoras" in episodio.resumo(base)
+    episodio.rodar(date(2026, 6, 24), date(2026, 7, 20))
+    assert (tmp_path / "fig" / "episodio_20260624_20260720.png").exists()

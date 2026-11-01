@@ -163,3 +163,18 @@ R² = 0,095; curtose dos resíduos = 15,3 (poucos dias extremos pesam muito).
 - **Agora:** "Medo fiscal ou medo global? O ágio da stablecoin em reais diante de choques domésticos e externos (2020–2026)".
 - **Motivo:** a pergunta passa de "é um termômetro fiscal?" para "qual medo move o ágio?". A comparação entre choques domésticos e externos já estava no desenho original, antes dos resultados.
 - **O que não muda:** a hipótese fiscal continua sendo a principal e é testada por inteiro; dados, testes, regra de decisão e pré-registro ficam iguais. Mudam a pergunta, o objetivo geral e a forma de apresentar as hipóteses na introdução e na conclusão.
+
+## 2026-11-01 — Episódio de ágio alto (24/06 a meados de julho de 2026): investigação
+
+*Ágio de 1% a 1,7% por semanas, sem paralelo na série. Antes de buscar causa econômica, checar se é medição: `agio episodio --inicio 2026-06-01 --fim 2026-08-15`.*
+
+**Pesquisa no noticiário (nenhuma causa única encontrada):**
+- **Dólar subiu em junho** (+2,4% no mês; +1,9% em 18/06). Pelo efeito mecânico já medido, dólar em alta *reduz* o ágio; o episódio aconteceu apesar disso.
+- **Resolução BCB 574 (18/06/2026):** adiou para 03/11/2026 o reporte de operações com ativos virtuais no câmbio. Uma semana antes do início; o sentido do efeito não é óbvio (adiamento reduz atrito).
+- **IOF sobre stablecoins:** proposta de até 3,5% noticiada em mar/2026; a consulta pública foi adiada (Reuters, 23/03/2026). Nenhuma notícia de decreto em junho ou julho. Expectativa de imposto poderia antecipar compras, mas não há data que coincida.
+- **Resolução BCB 561 (publicada por volta de 30/04/2026):** proíbe liquidar pagamentos internacionais eFX com stablecoins, a partir de 01/10/2026. Longe do episódio.
+- **Saída de corretoras:** NovaDAX anunciou o encerramento no Brasil em 08/06/2026 (por decisão do grupo controlador); as demais saídas são de agosto a outubro, ligadas ao prazo de autorização de 30/10/2026. Não afeta Binance nem Mercado Bitcoin diretamente.
+
+**Próximo passo:** rodar o diagnóstico e verificar (1) se o ágio alto aparece nas duas corretoras, (2) na janela e no fechamento, (3) se veio de alta do USDT ou de queda da PTAX, (4) liquidez na janela e (5) pressão compradora e número de negócios.
+
+Fontes: [Resolução 574](https://www.letsmoney.com.br/noticias/bc-adia-novembro-reporte-cripto-cambio-resolucao-574/), [consulta do IOF adiada](https://investnews.com.br/investimentos/governo-deve-adiar-consulta-sobre-iof-em-criptomoedas-diz-reuters/), [Resolução 561](https://www.moneytimes.com.br/resolucao-do-banco-central-limita-uso-de-stablecoins-no-brasil-investidor-deve-se-preocupar-rens/), [vigência da 561](https://whale-alert.io/stories/8bae01a704e36c/Brazil-bans-crypto-in-regulated-crossborder-eFX-payments-measures-take-effect-Oct-1-2026), [corretoras que saíram](https://brasilbitcoin.com.br/blog/corretoras-criptomoedas-encerrando-operacoes-brasil/), [dólar em junho](https://www.dgabc.com.br/Noticia/4332380/dolar-tem-leve-queda-para-r-5-16-mas-fecha-junho-com-valorizacao-de-2-38).
