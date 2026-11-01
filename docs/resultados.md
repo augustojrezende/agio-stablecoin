@@ -55,10 +55,24 @@
 - **Conclusão do diagnóstico:** o episódio é real, não é erro de medição.
 - **O sinal contrariou o efeito mecânico.** No primeiro dia (24/06), o dólar subiu 0,69%, o que pelo efeito mecânico reduziria o ágio, e mesmo assim o ágio saltou para 1,5%.
 - **Padrão compatível com falta de vendedores**, mais do que com excesso de compradores: preço alto sem urgência na compra e convergência lenta. Em outras palavras, a arbitragem ficou lenta por algumas semanas.
-- **Causa provável, a testar:** escassez de USDT. Em junho de 2026 a oferta global de stablecoins teve a maior contração mensal desde 2022, e o USDT caiu de cerca de US$ 190 bi para US$ 184 bi.
+- **Hipótese testada (exploratória):** escassez de USDT. Em junho de 2026 a oferta global de stablecoins teve a maior contração mensal desde 2022, e o USDT caiu de cerca de US$ 190 bi para US$ 184 bi.
 - **Outro fator possível:** aversão a risco no próprio dia 24/06 (ouro −3,4%, Ibovespa −0,4%).
 - **Descartados pelo noticiário como causa única:** Resolução 574 (18/06), IOF sobre stablecoins (sem decreto), Resolução 561 (vigência só em 01/10) e saída de corretoras menores. Detalhes e fontes em `decisoes.md`.
-- **Teste exploratório, fora do pré-registro:** `agio oferta-usdt` acrescenta a variação de 5 dias da oferta global de USDT (DefiLlama) à regressão do ágio anormal. Se der resultado, ele entra no TCC como análise do episódio e vira hipótese para o mestrado (limites à arbitragem); não muda o teste principal.
+- **Teste exploratório, fora do pré-registro (`agio oferta-usdt`):** a regressão do ágio anormal ganhou mais uma variável, a variação de 5 dias da oferta global de USDT (DefiLlama), com 1 dia de defasagem.
+
+| Variável | Coeficiente | p-valor |
+| --- | --- | --- |
+| Variação da oferta de USDT (5 dias, %) | +0,031 | 0,051 |
+| Variação do dólar oficial (%) | −0,128 | < 0,001 |
+| Variação do juro real 10 anos (bp) | +0,0018 | 0,118 |
+| Variação do VIX no dia | +0,022 | 0,045 |
+| Variação do VIX no dia anterior | +0,016 | 0,008 |
+
+  - **A hipótese da escassez não se confirma.** O sinal é positivo, o contrário do previsto, e não chega a 5%.
+  - **A sequência mensal confirma:** a oferta caiu de maio a julho (US$ 188,4 bi para 183,5 bi) e caiu ainda mais em outubro (180,1 bi), sem novo salto do ágio.
+  - **Leitura do sinal positivo:** a oferta parece acompanhar a demanda global. Quando a procura sobe, a Tether emite mais, e o ágio sobe junto.
+  - **Ganho lateral de robustez:** com a variável a mais, o VIX e o dólar não mudam.
+- **Conclusão sobre o episódio:** é um fenômeno de mercado real, e a causa continua não identificada. A escassez global foi testada e descartada. O mais provável é um atrito local na arbitragem entre o câmbio oficial e o mercado de USDT no Brasil, que os dados disponíveis não medem. Fica como pergunta para o mestrado (limites à arbitragem).
 
 ## 4. Desenho do teste formal (fixado antes de rodar)
 
@@ -142,12 +156,12 @@ As duas hipóteses do TCC não se confirmam na amostra de descoberta.
 - **Pouco tempo depois da regulação:** 127 dias, sem poder estatístico.
 - **Google Trends ainda não importado:** os sinais de busca ficam para a próxima rodada.
 - **Testes múltiplos:** ver a seção 7.
-- **Episódio de jun–jul/2026:** causa não identificada; a hipótese de escassez de USDT é exploratória.
+- **Episódio de jun–jul/2026:** causa não identificada; a escassez global de USDT foi testada e não se confirmou.
 
 ## 10. Próximos passos
 
 1. **Validação fora da amostra** (`pre-registro.md`): análise intermediária em 30/10/2027 e final em 31/10/2028.
-2. **Episódio de jun–jul/2026:** confirmado como fenômeno de mercado (seção 3.1); rodar `agio oferta-usdt` para o teste exploratório da escassez de USDT.
+2. **Episódio de jun–jul/2026:** fenômeno de mercado confirmado; escassez global de USDT descartada (seção 3.1). A causa fica em aberto para o mestrado.
 3. **Google Trends:** importar os CSVs e repetir a análise comportamental.
 4. **Ponte para o mestrado:** repasse incompleto do câmbio e medo global, se confirmados na validação.
 
