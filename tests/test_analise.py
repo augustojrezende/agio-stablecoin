@@ -345,3 +345,21 @@ def test_regressao_oferta_aceita_unidades_de_data_diferentes():
                          "agio_anormal": rng.normal(0, 0.2, len(uteis))})
     _, tabela, _ = regressao_oferta_usdt(base, oferta)
     assert "var_oferta_usdt" in set(tabela["variavel"])
+
+
+def test_buscas_exploratorio(tmp_path, monkeypatch):
+    from agio import armazenamento as arm
+    from agio import cli, relatorio
+
+    tabelas = _tabelas_sinteticas()
+    rng = np.random.default_rng(13)
+    n = len(tabelas["painel_diario"])
+    tabelas["painel_diario"]["busca_usdt"] = rng.uniform(20, 80, n)
+    tabelas["painel_diario"]["busca_dólar"] = rng.uniform(30, 90, n)
+    monkeypatch.setattr(arm, "ler_tratado", lambda nome: tabelas[nome].copy())
+    monkeypatch.setattr(cli, "PASTA_RESULTADOS", tmp_path)
+    monkeypatch.setattr(relatorio, "FIGURAS", tmp_path / "fig")
+    cli.buscas()
+    reg = pd.read_csv(tmp_path / "exploratorio_atencao.csv")
+    assert {"busca_usdt_anormal_ant", "busca_dolar_anormal_ant"} <= set(reg["variavel"])
+    assert (tmp_path / "fig" / "09_buscas_usdt.png").exists()

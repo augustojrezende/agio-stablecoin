@@ -52,11 +52,15 @@ def montar_base(agio_diario: pd.DataFrame, painel: pd.DataFrame, ptax: pd.DataFr
     base["log_mercado"] = np.log(base["volume"].shift(1).rolling(JANELA_NORMAL,
                                  min_periods=MINIMO_NORMAL).median())
 
-    comp = painel[["data", "num_negocios", "ticket_medio_brl"]].assign(
+    buscas = [c for c in painel.columns if c.startswith("busca_")]
+    comp = painel[["data", "num_negocios", "ticket_medio_brl"] + buscas].assign(
         data=lambda d: pd.to_datetime(d["data"]))
     base = base.merge(comp, on="data", how="left")
     base["negocios_anormal"] = _anormal(np.log(base["num_negocios"]))
     base["ticket_anormal"] = _anormal(np.log(base["ticket_medio_brl"]))
+    for c in buscas:  # atenção do público (Google Trends), em log
+        nome = "busca_" + c[len("busca_"):].replace("ó", "o") + "_anormal"
+        base[nome] = _anormal(np.log1p(base[c]))
 
     if juro is not None and not juro.empty:
         j = juro.assign(data=lambda d: pd.to_datetime(d["data"]).astype("datetime64[ns]"))
@@ -396,3 +400,28 @@ def regressao_oferta_usdt(base: pd.DataFrame, oferta: pd.DataFrame, dias: int = 
                            "t": modelo.tvalues, "p_valor": modelo.pvalues})
     tabela.index.name = "variavel"
     return modelo, tabela.reset_index(), dados
+
+
+# --- Exploratório: atenção do público (Google Trends) -----------------------
+
+def regressao_atencao(base: pd.DataFrame, y: str = "agio_anormal", lags_hac: int = 5):
+    """Ágio anormal ~ controles + buscas anormais do dia anterior.
+
+    EXPLORATÓRIO (fora do pré-registro). Pergunta: a atenção do público ao
+    dólar e ao USDT antecipa o ágio? As buscas entram com um dia de atraso
+    para não confundir causa e efeito no mesmo dia.
+    """
+    dados = base.copy()
+    novas = []
+    for c in [c for c in dados.columns if c.startswith("busca_") and c.endswith("_anormal")]:
+        dados[c + "_ant"] = dados[c].shift(1)
+        novas.append(c + "_ant")
+    x = [c for c in ["d_dolar", "d_juro_bp", "d_vix", "d_vix_ant", "log_mercado"] + novas
+         if c in dados and dados[c].notna().any()]
+    usada = dados[[y] + x].replace([np.inf, -np.inf], np.nan).dropna()
+    modelo = smf.ols(f"{y} ~ " + " + ".join(x), data=usada).fit(
+        cov_type="HAC", cov_kwds={"maxlags": lags_hac})
+    tabela = pd.DataFrame({"coeficiente": modelo.params, "erro_padrao": modelo.bse,
+                           "t": modelo.tvalues, "p_valor": modelo.pvalues})
+    tabela.index.name = "variavel"
+    return modelo, tabela.reset_index()
