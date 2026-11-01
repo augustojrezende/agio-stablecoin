@@ -64,7 +64,7 @@ Resultados em `dados/resultados/`: `relatorio.txt`, tabelas `regressao_*.csv`, `
 
 **Primeira coleta urgente:** rode `agio coletar` desde outubro de 2020. As APIs das corretoras nem sempre guardam histórico longo.
 
-Depois, agende `agio coletar --inicio <ontem>` uma vez por dia (cron no Linux/Mac, Agendador de Tarefas no Windows). A coleta é idempotente: rodar de novo o mesmo período só substitui pelos dados mais recentes.
+**Coleta semanal (validação fora da amostra):** `./scripts/coleta_semanal.sh` baixa os últimos 10 dias, recalcula o ágio e grava um log em `dados/logs/`. No Mac, `./scripts/agendar_coleta_mac.sh` agenda o script para toda segunda às 20h (se o Mac estiver dormindo, roda quando acordar). A coleta é idempotente: rodar de novo o mesmo período só substitui pelos dados mais recentes.
 
 ## Sinais de comportamento coletivo
 
