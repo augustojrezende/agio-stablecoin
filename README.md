@@ -24,7 +24,7 @@ A PTAX é formada entre 10h e 13h; o candle diário das corretoras fecha às 21h
 python -m venv .venv
 source .venv/bin/activate          # Windows: .venv\Scripts\activate
 pip install -e ".[dev]"
-pytest                             # 34 testes, sem rede
+pytest                             # 35 testes, sem rede
 
 agio coletar --inicio 2020-10-01          # diário: PTAX, Selic, preços, comportamento
 agio coletar-horario --inicio 2020-10-01  # horário: preço na janela da PTAX
@@ -37,6 +37,7 @@ agio testar                        # teste formal -> dados/resultados/
 agio robustez                      # mesma regressão em especificações alternativas
 agio relatorio                     # gráficos (docs/figuras) e tabelas (docs/resultados_tabelas.md)
 agio testar --inicio 2026-11-02    # validação fora da amostra (docs/pre-registro.md)
+agio episodio --inicio 2026-06-01 --fim 2026-08-15   # diagnóstico de um período de ágio fora do normal
 ```
 
 ## Documentação dos resultados

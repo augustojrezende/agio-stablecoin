@@ -12,6 +12,7 @@
     agio robustez                              # mesma regressão em especificações alternativas
     agio relatorio                             # gráficos e tabelas -> docs/figuras, docs/resultados_tabelas.md
     agio testar --inicio 2026-11-02            # validação fora da amostra (docs/pre-registro.md)
+    agio episodio --inicio 2026-06-01 --fim 2026-08-15   # diagnóstico de um episódio
 """
 
 from __future__ import annotations
@@ -399,6 +400,9 @@ def main() -> None:
     t.add_argument("--fim", type=date.fromisoformat, default=None,
                    help="só dias antes desta data")
     sub.add_parser("relatorio")
+    ep = sub.add_parser("episodio", help="diagnóstico de um período de ágio fora do normal")
+    ep.add_argument("--inicio", type=date.fromisoformat, required=True)
+    ep.add_argument("--fim", type=date.fromisoformat, required=True)
     sub.add_parser("robustez")
     args = p.parse_args()
     if args.comando == "coletar":
@@ -415,6 +419,9 @@ def main() -> None:
         testar(args.inicio, args.fim)
     elif args.comando == "relatorio":
         relatorio()
+    elif args.comando == "episodio":
+        from agio.episodio import rodar
+        rodar(args.inicio, args.fim)
     elif args.comando == "robustez":
         robustez()
     else:
