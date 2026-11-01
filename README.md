@@ -24,14 +24,27 @@ A PTAX é formada entre 10h e 13h; o candle diário das corretoras fecha às 21h
 python -m venv .venv
 source .venv/bin/activate          # Windows: .venv\Scripts\activate
 pip install -e ".[dev]"
-pytest                             # 17 testes, sem rede
+pytest                             # 23 testes, sem rede
 
 agio coletar --inicio 2020-10-01          # diário: PTAX, Selic, preços, comportamento
 agio coletar-horario --inicio 2020-10-01  # horário: preço na janela da PTAX
 agio calcular                      # gera dados/tratado/agio_*.csv
 agio grafico                       # salva dados/grafico_agio.png
 agio importar-trends               # opcional: lê os CSVs do Google Trends
+agio coletar-controles             # juro real 10 anos (Tesouro Direto) e VIX (FRED)
+agio testar                        # teste formal -> dados/resultados/
 ```
+
+## Teste formal
+
+`agio testar` roda, com os dados já coletados:
+
+1. **Regressões com todos os dias** (erros padrão de Newey-West) para o ágio anormal, o número de negócios anormal e o ticket médio anormal, controlando por variação do dólar oficial, variação do juro real de 10 anos (termômetro do medo fiscal), variação do VIX (medo global) e tamanho do mercado.
+2. **Estudo de evento agrupado** sobre os eventos de `dados/manual/eventos.csv`, na janela do dia anterior até 3 dias úteis depois, para o ágio anormal, o ágio ajustado pela variação do dólar e o número de negócios. Cada grupo é comparado com datas sorteadas fora dos eventos (teste de permutação), e os choques domésticos são comparados com os externos.
+
+Resultados em `dados/resultados/`: `relatorio.txt`, tabelas `regressao_*.csv`, `eventos_*.csv` e a base usada (`base_teste.csv`).
+
+**A lista de eventos é decisão do pesquisador.** O arquivo traz um rascunho com a coluna `fonte` marcada como `A CONFIRMAR`: confira cada data, registre a fonte e acrescente eventos (por exemplo, todas as reuniões do Copom) antes de olhar os resultados.
 
 **Primeira coleta urgente:** rode `agio coletar` desde outubro de 2020. As APIs das corretoras nem sempre guardam histórico longo.
 
@@ -61,6 +74,7 @@ src/agio/
   armazenamento.py camadas bruto e tratado
   indicador.py     cálculo do ágio e consolidação ponderada por volume
   janela.py        preço do USDT na janela da PTAX (10h às 13h de Brasília)
+  analise.py       teste formal: regressões, estudo de evento, permutação
   comportamento.py sinais de comportamento coletivo e painel diário
   cli.py           linha de comando
 dados/

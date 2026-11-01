@@ -26,6 +26,17 @@ def salvar_bruto(fonte: str, conteudo, rotulo: str, raiz: Path = BRUTO) -> Path:
     return caminho
 
 
+def salvar_bruto_texto(fonte: str, texto: str, rotulo: str, extensao: str = "csv",
+                       raiz: Path = BRUTO) -> Path:
+    """Grava um arquivo de texto (CSV) como veio da fonte."""
+    agora = datetime.now(timezone.utc).strftime("%Y%m%dT%H%M%SZ")
+    pasta = raiz / fonte
+    pasta.mkdir(parents=True, exist_ok=True)
+    caminho = pasta / f"{rotulo}_coletado-{agora}.{extensao}"
+    caminho.write_text(texto, encoding="utf-8")
+    return caminho
+
+
 def atualizar_tratado(nome: str, novo: pd.DataFrame, chaves: list[str],
                       raiz: Path = TRATADO) -> pd.DataFrame:
     """Junta o novo lote ao arquivo existente; em conflito, vale a coleta mais recente."""

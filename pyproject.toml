@@ -3,7 +3,7 @@ name = "agio-stablecoin"
 version = "0.1.0"
 description = "Indicador diário do ágio da stablecoin de dólar negociada em reais sobre a PTAX"
 requires-python = ">=3.10"
-dependencies = ["requests>=2.31", "pandas>=2.1", "matplotlib>=3.8"]
+dependencies = ["requests>=2.31", "pandas>=2.1", "matplotlib>=3.8", "statsmodels>=0.14", "scipy>=1.11"]
 
 [project.optional-dependencies]
 dev = ["pytest>=8"]

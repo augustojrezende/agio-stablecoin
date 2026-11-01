@@ -69,3 +69,19 @@ Cada entrada: data, decisão, motivo, alternativa descartada. Vira a seção de 
 1. Regressão do ágio anormal controlando pela variação do dólar oficial no dia.
 2. Janela da PTAX incluindo a hora das 13h: o Banco Central consulta às 10h, 11h, 12h e 13h, e a janela atual vai até 12h59.
 3. Mesma análise de evento para o número de negócios e o ticket médio.
+
+## 2026-10-31 — Teste formal: desenho e regra de decisão
+
+- **Regressão (todos os dias, Newey-West com 5 defasagens):** ágio anormal ~ variação do dólar oficial + variação do juro real de 10 anos (bp) + variação do VIX (no dia e no anterior) + tamanho do mercado. O mesmo para número de negócios e ticket médio.
+- **Juro real de 10 anos:** taxas de compra da manhã dos títulos Tesouro IPCA+ (sem cupom), interpoladas no prazo de 10 anos. Taxa da manhã para coincidir com a janela da PTAX.
+- **VIX:** o fechamento em Nova York sai depois da janela da PTAX; por isso entram a variação do dia e a do dia anterior.
+- **Estudo de evento:** janela de −1 a +3 dias úteis; ágio anormal acumulado; teste t e teste de permutação contra datas sorteadas fora de ±10 dias úteis dos eventos; comparação domésticos (fiscal, político) x externos por permutação de rótulos.
+- **Ágio ajustado pelo dólar:** resíduo da regressão do ágio anormal sobre a variação do dólar, para o estudo de evento não confundir o efeito mecânico do câmbio com reação ao medo.
+- **Regra de decisão:** hipótese original confirmada se o coeficiente do juro real for positivo e significativo a 5% e os domésticos tiverem ágio anormal maior que os externos; versão comportamental confirmada se a participação for significativamente maior nas crises.
+- **Lista de eventos:** rascunho com 15 eventos marcados como A CONFIRMAR; a versão final deve ser fixada, com fontes, antes de interpretar os resultados.
+
+## 2026-10-31 — Primeira rodada do teste (sem juro real e VIX)
+
+- **Efeito mecânico do dólar confirmado:** coeficiente de −0,11 (t = −9,6): cada 1% de alta do dólar oficial no dia reduz o ágio em 0,11 p.p. O controle é indispensável.
+- **Estudo de evento com 15 eventos:** nenhum grupo significativo, nem no ágio nem no número de negócios. Nos negócios, o teste t contra zero dá p = 0,013 para todos os eventos, mas a permutação dá p = 0,25: o número de negócios anormal é positivo em média (mercado em crescimento), e a comparação certa é com datas sorteadas.
+- **Leitura:** com 2 a 6 eventos por grupo, o teste tem pouco poder. Prioridade: ampliar a lista (todas as reuniões do Copom, anúncios fiscais) e incluir juro real e VIX.
