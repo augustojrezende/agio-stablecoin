@@ -59,7 +59,7 @@ FONTE_RARDP = ("Prazo da LDO (22º dia após o bimestre; LRF, art. 9º) - confer
 
 # Anúncios não agendados: (data_anuncio, depois_da_janela, tipo, descrição, fonte)
 NAO_AGENDADOS = [
-    ("2021-10-21", False, "fiscal", "Governo propõe mudar o teto de gastos para pagar o Auxílio Brasil de R$ 400 (Guedes pede 'licença para gastar')",
+    ("2021-10-20", True, "fiscal", "Governo propõe mudar o teto de gastos para pagar o Auxílio Brasil de R$ 400 (Guedes pede 'licença para gastar')",
      "https://www.poder360.com.br/economia/bolsa-cai-2-e-dolar-vai-a-r-568-apos-guedes-falar-em-licenca-para-gastar/"),
     ("2022-11-16", True, "fiscal", "Alckmin entrega ao Senado a minuta da PEC da Transição (Bolsa Família fora do teto)",
      "https://www12.senado.leg.br/noticias/materias/2022/11/16/alckmin-entrega-ao-senado-sugestao-de-texto-da-pec-da-transicao"),

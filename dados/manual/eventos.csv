@@ -22,7 +22,7 @@ data,tipo,descricao,data_anuncio,agendado,sobreposto,fonte
 2021-09-23,externo,Decisão do Fed (FOMC),2021-09-22,sim,sim,https://www.federalreserve.gov/monetarypolicy/fomccalendars.htm
 2021-09-23,fiscal,"Relatório de Avaliação de Receitas e Despesas Primárias, 4º bimestre de 2021",2021-09-22,sim,sim,"Prazo da LDO (22º dia após o bimestre; LRF, art. 9º) - conferir data efetiva: https://www.planalto.gov.br/ccivil_03/leis/lcp/lcp101.htm"
 2021-09-23,monetario,Decisão do Copom,2021-09-22,sim,sim,https://www.suno.com.br/noticias/?p=69971
-2021-10-21,fiscal,Governo propõe mudar o teto de gastos para pagar o Auxílio Brasil de R$ 400 (Guedes pede 'licença para gastar'),2021-10-21,nao,nao,https://www.poder360.com.br/economia/bolsa-cai-2-e-dolar-vai-a-r-568-apos-guedes-falar-em-licenca-para-gastar/
+2021-10-21,fiscal,Governo propõe mudar o teto de gastos para pagar o Auxílio Brasil de R$ 400 (Guedes pede 'licença para gastar'),2021-10-20,nao,nao,https://www.poder360.com.br/economia/bolsa-cai-2-e-dolar-vai-a-r-568-apos-guedes-falar-em-licenca-para-gastar/
 2021-10-28,monetario,Decisão do Copom,2021-10-27,sim,nao,https://www.suno.com.br/noticias/?p=69971
 2021-11-04,externo,Decisão do Fed (FOMC),2021-11-03,sim,nao,https://www.federalreserve.gov/monetarypolicy/fomccalendars.htm
 2021-11-23,fiscal,"Relatório de Avaliação de Receitas e Despesas Primárias, 5º bimestre de 2021",2021-11-22,sim,nao,"Prazo da LDO (22º dia após o bimestre; LRF, art. 9º) - conferir data efetiva: https://www.planalto.gov.br/ccivil_03/leis/lcp/lcp101.htm"
