@@ -21,14 +21,19 @@ def _s(d: date) -> int:
     return int(datetime(d.year, d.month, d.day, tzinfo=timezone.utc).timestamp())
 
 
-def baixar(simbolo: str, inicio: date, fim: date) -> list[dict]:
+JANELA_DIAS_HORARIO = 30  # 720 candles por consulta
+
+
+def baixar(simbolo: str, inicio: date, fim: date, resolucao: str = "1d") -> list[dict]:
+    """Candles entre inicio e fim. resolucao: "1d" (diário) ou "1h" (horário)."""
+    janela = JANELA_DIAS if resolucao == "1d" else JANELA_DIAS_HORARIO
     lotes: list[dict] = []
     atual = inicio
     while atual <= fim:
-        bloco_fim = min(fim, atual + timedelta(days=JANELA_DIAS - 1))
+        bloco_fim = min(fim, atual + timedelta(days=janela - 1))
         lote = get_json(
             CANDLES_URL,
-            {"symbol": simbolo, "resolution": "1d",
+            {"symbol": simbolo, "resolution": resolucao,
              "from": _s(atual), "to": _s(bloco_fim + timedelta(days=1)) - 1},
         )
         if lote:
@@ -55,3 +60,22 @@ def tratar(bruto: list[dict], fonte: str = "mercadobitcoin") -> pd.DataFrame:
         df[c] = pd.to_numeric(df[c], errors="coerce")
     df["fonte"] = fonte
     return df.drop_duplicates("data", keep="last")[colunas].sort_values("data").reset_index(drop=True)
+
+
+def tratar_horario(bruto: list[dict], fonte: str = "mercadobitcoin") -> pd.DataFrame:
+    """Candles horários: inicio_utc, fonte, maxima, minima, fechamento, volume_base."""
+    colunas = ["inicio_utc", "fonte", "maxima", "minima", "fechamento", "volume_base"]
+    partes = [
+        pd.DataFrame({"t": lote["t"], "maxima": lote["h"], "minima": lote["l"],
+                      "fechamento": lote["c"], "volume_base": lote["v"]})
+        for lote in bruto if lote.get("t")
+    ]
+    if not partes:
+        return pd.DataFrame(columns=colunas)
+    df = pd.concat(partes, ignore_index=True)
+    df["inicio_utc"] = pd.to_datetime(pd.to_numeric(df["t"]), unit="s", utc=True)
+    for c in ["maxima", "minima", "fechamento", "volume_base"]:
+        df[c] = pd.to_numeric(df[c], errors="coerce")
+    df["fonte"] = fonte
+    return (df.drop_duplicates("inicio_utc", keep="last")[colunas]
+            .sort_values("inicio_utc").reset_index(drop=True))
