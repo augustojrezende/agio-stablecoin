@@ -50,3 +50,22 @@ Cada entrada: data, decisão, motivo, alternativa descartada. Vira a seção de 
 - **Motivo:** na primeira coleta (out/2020 a out/2026), os menores ágios da série caíram justamente em dias de choque: 09/04/2025 (−3,5%), 26/10/2026 (−2,1%, dia seguinte ao segundo turno) e 06/11/2024 (−1,8%). A explicação provável é o horário: a PTAX registra o câmbio da manhã, e o fechamento das 21h registra o mercado já acalmado. O descasamento é maior exatamente nos dias que mais importam para o estudo.
 - **Detalhes:** preço típico de cada hora, (máxima + mínima + fechamento) / 3, ponderado pelo volume; sem volume na janela, média simples dos fechamentos. O Brasil não tem horário de verão desde 2019, então a janela é fixa em UTC.
 - **A verificar:** quantos dias ficam sem negociação na janela no início da série (2020–2021), quando o volume era baixo.
+
+## 2026-10-31 — Resultados preliminares da série alinhada (out/2020 a out/2026)
+
+*Análise descritiva, sem teste formal. Ágio anormal = ágio do dia menos a mediana dos 60 dias úteis anteriores.*
+
+- **A correção de horário funcionou:** 09/04/2025 passou de −3,5% (fechamento) para cerca de 0% (janela da PTAX). A correlação entre as duas medidas é 0,54, e o desvio padrão de 2025 caiu de 0,53 para 0,19 p.p.
+- **Custo:** a correlação entre corretoras caiu de 0,91 para 0,68, porque a janela de 3 horas tem menos negócios, sobretudo no Mercado Bitcoin. A consolidação por volume reduz o efeito.
+- **Choques domésticos não elevaram o ágio:** pacote fiscal (29/11/2024, −1,5 p.p. anormal), segundo turno (26/10/2026, −0,8 p.p.). Primeiro turno (05/10/2026): +0,24 p.p.
+- **O maior ágio anormal foi externo:** 05/08/2024, +3,0 p.p. (turbulência global).
+- **A participação reage com força:** o número de negócios dobra ou triplica nas crises (dez/2024: 140 a 170 mil por dia contra cerca de 60 mil; 05/08/2024: 179 mil; 26/10/2026: 105 mil contra cerca de 46 mil), e o ticket médio cai (entrada do varejo).
+- **Interpretação a testar:** quando o dólar oficial dispara, detentores de USDT vendem para realizar ganho e seguram o preço; a pressão compradora abaixo de 0,5 nesses dias é compatível.
+- **Episódio a investigar:** de 24/06 a meados de julho de 2026, ágio entre 1% e 1,7% por semanas seguidas, sem paralelo na série. Verificar mudança tributária ou regulatória sobre stablecoins no período.
+- **Possível reformulação da hipótese (só depois do teste formal):** o medo fiscal se manifestaria na participação no mercado de dólar digital, e não no prêmio de preço.
+
+### Próximos testes
+
+1. Regressão do ágio anormal controlando pela variação do dólar oficial no dia.
+2. Janela da PTAX incluindo a hora das 13h: o Banco Central consulta às 10h, 11h, 12h e 13h, e a janela atual vai até 12h59.
+3. Mesma análise de evento para o número de negócios e o ticket médio.
