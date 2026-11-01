@@ -1,6 +1,6 @@
 # Ágio da stablecoin em reais
 
-Indicador diário do ágio do USDT negociado em reais sobre o dólar oficial (PTAX): um termômetro do estresse fiscal no Brasil (2020–2026). Código e dados abertos do TCC em Economia *O ágio da stablecoin em reais: um termômetro do estresse fiscal no Brasil (2020–2026)*.
+Indicador diário do ágio do USDT negociado em reais sobre o dólar oficial (PTAX) e sua reação a choques domésticos e externos (2020–2026). Código e dados abertos do TCC em Economia *Medo fiscal ou medo global? O ágio da stablecoin em reais diante de choques domésticos e externos (2020–2026)*.
 
 ```
 ágio = preço do USDT/BRL na janela da PTAX (10h às 13h de Brasília) / PTAX de venda − 1
@@ -125,4 +125,4 @@ Recomendação: `agio coletar --inicio 2020-10-01`.
 
 ## Como citar
 
-Rezende, Augusto. *O ágio da stablecoin em reais: um termômetro do estresse fiscal no Brasil (2020–2026)*. Código e dados. Disponível em: https://github.com/augustojrezende/agio-stablecoin.
+Rezende, Augusto. *Medo fiscal ou medo global? O ágio da stablecoin em reais diante de choques domésticos e externos (2020–2026)*. Código e dados. Disponível em: https://github.com/augustojrezende/agio-stablecoin.

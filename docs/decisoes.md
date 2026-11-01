@@ -156,3 +156,10 @@ R² = 0,095; curtose dos resíduos = 15,3 (poucos dias extremos pesam muito).
 - **Decisão do pesquisador:** o TCC mantém a hipótese fiscal como hipótese principal, testada e documentada até o fim. Os resultados que surgiram na análise (medo global e repasse incompleto do câmbio) ficam como ponto de partida para o mestrado.
 - **Validação fora da amostra:** hipóteses V1 a V5 e regras registradas em `pre-registro.md` antes de qualquer dado posterior a 30/10/2026. Análise intermediária em 30/10/2027 (α = 1%) e final em 31/10/2028 (α = 5%), cada uma rodada uma vez.
 - **Documentação:** `resultados.md` (narrativa), `agio relatorio` (8 figuras e tabelas), `agio testar` passa a gravar o quadro das hipóteses com p-valores de Holm.
+
+## 2026-11-01 — Novo título
+
+- **Antes:** "O ágio da stablecoin em reais: um termômetro do estresse fiscal no Brasil (2020–2026)".
+- **Agora:** "Medo fiscal ou medo global? O ágio da stablecoin em reais diante de choques domésticos e externos (2020–2026)".
+- **Motivo:** a pergunta passa de "é um termômetro fiscal?" para "qual medo move o ágio?". A comparação entre choques domésticos e externos já estava no desenho original, antes dos resultados.
+- **O que não muda:** a hipótese fiscal continua sendo a principal e é testada por inteiro; dados, testes, regra de decisão e pré-registro ficam iguais. Mudam a pergunta, o objetivo geral e a forma de apresentar as hipóteses na introdução e na conclusão.
