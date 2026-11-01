@@ -6,6 +6,8 @@
     agio grafico                               # salva dados/grafico_agio.png
     agio coletar-horario --inicio 2020-10-01   # candles horários -> preço na janela da PTAX
     agio importar-trends                       # lê os CSVs de dados/manual/google_trends
+    agio coletar-controles                     # juro real (Tesouro Direto) e VIX (FRED)
+    agio testar                                # regressão e estudo de evento -> dados/resultados
 """
 
 from __future__ import annotations
@@ -17,11 +19,13 @@ import pandas as pd
 
 from agio import armazenamento as arm
 from agio.comportamento import painel_diario, sinais_mercado
-from agio.fontes import bcb, binance, google_trends, mercadobitcoin
+from agio.fontes import bcb, binance, fred, google_trends, mercadobitcoin, tesouro
 from agio.indicador import calcular_agio, consolidar
 from agio.janela import preco_janela_ptax
 
 PASTA_TRENDS = arm.RAIZ / "manual" / "google_trends"
+ARQUIVO_EVENTOS = arm.RAIZ / "manual" / "eventos.csv"
+PASTA_RESULTADOS = arm.RAIZ / "resultados"
 
 CORRETORAS = {
     "binance": (binance, "USDTBRL"),
@@ -82,6 +86,64 @@ def coletar_horario(inicio: date, fim: date) -> None:
     if lotes:
         base = arm.atualizar_tratado("precos_janela_ptax", pd.concat(lotes), ["data", "fonte"])
         print(f"Preços na janela da PTAX: {len(base)} linhas na base")
+
+
+def coletar_controles() -> None:
+    """Juro real de 10 anos (Tesouro Direto) e VIX (FRED), histórico completo."""
+    hoje = f"{date.today():%Y%m%d}"
+    texto = tesouro.baixar()
+    arm.salvar_bruto_texto("tesouro_direto", texto, hoje)
+    juro = tesouro.juro_real_10a(tesouro.tratar(texto))
+    juro.to_csv(arm.TRATADO / "juro_real_10a.csv", index=False)
+    print(f"Juro real 10 anos: {len(juro)} dias ({juro['data'].min()} a {juro['data'].max()})")
+
+    texto = fred.baixar("VIXCLS")
+    arm.salvar_bruto_texto("fred_vix", texto, hoje)
+    vix = fred.tratar(texto, "vix")
+    vix.to_csv(arm.TRATADO / "vix.csv", index=False)
+    print(f"VIX: {len(vix)} dias")
+
+
+def testar() -> None:
+    from agio.analise import ajustar_pelo_dolar, estudo_evento, montar_base, regressao
+
+    def opcional(nome):
+        try:
+            return arm.ler_tratado(nome)
+        except FileNotFoundError:
+            print(f"Sem {nome}; rode `agio coletar-controles` para incluir.")
+            return None
+
+    base = montar_base(arm.ler_tratado("agio_diario"), arm.ler_tratado("painel_diario"),
+                       arm.ler_tratado("ptax"), arm.ler_tratado("precos_usdt_brl"),
+                       opcional("juro_real_10a"), opcional("vix"))
+    base["agio_ajustado_dolar"] = ajustar_pelo_dolar(base)
+    PASTA_RESULTADOS.mkdir(parents=True, exist_ok=True)
+    base.to_csv(PASTA_RESULTADOS / "base_teste.csv", index=False)
+
+    relatorio = []
+    for y, titulo in [("agio_anormal", "Ágio anormal (p.p.)"),
+                      ("negocios_anormal", "Número de negócios anormal (log)"),
+                      ("ticket_anormal", "Ticket médio anormal (log)")]:
+        modelo, tabela = regressao(base, y)
+        tabela.to_csv(PASTA_RESULTADOS / f"regressao_{y}.csv", index=False)
+        relatorio += [f"\n=== Regressão: {titulo} ===", str(modelo.summary())]
+
+    eventos = pd.read_csv(ARQUIVO_EVENTOS)
+    if (eventos.get("fonte", pd.Series(dtype=str)) == "A CONFIRMAR").any():
+        print("Atenção: dados/manual/eventos.csv ainda tem eventos marcados como A CONFIRMAR.")
+    for y in ["agio_anormal", "agio_ajustado_dolar", "negocios_anormal"]:
+        por_evento, grupos, comp = estudo_evento(base, eventos, y)
+        por_evento.to_csv(PASTA_RESULTADOS / f"eventos_{y}.csv", index=False)
+        grupos.to_csv(PASTA_RESULTADOS / f"eventos_grupos_{y}.csv", index=False)
+        relatorio += [f"\n=== Estudo de evento: {y} ===", grupos.round(3).to_string(index=False)]
+        if comp:
+            relatorio.append("Domésticos x externos: " + ", ".join(
+                f"{k}={v:.3f}" for k, v in comp.items()))
+    texto = "\n".join(relatorio)
+    (PASTA_RESULTADOS / "relatorio.txt").write_text(texto, encoding="utf-8")
+    print(texto)
+    print(f"\nResultados salvos em {PASTA_RESULTADOS}")
 
 
 def importar_trends() -> None:
@@ -169,6 +231,8 @@ def main() -> None:
     sub.add_parser("calcular")
     sub.add_parser("grafico")
     sub.add_parser("importar-trends")
+    sub.add_parser("coletar-controles")
+    sub.add_parser("testar")
     args = p.parse_args()
     if args.comando == "coletar":
         coletar(args.inicio, args.fim)
@@ -178,6 +242,10 @@ def main() -> None:
         calcular()
     elif args.comando == "importar-trends":
         importar_trends()
+    elif args.comando == "coletar-controles":
+        coletar_controles()
+    elif args.comando == "testar":
+        testar()
     else:
         grafico()
 
