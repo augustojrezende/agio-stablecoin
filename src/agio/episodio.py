@@ -74,6 +74,11 @@ def montar(inicio: date, fim: date, contexto_dias: int = 90) -> pd.DataFrame:
             ["data", "num_negocios", "pressao_compradora", "ticket_medio_brl"]]
         base = base.merge(s, on="data", how="left")
 
+    oferta = _opcional("usdt_oferta")
+    if oferta is not None:
+        base = base.merge(oferta, on="data", how="left")
+        base["usdt_oferta_bi"] = base["usdt_oferta_bi"].ffill()
+
     base = base.sort_values("data").reset_index(drop=True)
     base["var_ptax_pct"] = 100 * base["ptax_venda"].pct_change()
     for c in [c for c in base.columns if c.startswith("agio_")] + ["num_negocios"]:
@@ -93,7 +98,8 @@ def resumo(base: pd.DataFrame) -> str:
     linhas = ["Média nos 90 dias antes x durante o episódio:"]
     colunas = [c for c in base.columns if (c.startswith(("agio_", "horas_janela", "volume_janela"))
                and not c.endswith("_normal")) or c in
-               ("num_negocios", "pressao_compradora", "ticket_medio_brl", "var_ptax_pct")]
+               ("num_negocios", "pressao_compradora", "ticket_medio_brl", "var_ptax_pct",
+                    "usdt_oferta_bi")]
     for c in colunas:
         linhas.append(f"  {c:32s} {antes[c].mean():>12.3f} {durante[c].mean():>12.3f}")
     duas = [c for c in base.columns if c.startswith("agio_janela_")]

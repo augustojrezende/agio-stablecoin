@@ -38,7 +38,27 @@
 - **Choques domésticos não elevaram o ágio.** Pacote fiscal (29/11/2024): −1,5 p.p. de ágio anormal. Segundo turno (26/10/2026): −0,8 p.p.
 - **O maior ágio anormal da série foi externo.** Em 05/08/2024 (turbulência global), +3,0 p.p. (Figura 4).
 - **A participação disparou nos grandes choques.** O número de negócios dobrou ou triplicou, e o ticket médio caiu.
-- **Episódio sem explicação.** De 24/06 a meados de julho de 2026, o ágio ficou entre 1% e 1,7%. A investigar.
+- **Episódio sem explicação.** De 24/06 a meados de julho de 2026, o ágio ficou entre 1% e 1,7%. Diagnóstico na seção 3.1.
+
+### 3.1 Episódio de ágio alto (24/06 a meados de julho de 2026)
+
+*Diagnóstico com `agio episodio --inicio 2026-06-01 --fim 2026-08-15`, comparando o período com os 90 dias anteriores. Gráfico: `figuras/episodio_20260601_20260815.png`.*
+
+| Verificação | Resultado | Leitura |
+| --- | --- | --- |
+| Duas corretoras? | Sim: correlação de 0,83 no episódio; média de +0,50 p.p. na Binance e +0,35 p.p. no Mercado Bitcoin (antes: 0,07 e 0,01) | Fenômeno de mercado, não de uma corretora |
+| Janela e fechamento? | Os dois sobem juntos (fechamento: 0,17 → 0,67 p.p.) | Nível do preço, não horário |
+| Liquidez na janela | 3 horas com negócio todos os dias; volume 52% maior (R$ 17,1 mi → R$ 26,1 mi) | Não é preço de poucos negócios |
+| De que lado veio? | A PTAX ficou em R$ 5,17–5,21 e o USDT subiu até R$ 5,28; depois a PTAX caiu e o USDT acompanhou devagar | O USDT ficou caro, e a diferença levou cerca de 4 semanas para fechar |
+| Quem comprou? | Ticket médio 39% maior (R$ 6,5 mil → R$ 9,0 mil); número de negócios igual; pressão compradora menor (0,55 → 0,51) | Operações maiores, sem pressa de compra; não é corrida do varejo |
+
+- **Conclusão do diagnóstico:** o episódio é real, não é erro de medição.
+- **O sinal contrariou o efeito mecânico.** No primeiro dia (24/06), o dólar subiu 0,69%, o que pelo efeito mecânico reduziria o ágio, e mesmo assim o ágio saltou para 1,5%.
+- **Padrão compatível com falta de vendedores**, mais do que com excesso de compradores: preço alto sem urgência na compra e convergência lenta. Em outras palavras, a arbitragem ficou lenta por algumas semanas.
+- **Causa provável, a testar:** escassez de USDT. Em junho de 2026 a oferta global de stablecoins teve a maior contração mensal desde 2022, e o USDT caiu de cerca de US$ 190 bi para US$ 184 bi.
+- **Outro fator possível:** aversão a risco no próprio dia 24/06 (ouro −3,4%, Ibovespa −0,4%).
+- **Descartados pelo noticiário como causa única:** Resolução 574 (18/06), IOF sobre stablecoins (sem decreto), Resolução 561 (vigência só em 01/10) e saída de corretoras menores. Detalhes e fontes em `decisoes.md`.
+- **Teste exploratório, fora do pré-registro:** `agio oferta-usdt` acrescenta a variação de 5 dias da oferta global de USDT (DefiLlama) à regressão do ágio anormal. Se der resultado, ele entra no TCC como análise do episódio e vira hipótese para o mestrado (limites à arbitragem); não muda o teste principal.
 
 ## 4. Desenho do teste formal (fixado antes de rodar)
 
@@ -122,11 +142,12 @@ As duas hipóteses do TCC não se confirmam na amostra de descoberta.
 - **Pouco tempo depois da regulação:** 127 dias, sem poder estatístico.
 - **Google Trends ainda não importado:** os sinais de busca ficam para a próxima rodada.
 - **Testes múltiplos:** ver a seção 7.
+- **Episódio de jun–jul/2026:** causa não identificada; a hipótese de escassez de USDT é exploratória.
 
 ## 10. Próximos passos
 
 1. **Validação fora da amostra** (`pre-registro.md`): análise intermediária em 30/10/2027 e final em 31/10/2028.
-2. **Episódio de jun–jul/2026:** o ágio subiu a partir de 24/06, uma semana depois da Resolução 574.
+2. **Episódio de jun–jul/2026:** confirmado como fenômeno de mercado (seção 3.1); rodar `agio oferta-usdt` para o teste exploratório da escassez de USDT.
 3. **Google Trends:** importar os CSVs e repetir a análise comportamental.
 4. **Ponte para o mestrado:** repasse incompleto do câmbio e medo global, se confirmados na validação.
 
