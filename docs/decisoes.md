@@ -220,3 +220,9 @@ Fontes: [Resolução 574](https://www.letsmoney.com.br/noticias/bc-adia-novembro
 - **Buscas por "USDT":** não diferem das datas sorteadas (todos: p = 0,29).
 - **Antecipação:** as buscas do dia anterior não explicam o ágio (USDT p = 0,13; dólar p = 0,21).
 - **Leitura registrada em `resultados.md` (7.1):** a atenção do público responde a choques externos e políticos, não a anúncios fiscais, e não vira procura por dólar digital. Resultado exploratório.
+
+## 2026-11-01 — Título final
+
+- **Agora:** "O ágio da stablecoin em reais: reação a choques domésticos e externos no Brasil (2020–2026)".
+- **Antes:** "Medo fiscal ou medo global? O ágio da stablecoin em reais diante de choques domésticos e externos (2020–2026)".
+- **Motivo:** títulos acadêmicos evitam interrogação, e "medo fiscal" e "medo global" são a interpretação do resultado, não o objeto do estudo. O título passa a nomear o objeto (o ágio) e o que se compara (choques domésticos e externos). Hipóteses, testes e pré-registro não mudam.
