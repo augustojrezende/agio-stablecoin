@@ -207,3 +207,9 @@ Fontes: [Resolução 574](https://www.letsmoney.com.br/noticias/bc-adia-novembro
 - **Correção no encadeamento:** termos exportados em arquivos separados passaram a ser encadeados só entre as janelas que os contêm. A razão de escala usa apenas os dias da sobreposição com busca nos dois lados.
 - **"comprar dólar" fica de fora:** quase todos os dias aparecem como 0 ou "<1" ao lado de "dólar" (só 2 dias com busca na primeira sobreposição), então não é possível encadear com segurança. Se for necessário, exportar o termo sozinho.
 - **Séries resultantes ("dólar" e "USDT", 2.252 dias):** os picos coincidem com choques conhecidos (06/11/2024, eleição nos EUA; dez/2024, dólar recorde; 26/10/2026, dia seguinte ao segundo turno), o que valida o encadeamento.
+
+## 2026-11-01 — Atenção do público (Google Trends): análise exploratória
+
+- **Decisão:** incluir no TCC uma análise curta (uma figura e uma tabela), fora do pré-registro e só na amostra de descoberta, com duas perguntas: (1) as buscas por "dólar" e "USDT" sobem nos eventos mais do que em datas sorteadas? (2) as buscas do dia anterior antecipam o ágio?
+- **Medida:** buscas anormais = log(1 + interesse) menos a mediana dos 60 dias úteis anteriores, a mesma lógica do ágio anormal.
+- **Motivo:** completar a parte comportamental sem alongar o trabalho; a atenção mede o "medo" do público diretamente, o que o número de negócios não faz.

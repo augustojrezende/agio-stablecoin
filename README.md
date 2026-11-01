@@ -40,6 +40,7 @@ agio relatorio                     # gráficos (docs/figuras) e tabelas (docs/re
 agio testar --inicio 2026-11-02    # validação fora da amostra (docs/pre-registro.md)
 agio episodio --inicio 2026-06-01 --fim 2026-08-15   # diagnóstico de um período de ágio fora do normal
 agio oferta-usdt                   # exploratório: oferta global de USDT (DefiLlama) e o ágio
+agio buscas                        # exploratório: atenção do público (Google Trends) e o ágio
 ```
 
 ## Documentação dos resultados

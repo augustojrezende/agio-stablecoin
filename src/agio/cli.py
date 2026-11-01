@@ -14,6 +14,7 @@
     agio testar --inicio 2026-11-02            # validação fora da amostra (docs/pre-registro.md)
     agio episodio --inicio 2026-06-01 --fim 2026-08-15   # diagnóstico de um episódio
     agio oferta-usdt                           # exploratório: oferta global de USDT (DefiLlama)
+    agio buscas                                # exploratório: atenção do público (Google Trends)
 """
 
 from __future__ import annotations
@@ -256,6 +257,65 @@ def oferta_usdt(coletar: bool = True) -> None:
     print(mensal[mensal.index.year == 2026].round(1).to_string())
 
 
+def buscas() -> None:
+    """EXPLORATÓRIO (fora do pré-registro): atenção do público e o ágio.
+
+    1. As buscas por "dólar" e "USDT" sobem nos eventos mais do que em datas
+       sorteadas? (estudo de evento, lista completa)
+    2. As buscas do dia anterior antecipam o ágio? (regressão com controles)
+    Só a amostra de descoberta (até 30/10/2026).
+    """
+    from agio.analise import estudo_evento, montar_base, periodo, regressao_atencao
+
+    def opcional(nome):
+        try:
+            return arm.ler_tratado(nome)
+        except FileNotFoundError:
+            return None
+
+    painel = arm.ler_tratado("painel_diario")
+    if not any(c.startswith("busca_") for c in painel.columns):
+        print("Sem buscas no painel: rode `agio importar-trends` e `agio calcular` antes.")
+        return
+    base = montar_base(arm.ler_tratado("agio_diario"), painel, arm.ler_tratado("ptax"),
+                       arm.ler_tratado("precos_usdt_brl"), opcional("juro_real_10a"),
+                       opcional("vix"))
+    base = periodo(base, fim=date(2026, 10, 31)).reset_index(drop=True)
+    base.to_csv(PASTA_RESULTADOS / "base_buscas.csv", index=False)
+    eventos = pd.read_csv(ARQUIVO_EVENTOS)
+
+    texto = ["=== EXPLORATÓRIO (fora do pré-registro): atenção do público (Google Trends) ==="]
+    colunas = [c for c in base.columns if c.startswith("busca_") and c.endswith("_anormal")]
+    for c in colunas:
+        _, grupos, comp = estudo_evento(base, eventos, c)
+        grupos.to_csv(PASTA_RESULTADOS / f"exploratorio_eventos_{c}.csv", index=False)
+        texto += [f"\n--- Eventos: {c} (log; janela −1 a +3; média placebo "
+                  f"{grupos.attrs.get('placebo_media', float('nan')):.3f}) ---",
+                  grupos.round(3).to_string(index=False)]
+        if comp:
+            texto.append("Domésticos x externos: " + ", ".join(f"{k}={v:.3f}" for k, v in comp.items()))
+    modelo, tabela = regressao_atencao(base)
+    tabela.to_csv(PASTA_RESULTADOS / "exploratorio_atencao.csv", index=False)
+    texto += ["\n--- Regressão: ágio anormal ~ controles + buscas anormais do dia anterior ---",
+              tabela.round(4).to_string(index=False), f"n = {int(modelo.nobs)}"]
+    saida = "\n".join(texto)
+    (PASTA_RESULTADOS / "exploratorio_buscas.txt").write_text(saida, encoding="utf-8")
+    print(saida)
+
+    from agio.relatorio import FIGURAS, _plt, fig_trajetorias
+    plt = _plt()
+    figs = []
+    for c in colunas:
+        rotulo = c.replace("busca_", "").replace("_anormal", "")
+        fig_trajetorias(plt, figs, base.assign(data=pd.to_datetime(base["data"])),
+                        eventos.assign(data=pd.to_datetime(eventos["data"])), c,
+                        f"09_buscas_{rotulo}.png", f"Buscas por '{rotulo}' em torno dos eventos",
+                        "Buscas anormais (log)",
+                        f"Buscas por '{rotulo}' no Google (Brasil) em torno de cada tipo de evento, "
+                        "contra a faixa de 95% de datas sorteadas. Exploratório.")
+    print(f"\nFiguras em {FIGURAS}: " + ", ".join(n for n, _ in figs))
+
+
 def relatorio() -> None:
     from agio.relatorio import gerar
     gerar()
@@ -444,6 +504,7 @@ def main() -> None:
     t.add_argument("--fim", type=date.fromisoformat, default=None,
                    help="só dias antes desta data")
     sub.add_parser("relatorio")
+    sub.add_parser("buscas", help="exploratório: atenção do público (Google Trends) e o ágio")
     ou = sub.add_parser("oferta-usdt", help="exploratório: oferta global de USDT e o ágio")
     ou.add_argument("--sem-coleta", action="store_true", help="usa a oferta já baixada")
     ep = sub.add_parser("episodio", help="diagnóstico de um período de ágio fora do normal")
@@ -465,6 +526,8 @@ def main() -> None:
         testar(args.inicio, args.fim)
     elif args.comando == "relatorio":
         relatorio()
+    elif args.comando == "buscas":
+        buscas()
     elif args.comando == "oferta-usdt":
         oferta_usdt(coletar=not args.sem_coleta)
     elif args.comando == "episodio":
