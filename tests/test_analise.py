@@ -98,3 +98,60 @@ def test_cboe_vix():
     vix = fred.tratar_cboe(texto)
     assert vix.loc[1, "data"] == date(2026, 10, 26)
     assert vix.loc[1, "vix"] == 22.1
+
+
+def test_winsorizar_corta_extremos():
+    from agio.analise import winsorizar
+    base = pd.DataFrame({"agio_anormal": list(range(99)) + [1000.0]})
+    w = winsorizar(base, ["agio_anormal", "nao_existe"])
+    assert w["agio_anormal"].max() < 200
+    assert base["agio_anormal"].max() == 1000.0  # original intacto
+
+
+def test_huber_resiste_a_dia_extremo():
+    from agio.analise import resumo_especificacao
+    base = _base_sintetica()
+    base["agio_anormal"] = base["agio_pct"] - 0.5
+    base.loc[200, "agio_anormal"] = 50.0  # um dia absurdo
+    linha = resumo_especificacao("huber", base, metodo="huber")
+    assert linha["d_juro_bp_coef"] == pytest.approx(0.05, abs=0.01)
+    assert linha["n"] > 250
+
+
+def test_periodo_recorta_depois_do_anormal():
+    from agio.analise import periodo
+    base = _base_sintetica()
+    corte = base["data"].iloc[150]
+    antes, depois = periodo(base, fim=corte), periodo(base, inicio=corte)
+    assert len(antes) + len(depois) == len(base)
+    assert depois["agio_anormal"].notna().all()  # o histórico de antes foi usado
+
+
+def test_comando_robustez_ponta_a_ponta(tmp_path, monkeypatch):
+    from agio import armazenamento as arm
+    from agio import cli
+
+    rng = np.random.default_rng(3)
+    datas = pd.bdate_range("2025-01-01", "2026-10-30")
+    n = len(datas)
+    dias = datas.date
+    ptax = pd.DataFrame({"data": dias, "ptax_venda": 5 + rng.normal(0, 0.01, n).cumsum()})
+    agio = pd.DataFrame({"data": dias, "agio_pct": rng.normal(0.3, 0.2, n)})
+    por_fonte = pd.concat([agio.assign(fonte="binance"), agio.assign(fonte="mercadobitcoin")])
+    tabelas = {
+        "ptax": ptax,
+        "painel_diario": pd.DataFrame({"data": dias, "num_negocios": rng.integers(4e4, 6e4, n),
+                                       "ticket_medio_brl": rng.uniform(5e3, 9e3, n)}),
+        "precos_usdt_brl": pd.DataFrame({"data": dias, "fonte": "binance",
+                                         "volume_base": rng.uniform(1e7, 2e7, n)}),
+        "juro_real_10a": pd.DataFrame({"data": dias, "juro_real_10a": 7 + rng.normal(0, .05, n).cumsum()}),
+        "vix": pd.DataFrame({"data": dias, "vix": 20 + rng.normal(0, 1, n)}),
+        "agio_diario": agio, "agio_fechamento_diario": agio, "agio_por_fonte": por_fonte,
+    }
+    monkeypatch.setattr(arm, "ler_tratado", lambda nome: tabelas[nome].copy())
+    monkeypatch.setattr(arm, "BRUTO", tmp_path / "bruto")
+    monkeypatch.setattr(cli, "PASTA_RESULTADOS", tmp_path / "resultados")
+    cli.robustez()
+    saida = pd.read_csv(tmp_path / "resultados" / "robustez.csv")
+    assert len(saida) == 8  # 1-4, duas corretoras, antes e depois (sem bruto horário)
+    assert {"d_juro_bp_coef", "d_vix_p"} <= set(saida.columns)
