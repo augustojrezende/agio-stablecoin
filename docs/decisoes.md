@@ -200,3 +200,10 @@ Fontes: [Resolução 574](https://www.letsmoney.com.br/noticias/bc-adia-novembro
 - **Decisão (aprovada pelo pesquisador):** adendo 1 ao pré-registro. A V4b é mantida como escrita, e entra a V6 (soma < 0), derivada da descoberta. A correção de Holm passa a cobrir 7 hipóteses, e o quadro mostra `confirma` e `confirma_holm`.
 - **Dias extremos do dólar** conferidos: 26/10/2026 (+8,8%), 05/10/2026, 03/10/2022 e 09/11/2020 são reais, todos depois de fim de semana e ligados a eleições ou choques conhecidos. Nenhum dado corrigido.
 - **Legenda da Figura 5:** a reta é simples, sem controles (−0,109), e difere do coeficiente da regressão (−0,129).
+
+## 2026-11-01 — Google Trends importado
+
+- **Exportação:** 22 CSVs em 01/11/2026 (Brasil, dados diários), 11 janelas de cerca de 8 meses de set/2020 a out/2026, sobrepostas em 30 a 31 dias. "dólar" e "comprar dólar" numa consulta; "USDT" em outra, para não perder resolução.
+- **Correção no encadeamento:** termos exportados em arquivos separados passaram a ser encadeados só entre as janelas que os contêm. A razão de escala usa apenas os dias da sobreposição com busca nos dois lados.
+- **"comprar dólar" fica de fora:** quase todos os dias aparecem como 0 ou "<1" ao lado de "dólar" (só 2 dias com busca na primeira sobreposição), então não é possível encadear com segurança. Se for necessário, exportar o termo sozinho.
+- **Séries resultantes ("dólar" e "USDT", 2.252 dias):** os picos coincidem com choques conhecidos (06/11/2024, eleição nos EUA; dez/2024, dólar recorde; 26/10/2026, dia seguinte ao segundo turno), o que valida o encadeamento.
