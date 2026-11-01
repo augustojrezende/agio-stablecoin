@@ -140,24 +140,34 @@ def testar() -> None:
         relatorio += [f"\n=== Regressão: {titulo} ===", str(modelo.summary())]
 
     eventos = pd.read_csv(ARQUIVO_EVENTOS)
-    if (eventos.get("fonte", pd.Series(dtype=str)) == "A CONFIRMAR").any():
+    if eventos.get("fonte", pd.Series(dtype=str)).astype(str).str.contains("A CONFIRMAR").any():
         print("Atenção: dados/manual/eventos.csv ainda tem eventos marcados como A CONFIRMAR.")
-    for y in ["agio_anormal", "agio_ajustado_dolar", "negocios_anormal"]:
-        por_evento, grupos, comp = estudo_evento(base, eventos, y)
-        por_evento.to_csv(PASTA_RESULTADOS / f"eventos_{y}.csv", index=False)
-        grupos.to_csv(PASTA_RESULTADOS / f"eventos_grupos_{y}.csv", index=False)
-        relatorio += [f"\n=== Estudo de evento: {y} ===", grupos.round(3).to_string(index=False)]
-        if comp:
-            relatorio.append("Domésticos x externos: " + ", ".join(
-                f"{k}={v:.3f}" for k, v in comp.items()))
+    listas = [("", eventos)]
+    if "sobreposto" in eventos:
+        # Copom e Fed costumam decidir na mesma semana: a versão sem sobrepostos
+        # isola cada choque de eventos de outro tipo na mesma janela.
+        listas.append(("_sem_sobrepostos", eventos[eventos["sobreposto"] == "nao"]))
+    for sufixo, lista in listas:
+        for y in ["agio_anormal", "agio_ajustado_dolar", "negocios_anormal"]:
+            por_evento, grupos, comp = estudo_evento(base, lista, y)
+            por_evento.to_csv(PASTA_RESULTADOS / f"eventos_{y}{sufixo}.csv", index=False)
+            grupos.to_csv(PASTA_RESULTADOS / f"eventos_grupos_{y}{sufixo}.csv", index=False)
+            titulo = f"{y}{' (sem sobrepostos)' if sufixo else ''}"
+            relatorio += [f"\n=== Estudo de evento: {titulo} ===",
+                          f"Datas placebo disponíveis: {grupos.attrs.get('n_placebo')}",
+                          grupos.round(3).to_string(index=False)]
+            if comp:
+                relatorio.append("Domésticos x externos: " + ", ".join(
+                    f"{k}={v:.3f}" for k, v in comp.items()))
     texto = "\n".join(relatorio)
     (PASTA_RESULTADOS / "relatorio.txt").write_text(texto, encoding="utf-8")
     print(texto)
     print(f"\nResultados salvos em {PASTA_RESULTADOS}")
 
 
-# Início da informação obrigatória de operações com stablecoins ao BC.
-# Mesma data do evento regulatório em dados/manual/eventos.csv (a confirmar).
+# Início previsto das obrigações de informação da Resolução BCB 521. Atenção:
+# a Resolução 574 (18/06/2026) adiou para 03/11/2026 o reporte de operações
+# com ativos virtuais no câmbio; ver docs/decisoes.md.
 DATA_REGULACAO = date(2026, 5, 4)
 
 

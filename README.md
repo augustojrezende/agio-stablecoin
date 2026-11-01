@@ -24,7 +24,7 @@ A PTAX é formada entre 10h e 13h; o candle diário das corretoras fecha às 21h
 python -m venv .venv
 source .venv/bin/activate          # Windows: .venv\Scripts\activate
 pip install -e ".[dev]"
-pytest                             # 29 testes, sem rede
+pytest                             # 31 testes, sem rede
 
 agio coletar --inicio 2020-10-01          # diário: PTAX, Selic, preços, comportamento
 agio coletar-horario --inicio 2020-10-01  # horário: preço na janela da PTAX
@@ -48,7 +48,7 @@ Resultados em `dados/resultados/`: `relatorio.txt`, tabelas `regressao_*.csv`, `
 
 `agio robustez` repete a regressão do ágio anormal em especificações alternativas e grava `robustez.csv` e `robustez.txt`: winsorizada (1%/99%), regressão robusta de Huber, ágio de fechamento, cada corretora separada, antes e depois de 04/05/2026 (informação obrigatória ao BC) e janela da PTAX incluindo a consulta das 13h (relê os candles horários de `dados/bruto`, sem nova coleta).
 
-**A lista de eventos é decisão do pesquisador.** O arquivo traz um rascunho com a coluna `fonte` marcada como `A CONFIRMAR`: confira cada data, registre a fonte e acrescente eventos (por exemplo, todas as reuniões do Copom) antes de olhar os resultados.
+**A lista de eventos sai de uma regra fixa** (ver `docs/decisoes.md`), gerada por `python scripts/montar_eventos.py`: toda decisão do Copom e do Fed, envio do PLDO e do PLOA, relatórios bimestrais de receitas e despesas, anúncios de mudança nas regras fiscais, turnos das eleições, choques externos e normas do Banco Central sobre criptoativos. Cada linha tem a fonte. Para mudar a lista, altere o script e registre no diário; não edite o CSV à mão.
 
 **Primeira coleta urgente:** rode `agio coletar` desde outubro de 2020. As APIs das corretoras nem sempre guardam histórico longo.
 

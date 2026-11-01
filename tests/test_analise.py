@@ -155,3 +155,34 @@ def test_comando_robustez_ponta_a_ponta(tmp_path, monkeypatch):
     saida = pd.read_csv(tmp_path / "resultados" / "robustez.csv")
     assert len(saida) == 8  # 1-4, duas corretoras, antes e depois (sem bruto horário)
     assert {"d_juro_bp_coef", "d_vix_p"} <= set(saida.columns)
+
+
+def test_estudo_evento_agrupa_por_agendado():
+    base = _base_sintetica(semente=4)
+    datas = base["data"]
+    eventos = pd.DataFrame({
+        "data": [datas.iloc[i] for i in (60, 100, 140, 180, 220)],
+        "tipo": ["fiscal", "externo", "fiscal", "externo", "monetario"],
+        "descricao": list("abcde"),
+        "agendado": ["sim", "nao", "nao", "sim", "sim"],
+    })
+    _, grupos, _ = estudo_evento(base, eventos, n_perm=100)
+    g = grupos.set_index("tipo")
+    assert g.loc["agendado=sim", "n"] == 3 and g.loc["agendado=nao", "n"] == 2
+    assert grupos.attrs["n_placebo"] > 100
+
+
+def test_lista_de_eventos_segue_a_regra():
+    import importlib.util
+    from pathlib import Path
+    caminho = Path(__file__).resolve().parents[1] / "scripts" / "montar_eventos.py"
+    spec = importlib.util.spec_from_file_location("montar_eventos", caminho)
+    mod = importlib.util.module_from_spec(spec)
+    spec.loader.exec_module(mod)
+    ev = mod.montar()
+    gravado = pd.read_csv(caminho.parents[1] / "dados" / "manual" / "eventos.csv")
+    assert len(ev) == len(gravado)  # o CSV foi gerado pelo script, não editado à mão
+    assert (ev["fonte"].str.len() > 0).all()
+    assert not ev["fonte"].str.contains("A CONFIRMAR").any()
+    copom = ev[ev["descricao"] == "Decisão do Copom"]
+    assert (pd.to_datetime(copom["data"]) > pd.to_datetime(copom["data_anuncio"])).all()
