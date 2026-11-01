@@ -313,7 +313,11 @@ def quadro_hipoteses(reg_agio: pd.DataFrame, soma_repasse: dict,
                      grupos_negocios: pd.DataFrame, comp_agio: dict | None,
                      grupos_ajustado_isolados: pd.DataFrame | None,
                      alfa: float = 0.05) -> pd.DataFrame:
-    """V1 a V5 do pré-registro: estimativa, p-valor, Holm e decisão."""
+    """V1 a V6 do pré-registro: estimativa, p-valor, Holm e decisão.
+
+    `confirma` usa o p-valor de cada hipótese; `confirma_holm`, o p-valor
+    ajustado pelo método de Holm. O pré-registro manda reportar os dois.
+    """
     t = reg_agio.set_index("variavel")
     g = grupos_negocios.set_index("tipo")
 
@@ -337,6 +341,11 @@ def quadro_hipoteses(reg_agio: pd.DataFrame, soma_repasse: dict,
     linhas.append(("V4b", "Repasse se completa depois",
                    f"soma defasagens {soma_repasse['soma_defasagens']:.4f}",
                    soma_repasse["p_valor"], soma_repasse["soma_defasagens"] > 0))
+    # V6: adendo de 01/11/2026 ao pré-registro (derivada da descoberta): o ágio
+    # continua caindo nos dias seguintes à alta do dólar (realização de ganhos).
+    linhas.append(("V6", "Realização de ganhos: ágio segue caindo depois",
+                   f"soma defasagens {soma_repasse['soma_defasagens']:.4f}",
+                   soma_repasse["p_valor"], soma_repasse["soma_defasagens"] < 0))
     if grupos_ajustado_isolados is not None and "externo" in set(grupos_ajustado_isolados["tipo"]):
         ge = grupos_ajustado_isolados.set_index("tipo")
         car = ge.loc["externo", "car_medio"]
@@ -347,13 +356,14 @@ def quadro_hipoteses(reg_agio: pd.DataFrame, soma_repasse: dict,
     q = pd.DataFrame(linhas, columns=["hipotese", "descricao", "estimativa", "p_valor", "sinal_previsto"])
     q["p_holm"] = holm(q["p_valor"].fillna(1.0).tolist())
     q["confirma"] = np.where(q["sinal_previsto"] & (q["p_valor"] < alfa), "sim", "nao")
+    q["confirma_holm"] = np.where(q["sinal_previsto"] & (q["p_holm"] < alfa), "sim", "nao")
     # Pré-registro: menos de 10 eventos = sem poder, resultado inconclusivo.
     n_eventos = {"V2": g.loc["todos", "n"] if "todos" in g.index else 0}
     if grupos_ajustado_isolados is not None and "externo" in set(grupos_ajustado_isolados["tipo"]):
         n_eventos["V5"] = grupos_ajustado_isolados.set_index("tipo").loc["externo", "n"]
     for h, n in n_eventos.items():
         if n < 10:
-            q.loc[q["hipotese"] == h, "confirma"] = "inconclusivo"
+            q.loc[q["hipotese"] == h, ["confirma", "confirma_holm"]] = "inconclusivo"
     return q
 
 

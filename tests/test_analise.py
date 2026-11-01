@@ -253,7 +253,8 @@ def test_testar_por_periodo_e_relatorio(tmp_path, monkeypatch):
     assert base["data"].min() >= pd.Timestamp("2026-01-01")
     assert (validacao / "regressao_repasse_soma.csv").exists()
     hip = pd.read_csv(validacao / "hipoteses.csv")
-    assert {"V1", "V3", "V4a", "V4b"} <= set(hip["hipotese"])
+    assert {"V1", "V3", "V4a", "V4b", "V6"} <= set(hip["hipotese"])
+    assert "confirma_holm" in hip.columns
 
     cli.testar()
     cli.robustez()

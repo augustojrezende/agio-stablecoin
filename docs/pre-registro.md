@@ -57,3 +57,17 @@ Todas as regressões: MQO com erros de Newey-West (5 defasagens), mesmos control
 | V4a | −0,129 (p < 0,001); significativo em todas as especificações alinhadas à PTAX. |
 | V4b | Ainda não estimada. |
 | V5 | −0,61 p.p. (p = 0,035), 15 eventos; um entre cerca de 40 testes. |
+
+## Adendo 1 (01/11/2026, antes de qualquer dado da validação)
+
+**Motivo.** A V4b foi escrita antes de estimar a regressão de repasse. Na amostra de descoberta ela saiu com o sinal contrário ao previsto: depois de uma alta do dólar oficial, o ágio continua caindo nos dois dias seguintes (defasagens de 1 e 2 dias: −0,057 e −0,025; soma das 3 defasagens: −0,080, p < 0,001). O efeito total chega a cerca de −0,21 p.p. por 1% de alta, contra −0,13 só no dia.
+
+**O que muda.**
+- A **V4b fica como foi escrita** e será testada na validação com o sinal original (soma > 0). Na descoberta, ela não se confirma.
+- Entra a **V6, derivada da descoberta:** "realização de ganhos". Quem tem USDT vende ao longo de alguns dias depois de uma alta do dólar, e o ágio continua caindo.
+  - Teste: a mesma soma das defasagens 1 a 3 de `regressao_repasse`.
+  - Confirma se a soma for < 0 com p < α.
+  - A V6 surgiu nos dados da descoberta; a confirmação depende só da validação.
+- A correção de Holm passa a cobrir 7 hipóteses (V1, V2, V3, V4a, V4b, V5 e V6), e o quadro mostra a decisão pelo p simples (`confirma`) e pelo p ajustado (`confirma_holm`).
+
+**Situação na descoberta, pelo p ajustado de Holm.** V3 (0,031) e V4a (< 0,001) se mantêm. A V5 cai (0,104), e por isso deve ser lida como fraca.
