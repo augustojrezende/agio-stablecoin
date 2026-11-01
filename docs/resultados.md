@@ -169,6 +169,25 @@ O teste repete a regressão em 9 especificações: winsorizada, Huber, ágio de 
 - **Sem os eventos sobrepostos,** os choques externos isolados *reduzem* o ágio ajustado em 0,61 p.p. (p = 0,035). É daí que vem a diferença entre domésticos e externos, já que os domésticos ficam perto de zero.
 - **Cuidado com testes múltiplos.** Foram cerca de 40 testes, e ao nível de 5% se esperam cerca de 2 significativos só por acaso. O resultado dos externos isolados é exploratório (V5 no pré-registro) e não resiste à correção de Holm (p ajustado = 0,104). V3 (0,031) e V4a (< 0,001) resistem.
 
+### 7.1 Atenção do público (Google Trends), exploratório
+
+*`agio buscas`: buscas anormais = log(1 + interesse) menos a mediana dos 60 dias úteis anteriores. Fora do pré-registro; só a amostra de descoberta. Figuras 9a e 9b (`figuras/09_buscas_dolar.png`, `figuras/09_buscas_usdt.png`).*
+
+| Tipo de evento | Buscas por "dólar" (p perm.) | Buscas por "USDT" (p perm.) |
+| --- | --- | --- |
+| Externo (53) | +0,38 (0,013) | +0,43 (0,62) |
+| Político (4) | +3,01 (< 0,001) | +1,12 (0,64) |
+| Fiscal (46) | +0,07 (0,92) | +0,32 (0,48) |
+| Monetário (47) | +0,21 (0,26) | +0,32 (0,48) |
+| Todos (154) | +0,30 (0,002) | +0,38 (0,29) |
+| Não agendados (13) | +1,12 (< 0,001) | +0,88 (0,78) |
+
+- **A atenção ao dólar reage a choques externos e políticos, não aos fiscais.** Nos choques externos, as buscas saltam no dia do evento e saem da faixa das datas sorteadas. Nos anúncios fiscais, ficam dentro dela.
+- **As buscas por USDT não reagem aos eventos.** Como o número de negócios, elas crescem com o tempo em qualquer dia.
+- **As buscas não antecipam o ágio.** Na regressão com as buscas do dia anterior: USDT +0,067 (p = 0,13) e dólar −0,061 (p = 0,21). Dólar e VIX não mudam.
+- **Leitura:** o público presta atenção ao dólar nas eleições e nos choques externos, mas anúncios fiscais nem chegam a chamar a atenção; e atenção alta não vira procura por dólar digital nem ágio. Reforça a resposta do título: medo global e político, não fiscal.
+- **Cuidados:** o grupo político tem 4 eventos (efeito forte, poucos casos); são mais cerca de 12 testes, então a análise ilustra e não confirma.
+
 ## 8. Aplicação da regra de decisão
 
 | Hipótese | Condição | Resultado |

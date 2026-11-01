@@ -213,3 +213,10 @@ Fontes: [Resolução 574](https://www.letsmoney.com.br/noticias/bc-adia-novembro
 - **Decisão:** incluir no TCC uma análise curta (uma figura e uma tabela), fora do pré-registro e só na amostra de descoberta, com duas perguntas: (1) as buscas por "dólar" e "USDT" sobem nos eventos mais do que em datas sorteadas? (2) as buscas do dia anterior antecipam o ágio?
 - **Medida:** buscas anormais = log(1 + interesse) menos a mediana dos 60 dias úteis anteriores, a mesma lógica do ágio anormal.
 - **Motivo:** completar a parte comportamental sem alongar o trabalho; a atenção mede o "medo" do público diretamente, o que o número de negócios não faz.
+
+## 2026-11-01 — Atenção do público: resultado
+
+- **Buscas por "dólar":** sobem nos eventos externos (+0,38, p = 0,013), políticos (+3,01, p < 0,001, n = 4) e não agendados (+1,12, p < 0,001); não nos fiscais (+0,07, p = 0,92).
+- **Buscas por "USDT":** não diferem das datas sorteadas (todos: p = 0,29).
+- **Antecipação:** as buscas do dia anterior não explicam o ágio (USDT p = 0,13; dólar p = 0,21).
+- **Leitura registrada em `resultados.md` (7.1):** a atenção do público responde a choques externos e políticos, não a anúncios fiscais, e não vira procura por dólar digital. Resultado exploratório.
