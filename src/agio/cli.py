@@ -10,6 +10,8 @@
     agio coletar-controles --so-vix            # só o VIX
     agio testar                                # regressão e estudo de evento -> dados/resultados
     agio robustez                              # mesma regressão em especificações alternativas
+    agio relatorio                             # gráficos e tabelas -> docs/figuras, docs/resultados_tabelas.md
+    agio testar --inicio 2026-11-02            # validação fora da amostra (docs/pre-registro.md)
 """
 
 from __future__ import annotations
@@ -114,8 +116,14 @@ def coletar_controles(juro: bool = True, vix: bool = True) -> None:
         print(f"VIX ({fonte}): {len(tabela)} dias")
 
 
-def testar() -> None:
-    from agio.analise import ajustar_pelo_dolar, estudo_evento, montar_base, regressao
+def testar(inicio: date | None = None, fim: date | None = None) -> None:
+    """Teste formal. Com --inicio/--fim, roda só naquele período (validação).
+
+    O ágio anormal usa sempre o histórico completo (mediana dos 60 dias
+    anteriores); o recorte acontece depois, e os eventos fora do período saem.
+    """
+    from agio.analise import (ajustar_pelo_dolar, estudo_evento, montar_base, periodo,
+                              quadro_hipoteses, regressao, regressao_repasse)
 
     def opcional(nome):
         try:
@@ -127,19 +135,40 @@ def testar() -> None:
     base = montar_base(arm.ler_tratado("agio_diario"), arm.ler_tratado("painel_diario"),
                        arm.ler_tratado("ptax"), arm.ler_tratado("precos_usdt_brl"),
                        opcional("juro_real_10a"), opcional("vix"))
+    eventos = pd.read_csv(ARQUIVO_EVENTOS)
+    pasta = PASTA_RESULTADOS
+    if inicio or fim:
+        base = periodo(base, inicio, fim).reset_index(drop=True)
+        datas_ev = pd.to_datetime(eventos["data"])
+        if inicio:
+            eventos = eventos[datas_ev >= pd.Timestamp(inicio)]
+        if fim:
+            eventos = eventos[datas_ev.loc[eventos.index] < pd.Timestamp(fim)]
+        pasta = PASTA_RESULTADOS / f"periodo_{inicio or 'inicio'}_{fim or 'fim'}"
+        print(f"Período: {base['data'].min():%d/%m/%Y} a {base['data'].max():%d/%m/%Y}, "
+              f"{len(base)} dias, {len(eventos)} eventos.")
     base["agio_ajustado_dolar"] = ajustar_pelo_dolar(base)
-    PASTA_RESULTADOS.mkdir(parents=True, exist_ok=True)
-    base.to_csv(PASTA_RESULTADOS / "base_teste.csv", index=False)
+    pasta.mkdir(parents=True, exist_ok=True)
+    base.to_csv(pasta / "base_teste.csv", index=False)
 
     relatorio = []
+    guardado = {}
     for y, titulo in [("agio_anormal", "Ágio anormal (p.p.)"),
                       ("negocios_anormal", "Número de negócios anormal (log)"),
                       ("ticket_anormal", "Ticket médio anormal (log)")]:
         modelo, tabela = regressao(base, y)
-        tabela.to_csv(PASTA_RESULTADOS / f"regressao_{y}.csv", index=False)
+        tabela.to_csv(pasta / f"regressao_{y}.csv", index=False)
+        guardado[f"reg_{y}"] = tabela
         relatorio += [f"\n=== Regressão: {titulo} ===", str(modelo.summary())]
 
-    eventos = pd.read_csv(ARQUIVO_EVENTOS)
+    modelo, tabela, soma = regressao_repasse(base)
+    tabela.to_csv(pasta / "regressao_repasse.csv", index=False)
+    pd.DataFrame([soma]).to_csv(pasta / "regressao_repasse_soma.csv", index=False)
+    relatorio += ["\n=== Repasse do câmbio: ágio anormal ~ dólar no dia e 3 dias antes ===",
+                  tabela.round(4).to_string(index=False),
+                  "Soma das defasagens (volta do ágio nos dias seguintes): "
+                  + ", ".join(f"{k}={v:.4f}" for k, v in soma.items())]
+
     if eventos.get("fonte", pd.Series(dtype=str)).astype(str).str.contains("A CONFIRMAR").any():
         print("Atenção: dados/manual/eventos.csv ainda tem eventos marcados como A CONFIRMAR.")
     listas = [("", eventos)]
@@ -148,21 +177,43 @@ def testar() -> None:
         # isola cada choque de eventos de outro tipo na mesma janela.
         listas.append(("_sem_sobrepostos", eventos[eventos["sobreposto"] == "nao"]))
     for sufixo, lista in listas:
+        if lista.empty:
+            continue
         for y in ["agio_anormal", "agio_ajustado_dolar", "negocios_anormal"]:
             por_evento, grupos, comp = estudo_evento(base, lista, y)
-            por_evento.to_csv(PASTA_RESULTADOS / f"eventos_{y}{sufixo}.csv", index=False)
-            grupos.to_csv(PASTA_RESULTADOS / f"eventos_grupos_{y}{sufixo}.csv", index=False)
+            guardado[f"ev_{y}{sufixo}"] = (grupos, comp)
+            por_evento.to_csv(pasta / f"eventos_{y}{sufixo}.csv", index=False)
+            grupos.to_csv(pasta / f"eventos_grupos_{y}{sufixo}.csv", index=False)
             titulo = f"{y}{' (sem sobrepostos)' if sufixo else ''}"
             relatorio += [f"\n=== Estudo de evento: {titulo} ===",
                           f"Datas placebo disponíveis: {grupos.attrs.get('n_placebo')}",
                           grupos.round(3).to_string(index=False)]
             if comp:
+                pd.DataFrame([comp]).to_csv(pasta / f"eventos_comparacao_{y}{sufixo}.csv",
+                                            index=False)
                 relatorio.append("Domésticos x externos: " + ", ".join(
                     f"{k}={v:.3f}" for k, v in comp.items()))
+    if "ev_negocios_anormal" in guardado:
+        alfa = 0.01 if (fim and fim <= date(2027, 10, 30)) else 0.05
+        isolados = guardado.get("ev_agio_ajustado_dolar_sem_sobrepostos", (None, None))[0]
+        quadro = quadro_hipoteses(guardado["reg_agio_anormal"], soma,
+                                  guardado["ev_negocios_anormal"][0],
+                                  guardado["ev_agio_anormal"][1], isolados, alfa=alfa)
+        quadro.to_csv(pasta / "hipoteses.csv", index=False)
+        relatorio += [f"\n=== Hipóteses do pré-registro (alfa = {alfa:.0%}; ver docs/pre-registro.md) ===",
+                      quadro.round(4).to_string(index=False)]
+        if not (inicio or fim):
+            relatorio.append("Amostra completa: V3 a V5 são exploratórias aqui; "
+                             "a confirmação é na amostra de validação.")
     texto = "\n".join(relatorio)
-    (PASTA_RESULTADOS / "relatorio.txt").write_text(texto, encoding="utf-8")
+    (pasta / "relatorio.txt").write_text(texto, encoding="utf-8")
     print(texto)
-    print(f"\nResultados salvos em {PASTA_RESULTADOS}")
+    print(f"\nResultados salvos em {pasta}")
+
+
+def relatorio() -> None:
+    from agio.relatorio import gerar
+    gerar()
 
 
 # Início previsto das obrigações de informação da Resolução BCB 521. Atenção:
@@ -342,7 +393,12 @@ def main() -> None:
     so = cc.add_mutually_exclusive_group()
     so.add_argument("--so-vix", action="store_true", help="coleta só o VIX")
     so.add_argument("--so-juro", action="store_true", help="coleta só o juro real")
-    sub.add_parser("testar")
+    t = sub.add_parser("testar")
+    t.add_argument("--inicio", type=date.fromisoformat, default=None,
+                   help="só dias a partir desta data (validação fora da amostra)")
+    t.add_argument("--fim", type=date.fromisoformat, default=None,
+                   help="só dias antes desta data")
+    sub.add_parser("relatorio")
     sub.add_parser("robustez")
     args = p.parse_args()
     if args.comando == "coletar":
@@ -356,7 +412,9 @@ def main() -> None:
     elif args.comando == "coletar-controles":
         coletar_controles(juro=not args.so_vix, vix=not args.so_juro)
     elif args.comando == "testar":
-        testar()
+        testar(args.inicio, args.fim)
+    elif args.comando == "relatorio":
+        relatorio()
     elif args.comando == "robustez":
         robustez()
     else:

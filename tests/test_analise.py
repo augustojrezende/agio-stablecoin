@@ -186,3 +186,84 @@ def test_lista_de_eventos_segue_a_regra():
     assert not ev["fonte"].str.contains("A CONFIRMAR").any()
     copom = ev[ev["descricao"] == "Decisão do Copom"]
     assert (pd.to_datetime(copom["data"]) > pd.to_datetime(copom["data_anuncio"])).all()
+
+
+def _tabelas_sinteticas(n_dias_inicio="2024-01-01", fim="2026-10-30", semente=5):
+    rng = np.random.default_rng(semente)
+    datas = pd.bdate_range(n_dias_inicio, fim)
+    n = len(datas)
+    dias = datas.date
+    ptax = 5 * np.exp(np.cumsum(rng.normal(0, 0.006, n)))
+    d_dolar = np.r_[0, 100 * np.diff(np.log(ptax))]
+    agio = 0.3 - 0.13 * d_dolar + rng.normal(0, 0.2, n)
+    agio_df = pd.DataFrame({"data": dias, "agio_pct": agio})
+    return {
+        "ptax": pd.DataFrame({"data": dias, "ptax_venda": ptax}),
+        "painel_diario": pd.DataFrame({"data": dias, "agio_pct": agio,
+                                       "agio_fechamento_pct": agio + rng.normal(0, .2, n),
+                                       "num_negocios": rng.integers(4e4, 6e4, n),
+                                       "ticket_medio_brl": rng.uniform(5e3, 9e3, n)}),
+        "precos_usdt_brl": pd.DataFrame({"data": dias, "fonte": "binance",
+                                         "volume_base": rng.uniform(1e7, 2e7, n)}),
+        "juro_real_10a": pd.DataFrame({"data": dias, "juro_real_10a": 7 + rng.normal(0, .05, n).cumsum()}),
+        "vix": pd.DataFrame({"data": dias, "vix": 20 + rng.normal(0, 1, n)}),
+        "agio_diario": agio_df, "agio_fechamento_diario": agio_df,
+        "agio_por_fonte": pd.concat([agio_df.assign(fonte="binance"),
+                                     agio_df.assign(fonte="mercadobitcoin")]),
+    }
+
+
+def test_regressao_repasse_mede_volta_do_agio():
+    from agio.analise import regressao_repasse
+    rng = np.random.default_rng(7)
+    n = 800
+    datas = pd.bdate_range("2023-01-02", periods=n)
+    d = rng.normal(0, 1, n)
+    y = -0.13 * d + 0.05 * np.r_[0, d[:-1]] + 0.04 * np.r_[0, 0, d[:-2]] + rng.normal(0, .1, n)
+    base = pd.DataFrame({"data": datas, "d_dolar": d, "agio_anormal": y})
+    _, tabela, soma = regressao_repasse(base)
+    t = tabela.set_index("variavel")
+    assert t.loc["d_dolar", "coeficiente"] == pytest.approx(-0.13, abs=0.02)
+    assert soma["soma_defasagens"] == pytest.approx(0.09, abs=0.03)
+    assert soma["p_valor"] < 0.01
+
+
+def test_testar_por_periodo_e_relatorio(tmp_path, monkeypatch):
+    from agio import armazenamento as arm
+    from agio import cli, relatorio
+
+    tabelas = _tabelas_sinteticas()
+    tratado = tmp_path / "tratado"
+    tratado.mkdir()
+    for nome, df in tabelas.items():
+        df.to_csv(tratado / f"{nome}.csv", index=False)
+    resultados = tmp_path / "resultados"
+    monkeypatch.setattr(arm, "ler_tratado", lambda nome: tabelas[nome].copy())
+    monkeypatch.setattr(arm, "TRATADO", tratado)
+    monkeypatch.setattr(arm, "BRUTO", tmp_path / "bruto")
+    monkeypatch.setattr(cli, "PASTA_RESULTADOS", resultados)
+    monkeypatch.setattr(relatorio, "RESULTADOS", resultados)
+    monkeypatch.setattr(relatorio, "DOCS", tmp_path / "docs")
+    monkeypatch.setattr(relatorio, "FIGURAS", tmp_path / "docs" / "figuras")
+    (tmp_path / "docs").mkdir()
+
+    cli.testar(inicio=date(2026, 1, 1))
+    validacao = resultados / "periodo_2026-01-01_fim"
+    base = pd.read_csv(validacao / "base_teste.csv", parse_dates=["data"])
+    assert base["data"].min() >= pd.Timestamp("2026-01-01")
+    assert (validacao / "regressao_repasse_soma.csv").exists()
+    hip = pd.read_csv(validacao / "hipoteses.csv")
+    assert {"V1", "V3", "V4a", "V4b"} <= set(hip["hipotese"])
+
+    cli.testar()
+    cli.robustez()
+    relatorio.gerar()
+    figuras = sorted(p.name for p in (tmp_path / "docs" / "figuras").glob("*.png"))
+    assert len(figuras) == 8
+    texto = (tmp_path / "docs" / "resultados_tabelas.md").read_text(encoding="utf-8")
+    assert "Repasse do câmbio" in texto and "figuras/08_robustez.png" in texto
+
+
+def test_holm():
+    from agio.analise import holm
+    assert holm([0.01, 0.04, 0.03]) == pytest.approx([0.03, 0.06, 0.06])
