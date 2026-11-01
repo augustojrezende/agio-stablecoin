@@ -31,7 +31,8 @@ agio coletar-horario --inicio 2020-10-01  # horário: preço na janela da PTAX
 agio calcular                      # gera dados/tratado/agio_*.csv
 agio grafico                       # salva dados/grafico_agio.png
 agio importar-trends               # opcional: lê os CSVs do Google Trends
-agio coletar-controles             # juro real 10 anos (Tesouro Direto) e VIX (FRED)
+agio coletar-controles             # juro real 10 anos (Tesouro Direto) e VIX (FRED/Cboe)
+agio coletar-controles --so-vix    # só o VIX, sem baixar o Tesouro de novo
 agio testar                        # teste formal -> dados/resultados/
 ```
 
