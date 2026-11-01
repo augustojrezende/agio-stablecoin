@@ -192,3 +192,11 @@ Fontes: [Resolução 574](https://www.letsmoney.com.br/noticias/bc-adia-novembro
 - **Decisão:** a hipótese da escassez global de USDT é descartada como explicação do episódio de jun-jul/2026. O sinal positivo sugere que a oferta acompanha a demanda (emissão quando a procura sobe). A causa do episódio fica em aberto (provável atrito local de arbitragem) e passa a ser uma pergunta do mestrado.
 - **Robustez lateral:** com a oferta na regressão, VIX (p = 0,045 e 0,008) e dólar (−0,128) não mudam; juro real a p = 0,118.
 - A variável não entra no teste principal nem no pré-registro.
+
+## 2026-11-01 — Figuras publicadas, repasse defasado e adendo ao pré-registro
+
+- **Figuras e tabelas da descoberta** publicadas em `docs/figuras/` e `docs/resultados_tabelas.md` (commit do pesquisador).
+- **Repasse defasado:** soma das defasagens do dólar = −0,080 (p < 0,001), sinal oposto ao previsto na V4b. O ágio continua caindo por dois dias depois de uma alta do dólar, o que é compatível com realização de ganhos.
+- **Decisão (aprovada pelo pesquisador):** adendo 1 ao pré-registro. A V4b é mantida como escrita, e entra a V6 (soma < 0), derivada da descoberta. A correção de Holm passa a cobrir 7 hipóteses, e o quadro mostra `confirma` e `confirma_holm`.
+- **Dias extremos do dólar** conferidos: 26/10/2026 (+8,8%), 05/10/2026, 03/10/2022 e 09/11/2020 são reais, todos depois de fim de semana e ligados a eleições ou choques conhecidos. Nenhum dado corrigido.
+- **Legenda da Figura 5:** a reta é simples, sem controles (−0,109), e difere do coeficiente da regressão (−0,129).

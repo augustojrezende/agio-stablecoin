@@ -10,7 +10,8 @@
 | Anúncios domésticos elevam o ágio mais que choques externos? | Não na lista completa (p = 0,77) | **Não confirmada** |
 | Crises elevam a participação no mercado? | Não mais que em dias sorteados (p = 0,63) | Hipótese comportamental **não confirmada**; repetida (V2) |
 | O medo global (VIX) eleva o ágio? | Sim, robusto (7 de 9 especificações) | Exploratória; confirmação na validação (V3) |
-| O câmbio oficial passa para o USDT por inteiro no dia? | Não: o ágio cai 0,13 p.p. a cada 1% de alta do dólar | Exploratória; confirmação na validação (V4) |
+| O câmbio oficial passa para o USDT por inteiro no dia? | Não: o ágio cai 0,13 p.p. a cada 1% de alta do dólar | Exploratória; confirmação na validação (V4a) |
+| O ágio volta nos dias seguintes? | Não: continua caindo por mais 2 dias (total de cerca de −0,21 p.p. por 1%) | Contrário à V4b; nova V6, realização de ganhos (adendo ao pré-registro) |
 
 **Conclusão provisória:** o ágio do USDT em reais não funciona como termômetro do estresse fiscal brasileiro. Ele é movido pelo câmbio oficial, que o USDT acompanha só em parte no mesmo dia, e pelo medo global.
 
@@ -100,6 +101,37 @@ R² = 0,095; curtose dos resíduos = 15,3.
 - **VIX:** um salto de 10 pontos eleva o ágio em cerca de 0,2 p.p. no dia e 0,15 p.p. no dia seguinte.
 - **Participação:** o número de negócios anormal não responde ao juro nem ao VIX. O ticket médio cai quando o dólar sobe (p = 0,044).
 
+### 5.1 Repasse do câmbio nos dias seguintes
+
+A regressão de repasse acrescenta a variação do dólar de 1, 2 e 3 dias antes:
+
+| Variável | Coeficiente | p-valor |
+| --- | --- | --- |
+| Dólar no dia | −0,126 | < 0,001 |
+| Dólar 1 dia antes | −0,057 | < 0,001 |
+| Dólar 2 dias antes | −0,025 | 0,007 |
+| Dólar 3 dias antes | +0,002 | 0,85 |
+| Soma das defasagens | −0,080 | < 0,001 |
+
+- **A previsão registrada (V4b) não se confirma.** Ela dizia que o ágio voltaria nos dias seguintes, porque o USDT alcançaria o dólar com atraso. O ágio continua caindo por mais dois dias, e o efeito total chega a cerca de −0,21 p.p. por 1% de alta.
+- **Leitura comportamental.** Quem tem USDT vende para realizar o ganho quando o dólar sobe, e essa venda se espalha por alguns dias. A leitura já constava da análise descritiva (seção 3).
+- **Como fica no pré-registro.** Entrou como V6 no adendo 1, para ser confirmada na validação. A V4b continua sendo testada como foi escrita.
+
+### 5.2 Verificação: dias extremos do dólar
+
+O gráfico do dólar (Figura 5) mostrou variações diárias atípicas. Todas foram conferidas:
+
+| Data | Variação do dólar | Intervalo até o dia anterior | O que foi |
+| --- | --- | --- | --- |
+| 26/10/2026 | +8,8% | fim de semana | Dia seguinte ao segundo turno: dólar +8,21% e Bolsa −13,88% no noticiário |
+| 05/10/2026 | −4,7% | fim de semana | Dia seguinte ao primeiro turno de 2026 |
+| 09/11/2020 | −4,6% | fim de semana | Fora da regressão (ainda sem histórico para o ágio anormal) |
+| 03/10/2022 | −3,9% | fim de semana | Dia seguinte ao primeiro turno de 2022 |
+
+- **São dados reais, não buracos nos dados.**
+- **O maior choque doméstico da série** (26/10/2026) teve ágio anormal *negativo* (−0,77 p.p.), coerente com o efeito mecânico do dólar e contrário à hipótese fiscal.
+- **Os resultados não dependem desses dias:** a regressão robusta (Huber) e a winsorizada mantêm os sinais (seção 6).
+
 ## 6. Robustez (Figura 8)
 
 O teste repete a regressão em 9 especificações: winsorizada, Huber, ágio de fechamento, cada corretora separada, antes e depois de 04/05/2026, e janela até 14h.
@@ -135,7 +167,7 @@ O teste repete a regressão em 9 especificações: winsorizada, Huber, ágio de 
 
 - **Teste t contra teste de permutação.** O número de negócios parece subir nos eventos pelo teste t (p = 0,001), mas sobe igual nos dias sorteados, porque o mercado cresceu no período. A comparação válida é a de permutação.
 - **Sem os eventos sobrepostos,** os choques externos isolados *reduzem* o ágio ajustado em 0,61 p.p. (p = 0,035). É daí que vem a diferença entre domésticos e externos, já que os domésticos ficam perto de zero.
-- **Cuidado com testes múltiplos.** Foram cerca de 40 testes, e ao nível de 5% se esperam cerca de 2 significativos só por acaso. O resultado dos externos isolados é exploratório (V5 no pré-registro).
+- **Cuidado com testes múltiplos.** Foram cerca de 40 testes, e ao nível de 5% se esperam cerca de 2 significativos só por acaso. O resultado dos externos isolados é exploratório (V5 no pré-registro) e não resiste à correção de Holm (p ajustado = 0,104). V3 (0,031) e V4a (< 0,001) resistem.
 
 ## 8. Aplicação da regra de decisão
 

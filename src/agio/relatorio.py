@@ -147,7 +147,7 @@ def fig_dolar(plt, figs, base):
     ax.scatter(b["d_dolar"], b["agio_anormal"], s=4, alpha=0.35, color="#1a5276")
     x = np.linspace(b["d_dolar"].min(), b["d_dolar"].max(), 50)
     ax.plot(x, np.polyval(coef, x), color="#c0392b", lw=1.4,
-            label=f"inclinação {coef[0]:.3f}")
+            label=f"reta simples, sem controles: inclinação {coef[0]:.3f}")
     ax.axhline(0, color="black", lw=0.5)
     ax.axvline(0, color="black", lw=0.5)
     ax.set_xlabel("Variação do dólar oficial no dia (%)")
@@ -156,7 +156,10 @@ def fig_dolar(plt, figs, base):
     ax.legend(frameon=False)
     _salvar(fig, "05_dolar_e_agio.png",
             "Quando o dólar oficial sobe, o ágio cai: o USDT acompanha só parte do movimento "
-            "no mesmo dia (efeito mecânico controlado em todas as regressões).", figs)
+            "no mesmo dia. A reta é simples, sem controles; na regressão com controles o "
+            "coeficiente é cerca de −0,13, e o ágio continua caindo nos dois dias seguintes. "
+            "O ponto mais à direita é 26/10/2026 (dólar +8,8% após o segundo turno), dado "
+            "real conferido no noticiário.", figs)
     plt.close(fig)
 
 
