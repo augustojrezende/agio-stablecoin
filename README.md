@@ -24,7 +24,7 @@ A PTAX é formada entre 10h e 13h; o candle diário das corretoras fecha às 21h
 python -m venv .venv
 source .venv/bin/activate          # Windows: .venv\Scripts\activate
 pip install -e ".[dev]"
-pytest                             # 23 testes, sem rede
+pytest                             # 29 testes, sem rede
 
 agio coletar --inicio 2020-10-01          # diário: PTAX, Selic, preços, comportamento
 agio coletar-horario --inicio 2020-10-01  # horário: preço na janela da PTAX
@@ -34,6 +34,7 @@ agio importar-trends               # opcional: lê os CSVs do Google Trends
 agio coletar-controles             # juro real 10 anos (Tesouro Direto) e VIX (FRED/Cboe)
 agio coletar-controles --so-vix    # só o VIX, sem baixar o Tesouro de novo
 agio testar                        # teste formal -> dados/resultados/
+agio robustez                      # mesma regressão em especificações alternativas
 ```
 
 ## Teste formal
@@ -44,6 +45,8 @@ agio testar                        # teste formal -> dados/resultados/
 2. **Estudo de evento agrupado** sobre os eventos de `dados/manual/eventos.csv`, na janela do dia anterior até 3 dias úteis depois, para o ágio anormal, o ágio ajustado pela variação do dólar e o número de negócios. Cada grupo é comparado com datas sorteadas fora dos eventos (teste de permutação), e os choques domésticos são comparados com os externos.
 
 Resultados em `dados/resultados/`: `relatorio.txt`, tabelas `regressao_*.csv`, `eventos_*.csv` e a base usada (`base_teste.csv`).
+
+`agio robustez` repete a regressão do ágio anormal em especificações alternativas e grava `robustez.csv` e `robustez.txt`: winsorizada (1%/99%), regressão robusta de Huber, ágio de fechamento, cada corretora separada, antes e depois de 04/05/2026 (informação obrigatória ao BC) e janela da PTAX incluindo a consulta das 13h (relê os candles horários de `dados/bruto`, sem nova coleta).
 
 **A lista de eventos é decisão do pesquisador.** O arquivo traz um rascunho com a coluna `fonte` marcada como `A CONFIRMAR`: confira cada data, registre a fonte e acrescente eventos (por exemplo, todas as reuniões do Copom) antes de olhar os resultados.
 

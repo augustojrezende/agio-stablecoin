@@ -62,3 +62,12 @@ def test_agio_alinhado_corrige_dia_de_crise():
     assert a_fech.loc[0, "agio_pct"] < 0
     assert a_jan.loc[0, "agio_pct"] == pytest.approx(5.85 / 5.80 * 100 - 100)
     assert a_jan.loc[0, "volume_base"] == 300.0
+
+
+def test_janela_ate_14h_inclui_a_hora_das_13h():
+    bruto = [_kline(13, 5.0, 100), _kline(16, 6.0, 100)]
+    horas = binance.tratar_horario(bruto)
+    assert preco_janela_ptax(horas).loc[0, "horas_janela"] == 1
+    j = preco_janela_ptax(horas, hora_fim=14)
+    assert j.loc[0, "horas_janela"] == 2
+    assert j.loc[0, "preco_janela"] == pytest.approx(5.5)

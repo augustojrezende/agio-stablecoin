@@ -9,11 +9,13 @@
     agio coletar-controles                     # juro real (Tesouro Direto) e VIX (FRED/Cboe)
     agio coletar-controles --so-vix            # só o VIX
     agio testar                                # regressão e estudo de evento -> dados/resultados
+    agio robustez                              # mesma regressão em especificações alternativas
 """
 
 from __future__ import annotations
 
 import argparse
+import json
 from datetime import date
 
 import pandas as pd
@@ -154,6 +156,93 @@ def testar() -> None:
     print(f"\nResultados salvos em {PASTA_RESULTADOS}")
 
 
+# Início da informação obrigatória de operações com stablecoins ao BC.
+# Mesma data do evento regulatório em dados/manual/eventos.csv (a confirmar).
+DATA_REGULACAO = date(2026, 5, 4)
+
+
+def _horas_do_bruto(nome: str) -> pd.DataFrame:
+    """Relê os candles horários guardados em dados/bruto, sem nova coleta."""
+    modulo = CORRETORAS[nome][0]
+    arquivos = sorted((arm.BRUTO / f"{nome}_1h").glob("*.json"))
+    lotes = [modulo.tratar_horario(json.loads(a.read_text(encoding="utf-8")), nome)
+             for a in arquivos]
+    lotes = [l for l in lotes if not l.empty]
+    if not lotes:
+        return pd.DataFrame()
+    return pd.concat(lotes).drop_duplicates(["inicio_utc", "fonte"], keep="last")
+
+
+def robustez() -> None:
+    """Repete a regressão do ágio anormal em especificações alternativas.
+
+    A pergunta é se o resultado principal (juro real fraco, VIX significativo)
+    depende de escolhas de medida, de corretora, de período ou de poucos dias
+    extremos.
+    """
+    from agio.analise import (CONTROLES, montar_base, periodo, resumo_especificacao,
+                              winsorizar)
+
+    def opcional(nome):
+        try:
+            return arm.ler_tratado(nome)
+        except FileNotFoundError:
+            return None
+
+    ptax = arm.ler_tratado("ptax")
+    painel = arm.ler_tratado("painel_diario")
+    precos = arm.ler_tratado("precos_usdt_brl")
+    juro, vix = opcional("juro_real_10a"), opcional("vix")
+
+    def base_de(agio_diario):
+        return montar_base(agio_diario, painel, ptax, precos, juro, vix)
+
+    principal = base_de(arm.ler_tratado("agio_diario"))
+    linhas = [
+        resumo_especificacao("1. Principal (janela 10h-13h, MQO + Newey-West)", principal),
+        resumo_especificacao("2. Winsorizado 1%/99%",
+                             winsorizar(principal, ["agio_anormal"] + CONTROLES)),
+        resumo_especificacao("3. Regressão robusta (Huber)", principal, metodo="huber"),
+        resumo_especificacao("4. Ágio de fechamento (21h)",
+                             base_de(arm.ler_tratado("agio_fechamento_diario"))),
+    ]
+
+    por_fonte = arm.ler_tratado("agio_por_fonte")
+    for fonte in sorted(por_fonte["fonte"].unique()):
+        so = por_fonte[por_fonte["fonte"] == fonte][["data", "agio_pct"]]
+        linhas.append(resumo_especificacao(f"5. Só {fonte}", base_de(so)))
+
+    linhas.append(resumo_especificacao(f"6a. Antes de {DATA_REGULACAO:%d/%m/%Y}",
+                                       periodo(principal, fim=DATA_REGULACAO)))
+    linhas.append(resumo_especificacao(f"6b. A partir de {DATA_REGULACAO:%d/%m/%Y}",
+                                       periodo(principal, inicio=DATA_REGULACAO)))
+
+    lotes = []
+    for nome in CORRETORAS:
+        horas = _horas_do_bruto(nome)
+        if not horas.empty:
+            lotes.append(preco_janela_ptax(horas, hora_fim=14))
+    if lotes:
+        janela = calcular_agio(pd.concat(lotes), ptax, coluna_preco="preco_janela",
+                               coluna_volume="volume_janela")
+        linhas.append(resumo_especificacao("7. Janela 10h-14h (inclui a consulta das 13h)",
+                                           base_de(consolidar(janela))))
+    else:
+        print("Sem candles horários em dados/bruto; a especificação 7 ficou de fora.")
+
+    tabela = pd.DataFrame(linhas)
+    PASTA_RESULTADOS.mkdir(parents=True, exist_ok=True)
+    tabela.to_csv(PASTA_RESULTADOS / "robustez.csv", index=False)
+
+    colunas = ["especificacao", "n"] + [c for c in tabela.columns
+                                         if c.endswith(("_coef", "_p"))]
+    texto = ("=== Robustez: ágio anormal (coeficiente e p-valor) ===\n"
+             + tabela[colunas].to_string(index=False, float_format=lambda v: f"{v:.4f}"))
+    (PASTA_RESULTADOS / "robustez.txt").write_text(texto, encoding="utf-8")
+    print(texto)
+    print(f"\nResultados salvos em {PASTA_RESULTADOS / 'robustez.csv'}")
+
+
 def importar_trends() -> None:
     buscas = google_trends.importar_pasta(PASTA_TRENDS)
     buscas.to_csv(arm.TRATADO / "google_trends.csv", index=False)
@@ -244,6 +333,7 @@ def main() -> None:
     so.add_argument("--so-vix", action="store_true", help="coleta só o VIX")
     so.add_argument("--so-juro", action="store_true", help="coleta só o juro real")
     sub.add_parser("testar")
+    sub.add_parser("robustez")
     args = p.parse_args()
     if args.comando == "coletar":
         coletar(args.inicio, args.fim)
@@ -257,6 +347,8 @@ def main() -> None:
         coletar_controles(juro=not args.so_vix, vix=not args.so_juro)
     elif args.comando == "testar":
         testar()
+    elif args.comando == "robustez":
+        robustez()
     else:
         grafico()
 

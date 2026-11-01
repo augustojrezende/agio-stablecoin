@@ -18,18 +18,21 @@ FUSO_BRASILIA = "America/Sao_Paulo"
 HORA_INICIO, HORA_FIM = 10, 13  # janela da PTAX, horário de Brasília
 
 
-def preco_janela_ptax(horarios: pd.DataFrame) -> pd.DataFrame:
+def preco_janela_ptax(horarios: pd.DataFrame, hora_fim: int = HORA_FIM) -> pd.DataFrame:
     """Um preço por dia e corretora: média ponderada por volume na janela da PTAX.
 
     Usa o preço típico de cada hora, (máxima + mínima + fechamento) / 3. Se o
     volume da janela for zero, usa a média simples dos fechamentos.
+
+    hora_fim: primeira hora fora da janela. O padrão (13) cobre 10h a 12h59;
+    o teste de robustez usa 14 para incluir a consulta das 13h.
     """
     colunas = ["data", "fonte", "preco_janela", "volume_janela", "horas_janela"]
     if horarios.empty:
         return pd.DataFrame(columns=colunas)
     df = horarios.copy()
     local = df["inicio_utc"].dt.tz_convert(FUSO_BRASILIA)
-    df = df[(local.dt.hour >= HORA_INICIO) & (local.dt.hour < HORA_FIM)].copy()
+    df = df[(local.dt.hour >= HORA_INICIO) & (local.dt.hour < hora_fim)].copy()
     df["data"] = local.loc[df.index].dt.date
     df["tipico"] = (df["maxima"] + df["minima"] + df["fechamento"]) / 3
 

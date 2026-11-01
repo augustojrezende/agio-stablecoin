@@ -85,3 +85,25 @@ Cada entrada: data, decisão, motivo, alternativa descartada. Vira a seção de 
 - **Efeito mecânico do dólar confirmado:** coeficiente de −0,11 (t = −9,6): cada 1% de alta do dólar oficial no dia reduz o ágio em 0,11 p.p. O controle é indispensável.
 - **Estudo de evento com 15 eventos:** nenhum grupo significativo, nem no ágio nem no número de negócios. Nos negócios, o teste t contra zero dá p = 0,013 para todos os eventos, mas a permutação dá p = 0,25: o número de negócios anormal é positivo em média (mercado em crescimento), e a comparação certa é com datas sorteadas.
 - **Leitura:** com 2 a 6 eventos por grupo, o teste tem pouco poder. Prioridade: ampliar a lista (todas as reuniões do Copom, anúncios fiscais) e incluir juro real e VIX.
+
+## 2026-11-01 — Rodada completa (com juro real e VIX)
+
+*1.490 dias úteis; MQO com Newey-West (5 defasagens); variável dependente: ágio anormal (p.p.). VIX pela Cboe (FRED fora do ar).*
+
+| Variável | Coeficiente | p-valor |
+| --- | --- | --- |
+| Variação do dólar oficial (%) | −0,129 | < 0,001 |
+| Variação do juro real 10 anos (bp) | +0,0019 | 0,088 |
+| Variação do VIX no dia | +0,021 | 0,047 |
+| Variação do VIX no dia anterior | +0,016 | 0,008 |
+| Tamanho do mercado (log) | +0,029 | 0,087 |
+
+R² = 0,095; curtose dos resíduos = 15,3 (poucos dias extremos pesam muito).
+
+- **Regra de decisão aplicada:** a hipótese original **não se confirma**. O coeficiente do juro real é positivo, mas só significativo a 10%, e pequeno: um choque fiscal de +20 bp move o ágio em cerca de 0,04 p.p. No estudo de evento, os domésticos não têm ágio maior que os externos (diferença −0,58 p.p., p = 0,60).
+- **Medo global:** as duas variações do VIX são significativas. Um salto de 10 pontos eleva o ágio em cerca de 0,2 p.p. no dia e 0,15 p.p. no seguinte. O VIX do dia anterior é o resultado mais limpo, porque é conhecido antes da janela da PTAX.
+- **Participação:** número de negócios anormal sem relação com juro real nem VIX no dia a dia (só o tamanho do mercado é significativo). Ticket médio cai quando o dólar sobe (−0,012, p = 0,044), compatível com entrada do varejo.
+- **Estudo de evento:** inalterado (15 eventos provisórios, nenhum grupo significativo pela permutação).
+- **Interpretação provisória (a testar):** em pânicos globais, investidores de criptoativos migram das moedas voláteis para stablecoins, e a demanda por USDT eleva o ágio. O dólar digital funcionaria mais como proteção contra o medo global do que contra o medo fiscal doméstico.
+- **Conclusão provisória:** o ágio do dólar digital em reais reage mais ao medo global do que ao medo fiscal doméstico; o estresse fiscal mexe pouco no preço e aparece sobretudo no aumento da participação em grandes choques.
+- **Antes de tratar como resultado final:** (1) fechar a lista de eventos com fontes; (2) robustez (`agio robustez`): winsorização, regressão de Huber, ágio de fechamento, cada corretora, antes e depois de 04/05/2026, janela incluindo a consulta das 13h.
