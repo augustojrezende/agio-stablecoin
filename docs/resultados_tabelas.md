@@ -174,14 +174,15 @@ Domésticos x externos:
 
 *V3 a V5 surgiram nesta amostra: aqui são exploratórias. A confirmação é na validação (`pre-registro.md`).*
 
-| hipotese | descricao | estimativa | p_valor | sinal_previsto | p_holm | confirma |
-| --- | --- | --- | --- | --- | --- | --- |
-| V1 | Estresse fiscal eleva o ágio | juro 0.0019; dom−ext 0.072 | 0.7656 | True | 1.0000 | nao |
-| V2 | Crises elevam a participação | CAR negócios 0.426 | 0.6310 | False | 1.0000 | nao |
-| V3 | Medo global eleva o ágio | VIX anterior 0.0156 | 0.0078 | True | 0.0313 | sim |
-| V4a | Repasse incompleto no dia | dólar -0.1290 | 0.0000 | True | 0.0000 | sim |
-| V4b | Repasse se completa depois | soma defasagens -0.0798 | 0.0003 | False | 0.0013 | nao |
-| V5 | Choques externos isolados reduzem o ágio | CAR externos -0.614 (n=15) | 0.0348 | True | 0.1044 | sim |
+| hipotese | descricao | estimativa | p_valor | sinal_previsto | p_holm | confirma | confirma_holm |
+| --- | --- | --- | --- | --- | --- | --- | --- |
+| V1 | Estresse fiscal eleva o ágio | juro 0.0019; dom−ext 0.072 | 0.7656 | True | 1.0000 | nao | nao |
+| V2 | Crises elevam a participação | CAR negócios 0.426 | 0.6310 | False | 1.0000 | nao | nao |
+| V3 | Medo global eleva o ágio | VIX anterior 0.0156 | 0.0078 | True | 0.0313 | sim | sim |
+| V4a | Repasse incompleto no dia | dólar -0.1290 | 0.0000 | True | 0.0000 | sim | sim |
+| V4b | Repasse se completa depois | soma defasagens -0.0798 | 0.0003 | False | 0.0015 | nao | nao |
+| V6 | Realização de ganhos: ágio segue caindo depois | soma defasagens -0.0798 | 0.0003 | True | 0.0015 | sim | sim |
+| V5 | Choques externos isolados reduzem o ágio | CAR externos -0.614 (n=15) | 0.0348 | True | 0.1044 | sim | nao |
 
 ## Robustez (ágio anormal)
 
@@ -230,9 +231,9 @@ Domésticos x externos:
 
 ![Ágio do dia menos a mediana dos 60 dias úteis anteriores. Linhas verticais: eventos não agendados da lista (anúncios fiscais, choques externos, normas do BC).](figuras/04_agio_anormal_eventos.png)
 
-**05_dolar_e_agio.png.** Quando o dólar oficial sobe, o ágio cai: o USDT acompanha só parte do movimento no mesmo dia (efeito mecânico controlado em todas as regressões).
+**05_dolar_e_agio.png.** Quando o dólar oficial sobe, o ágio cai: o USDT acompanha só parte do movimento no mesmo dia. A reta é simples, sem controles; na regressão com controles o coeficiente é cerca de −0,13, e o ágio continua caindo nos dois dias seguintes. O ponto mais à direita é 26/10/2026 (dólar +8,8% após o segundo turno), dado real conferido no noticiário.
 
-![Quando o dólar oficial sobe, o ágio cai: o USDT acompanha só parte do movimento no mesmo dia (efeito mecânico controlado em todas as regressões).](figuras/05_dolar_e_agio.png)
+![Quando o dólar oficial sobe, o ágio cai: o USDT acompanha só parte do movimento no mesmo dia. A reta é simples, sem controles; na regressão com controles o coeficiente é cerca de −0,13, e o ágio continua caindo nos dois dias seguintes. O ponto mais à direita é 26/10/2026 (dólar +8,8% após o segundo turno), dado real conferido no noticiário.](figuras/05_dolar_e_agio.png)
 
 **06_trajetoria_agio.png.** Média diária em torno de cada tipo de evento (faixa amarela: janela do teste, −1 a +3) contra a faixa de 95% de datas sorteadas.
 
