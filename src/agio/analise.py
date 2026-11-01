@@ -59,12 +59,14 @@ def montar_base(agio_diario: pd.DataFrame, painel: pd.DataFrame, ptax: pd.DataFr
     base["ticket_anormal"] = _anormal(np.log(base["ticket_medio_brl"]))
 
     if juro is not None and not juro.empty:
-        j = juro.assign(data=lambda d: pd.to_datetime(d["data"])).sort_values("data")
-        base = pd.merge_asof(base, j, on="data")
+        j = juro.assign(data=lambda d: pd.to_datetime(d["data"]).astype("datetime64[ns]"))
+        base = pd.merge_asof(base.assign(data=base["data"].astype("datetime64[ns]")),
+                             j.sort_values("data"), on="data")
         base["d_juro_bp"] = 100 * base["juro_real_10a"].diff()
     if vix is not None and not vix.empty:
-        v = vix.assign(data=lambda d: pd.to_datetime(d["data"])).sort_values("data")
-        base = pd.merge_asof(base, v, on="data")
+        v = vix.assign(data=lambda d: pd.to_datetime(d["data"]).astype("datetime64[ns]"))
+        base = pd.merge_asof(base.assign(data=base["data"].astype("datetime64[ns]")),
+                             v.sort_values("data"), on="data")
         base["d_vix"] = base["vix"].diff()
         base["d_vix_ant"] = base["d_vix"].shift(1)
     return base
@@ -367,10 +369,14 @@ def regressao_oferta_usdt(base: pd.DataFrame, oferta: pd.DataFrame, dias: int = 
     um dia de defasagem (dado diário em UTC, conhecido antes da janela da
     PTAX). Devolve (modelo, tabela, base usada).
     """
-    o = oferta.assign(data=lambda d: pd.to_datetime(d["data"])).sort_values("data")
+    # Mesma unidade de data dos dois lados: versões novas do pandas recusam
+    # juntar datas em segundos com datas em microssegundos.
+    o = oferta.assign(data=lambda d: pd.to_datetime(d["data"]).astype("datetime64[ns]"))
+    o = o.sort_values("data")
     o["var_oferta_usdt"] = 100 * np.log(o["usdt_oferta_bi"] / o["usdt_oferta_bi"].shift(dias))
     o["data"] = o["data"] + pd.Timedelta(days=1)
-    dados = pd.merge_asof(base.sort_values("data"), o[["data", "var_oferta_usdt"]], on="data")
+    esquerda = base.assign(data=pd.to_datetime(base["data"]).astype("datetime64[ns]"))
+    dados = pd.merge_asof(esquerda.sort_values("data"), o[["data", "var_oferta_usdt"]], on="data")
     x = [c for c in ["d_dolar", "d_juro_bp", "d_vix", "d_vix_ant", "log_mercado",
                      "var_oferta_usdt"] if c in dados and dados[c].notna().any()]
     usada = dados[[y] + x].replace([np.inf, -np.inf], np.nan).dropna()
