@@ -91,3 +91,10 @@ def test_evento_em_fim_de_semana_vai_para_o_dia_util_seguinte():
     ev = pd.DataFrame({"data": [sabado], "tipo": ["politico"], "descricao": ["x"]})
     por_evento, _, _ = estudo_evento(base, ev, n_perm=10)
     assert por_evento.loc[0, "data"] == pd.Timestamp(sabado)
+
+
+def test_cboe_vix():
+    texto = "DATE,OPEN,HIGH,LOW,CLOSE\n10/23/2026,18.0,19.0,17.5,18.5\n10/26/2026,20.0,24.0,19.8,22.1\n"
+    vix = fred.tratar_cboe(texto)
+    assert vix.loc[1, "data"] == date(2026, 10, 26)
+    assert vix.loc[1, "vix"] == 22.1

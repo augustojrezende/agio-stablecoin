@@ -97,11 +97,14 @@ def coletar_controles() -> None:
     juro.to_csv(arm.TRATADO / "juro_real_10a.csv", index=False)
     print(f"Juro real 10 anos: {len(juro)} dias ({juro['data'].min()} a {juro['data'].max()})")
 
-    texto = fred.baixar("VIXCLS")
-    arm.salvar_bruto_texto("fred_vix", texto, hoje)
-    vix = fred.tratar(texto, "vix")
+    try:
+        fonte, texto, vix = fred.baixar_vix()
+    except RuntimeError as erro:
+        print(f"VIX: falhou nas duas fontes ({erro}); rode de novo mais tarde.")
+        return
+    arm.salvar_bruto_texto(f"{fonte}_vix", texto, hoje)
     vix.to_csv(arm.TRATADO / "vix.csv", index=False)
-    print(f"VIX: {len(vix)} dias")
+    print(f"VIX ({fonte}): {len(vix)} dias")
 
 
 def testar() -> None:
