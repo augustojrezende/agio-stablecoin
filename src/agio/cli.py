@@ -13,6 +13,7 @@
     agio relatorio                             # gráficos e tabelas -> docs/figuras, docs/resultados_tabelas.md
     agio testar --inicio 2026-11-02            # validação fora da amostra (docs/pre-registro.md)
     agio episodio --inicio 2026-06-01 --fim 2026-08-15   # diagnóstico de um episódio
+    agio oferta-usdt                           # exploratório: oferta global de USDT (DefiLlama)
 """
 
 from __future__ import annotations
@@ -25,7 +26,7 @@ import pandas as pd
 
 from agio import armazenamento as arm
 from agio.comportamento import painel_diario, sinais_mercado
-from agio.fontes import bcb, binance, fred, google_trends, mercadobitcoin, tesouro
+from agio.fontes import bcb, binance, defillama, fred, google_trends, mercadobitcoin, tesouro
 from agio.indicador import calcular_agio, consolidar
 from agio.janela import preco_janela_ptax
 
@@ -210,6 +211,49 @@ def testar(inicio: date | None = None, fim: date | None = None) -> None:
     (pasta / "relatorio.txt").write_text(texto, encoding="utf-8")
     print(texto)
     print(f"\nResultados salvos em {pasta}")
+
+
+def oferta_usdt(coletar: bool = True) -> None:
+    """EXPLORATÓRIO (fora do pré-registro): oferta global de USDT e o ágio.
+
+    Coleta a oferta diária na DefiLlama e roda a regressão do ágio anormal
+    com a variação de 5 dias da oferta como variável a mais, na amostra de
+    descoberta (até 30/10/2026). Resultado em dados/resultados/exploratorio_*.
+    """
+    from agio.analise import montar_base, periodo, regressao_oferta_usdt
+
+    if coletar:
+        print("Baixando a oferta de USDT (DefiLlama)...")
+        bruto = defillama.baixar()
+        arm.salvar_bruto("defillama_usdt", bruto, f"{date.today():%Y%m%d}")
+        tabela = defillama.tratar(bruto)
+        tabela.to_csv(arm.TRATADO / "usdt_oferta.csv", index=False)
+        print(f"Oferta de USDT: {len(tabela)} dias ({tabela['data'].min()} a {tabela['data'].max()})")
+    oferta = arm.ler_tratado("usdt_oferta")
+
+    def opcional(nome):
+        try:
+            return arm.ler_tratado(nome)
+        except FileNotFoundError:
+            return None
+
+    base = montar_base(arm.ler_tratado("agio_diario"), arm.ler_tratado("painel_diario"),
+                       arm.ler_tratado("ptax"), arm.ler_tratado("precos_usdt_brl"),
+                       opcional("juro_real_10a"), opcional("vix"))
+    base = periodo(base, fim=date(2026, 10, 31))  # só a amostra de descoberta
+    modelo, tabela, _ = regressao_oferta_usdt(base, oferta)
+    PASTA_RESULTADOS.mkdir(parents=True, exist_ok=True)
+    tabela.to_csv(PASTA_RESULTADOS / "exploratorio_oferta_usdt.csv", index=False)
+    texto = ("=== EXPLORATÓRIO (fora do pré-registro): ágio anormal e oferta global de USDT ===\n"
+             "var_oferta_usdt = variação % da oferta em 5 dias, com 1 dia de defasagem; "
+             "sinal esperado: negativo.\n" + str(modelo.summary()))
+    (PASTA_RESULTADOS / "exploratorio_oferta_usdt.txt").write_text(texto, encoding="utf-8")
+    print(texto)
+
+    o = oferta.assign(data=lambda d: pd.to_datetime(d["data"])).set_index("data")["usdt_oferta_bi"]
+    mensal = o.resample("ME").last()
+    print("\nOferta de USDT no fim de cada mês de 2026 (US$ bi):")
+    print(mensal[mensal.index.year == 2026].round(1).to_string())
 
 
 def relatorio() -> None:
@@ -400,6 +444,8 @@ def main() -> None:
     t.add_argument("--fim", type=date.fromisoformat, default=None,
                    help="só dias antes desta data")
     sub.add_parser("relatorio")
+    ou = sub.add_parser("oferta-usdt", help="exploratório: oferta global de USDT e o ágio")
+    ou.add_argument("--sem-coleta", action="store_true", help="usa a oferta já baixada")
     ep = sub.add_parser("episodio", help="diagnóstico de um período de ágio fora do normal")
     ep.add_argument("--inicio", type=date.fromisoformat, required=True)
     ep.add_argument("--fim", type=date.fromisoformat, required=True)
@@ -419,6 +465,8 @@ def main() -> None:
         testar(args.inicio, args.fim)
     elif args.comando == "relatorio":
         relatorio()
+    elif args.comando == "oferta-usdt":
+        oferta_usdt(coletar=not args.sem_coleta)
     elif args.comando == "episodio":
         from agio.episodio import rodar
         rodar(args.inicio, args.fim)

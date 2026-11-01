@@ -16,6 +16,7 @@ A PTAX é formada entre 10h e 13h; o candle diário das corretoras fecha às 21h
 | Banco Central (SGS) | Selic diária (série 11) | `api.bcb.gov.br/dados/serie/bcdata.sgs.11/dados` |
 | Binance | Candles diários `USDTBRL` | `data-api.binance.vision/api/v3/klines` |
 | Mercado Bitcoin | Candles diários `USDT-BRL` | `api.mercadobitcoin.net/api/v4/candles` |
+| DefiLlama | Oferta global de USDT (uso exploratório) | `stablecoins.llama.fi/stablecoincharts/all?stablecoin=1` |
 | Google Trends | Interesse de busca ("dólar", "comprar dólar", "USDT") | CSV exportado manualmente de trends.google.com |
 
 ## Como rodar
@@ -24,7 +25,7 @@ A PTAX é formada entre 10h e 13h; o candle diário das corretoras fecha às 21h
 python -m venv .venv
 source .venv/bin/activate          # Windows: .venv\Scripts\activate
 pip install -e ".[dev]"
-pytest                             # 35 testes, sem rede
+pytest                             # 37 testes, sem rede
 
 agio coletar --inicio 2020-10-01          # diário: PTAX, Selic, preços, comportamento
 agio coletar-horario --inicio 2020-10-01  # horário: preço na janela da PTAX
@@ -38,6 +39,7 @@ agio robustez                      # mesma regressão em especificações altern
 agio relatorio                     # gráficos (docs/figuras) e tabelas (docs/resultados_tabelas.md)
 agio testar --inicio 2026-11-02    # validação fora da amostra (docs/pre-registro.md)
 agio episodio --inicio 2026-06-01 --fim 2026-08-15   # diagnóstico de um período de ágio fora do normal
+agio oferta-usdt                   # exploratório: oferta global de USDT (DefiLlama) e o ágio
 ```
 
 ## Documentação dos resultados

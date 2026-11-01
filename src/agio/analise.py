@@ -353,3 +353,30 @@ def quadro_hipoteses(reg_agio: pd.DataFrame, soma_repasse: dict,
         if n < 10:
             q.loc[q["hipotese"] == h, "confirma"] = "inconclusivo"
     return q
+
+
+# --- Exploratório: oferta global de USDT (fora do pré-registro) ------------
+
+def regressao_oferta_usdt(base: pd.DataFrame, oferta: pd.DataFrame, dias: int = 5,
+                          y: str = "agio_anormal", lags_hac: int = 5):
+    """Ágio anormal ~ controles + variação da oferta global de USDT.
+
+    EXPLORATÓRIO. Hipótese surgida no episódio de jun-jul/2026: quando a
+    oferta global de USDT encolhe, o USDT fica escasso onde a arbitragem é
+    lenta e o ágio sobe (coeficiente negativo esperado). A oferta entra com
+    um dia de defasagem (dado diário em UTC, conhecido antes da janela da
+    PTAX). Devolve (modelo, tabela, base usada).
+    """
+    o = oferta.assign(data=lambda d: pd.to_datetime(d["data"])).sort_values("data")
+    o["var_oferta_usdt"] = 100 * np.log(o["usdt_oferta_bi"] / o["usdt_oferta_bi"].shift(dias))
+    o["data"] = o["data"] + pd.Timedelta(days=1)
+    dados = pd.merge_asof(base.sort_values("data"), o[["data", "var_oferta_usdt"]], on="data")
+    x = [c for c in ["d_dolar", "d_juro_bp", "d_vix", "d_vix_ant", "log_mercado",
+                     "var_oferta_usdt"] if c in dados and dados[c].notna().any()]
+    usada = dados[[y] + x].replace([np.inf, -np.inf], np.nan).dropna()
+    modelo = smf.ols(f"{y} ~ " + " + ".join(x), data=usada).fit(
+        cov_type="HAC", cov_kwds={"maxlags": lags_hac})
+    tabela = pd.DataFrame({"coeficiente": modelo.params, "erro_padrao": modelo.bse,
+                           "t": modelo.tvalues, "p_valor": modelo.pvalues})
+    tabela.index.name = "variavel"
+    return modelo, tabela.reset_index(), dados

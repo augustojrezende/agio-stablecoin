@@ -288,7 +288,12 @@ def test_episodio_compara_corretoras_e_horarios(tmp_path, monkeypatch):
                "sinais_comportamento": pd.DataFrame({
                    "data": datas, "fonte": "binance", "num_negocios": 50_000,
                    "pressao_compradora": 0.5, "ticket_medio_brl": 6_000.0})}
-    monkeypatch.setattr(arm, "ler_tratado", lambda nome: tabelas[nome].copy())
+    def ler(nome):
+        if nome not in tabelas:
+            raise FileNotFoundError(nome)
+        return tabelas[nome].copy()
+
+    monkeypatch.setattr(arm, "ler_tratado", ler)
     monkeypatch.setattr(episodio, "RESULTADOS", tmp_path / "res")
     monkeypatch.setattr(episodio, "FIGURAS", tmp_path / "fig")
     base = episodio.montar(date(2026, 6, 24), date(2026, 7, 20))
@@ -298,3 +303,31 @@ def test_episodio_compara_corretoras_e_horarios(tmp_path, monkeypatch):
     assert "Correlação entre corretoras" in episodio.resumo(base)
     episodio.rodar(date(2026, 6, 24), date(2026, 7, 20))
     assert (tmp_path / "fig" / "episodio_20260624_20260720.png").exists()
+
+
+def test_defillama_oferta_em_bilhoes():
+    from agio.fontes import defillama
+    bruto = [{"date": "1782259200", "totalCirculating": {"peggedUSD": 190e9}},
+             {"date": "1782345600", "totalCirculating": {"peggedUSD": 189.5e9}},
+             {"date": "1782432000", "totalCirculating": {}}]
+    df = defillama.tratar(bruto)
+    assert len(df) == 2
+    assert df.loc[0, "usdt_oferta_bi"] == pytest.approx(190.0)
+    assert df.loc[0, "data"] == date(2026, 6, 24)
+
+
+def test_regressao_oferta_detecta_escassez():
+    from agio.analise import regressao_oferta_usdt
+    rng = np.random.default_rng(11)
+    datas = pd.date_range("2024-01-01", periods=900, freq="D")
+    oferta = pd.DataFrame({"data": datas.date,
+                           "usdt_oferta_bi": 100 * np.exp(np.cumsum(rng.normal(0, 0.004, 900)))})
+    o = oferta.set_index(pd.to_datetime(oferta["data"]))["usdt_oferta_bi"]
+    var = (100 * np.log(o / o.shift(5))).shift(1)
+    dias_uteis = pd.bdate_range("2024-03-01", "2026-05-01")
+    v = var.reindex(dias_uteis).to_numpy()
+    base = pd.DataFrame({"data": dias_uteis, "d_dolar": rng.normal(0, 1, len(dias_uteis))})
+    base["agio_anormal"] = -0.2 * v - 0.13 * base["d_dolar"] + rng.normal(0, 0.1, len(base))
+    _, tabela, _ = regressao_oferta_usdt(base, oferta)
+    t = tabela.set_index("variavel")
+    assert t.loc["var_oferta_usdt", "coeficiente"] == pytest.approx(-0.2, abs=0.03)
