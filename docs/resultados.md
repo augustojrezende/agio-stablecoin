@@ -1,4 +1,4 @@
-# Resultados: o ágio da stablecoin em reais é um termômetro do estresse fiscal?
+# Resultados: Medo fiscal ou medo global? O ágio da stablecoin em reais diante de choques domésticos e externos (2020–2026)
 
 *Registro completo dos testes e verificações da amostra de descoberta (13/10/2020 a 30/10/2026), na ordem em que foram feitos. Números das tabelas: `resultados_tabelas.md`, gerado por `agio relatorio`. Decisões e motivos: `decisoes.md`. Validação fora da amostra: `pre-registro.md`.*
 
