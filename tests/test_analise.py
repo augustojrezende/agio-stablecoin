@@ -331,3 +331,16 @@ def test_regressao_oferta_detecta_escassez():
     _, tabela, _ = regressao_oferta_usdt(base, oferta)
     t = tabela.set_index("variavel")
     assert t.loc["var_oferta_usdt", "coeficiente"] == pytest.approx(-0.2, abs=0.03)
+
+
+def test_regressao_oferta_aceita_unidades_de_data_diferentes():
+    from agio.analise import regressao_oferta_usdt
+    rng = np.random.default_rng(12)
+    dias = pd.date_range("2024-01-01", periods=400, freq="D")
+    oferta = pd.DataFrame({"data": dias.astype("datetime64[s]"),
+                           "usdt_oferta_bi": 100 + rng.normal(0, 1, 400).cumsum()})
+    uteis = pd.bdate_range("2024-02-01", "2024-12-31").astype("datetime64[us]")
+    base = pd.DataFrame({"data": uteis, "d_dolar": rng.normal(0, 1, len(uteis)),
+                         "agio_anormal": rng.normal(0, 0.2, len(uteis))})
+    _, tabela, _ = regressao_oferta_usdt(base, oferta)
+    assert "var_oferta_usdt" in set(tabela["variavel"])
