@@ -24,7 +24,7 @@ A PTAX é formada entre 10h e 13h; o candle diário das corretoras fecha às 21h
 python -m venv .venv
 source .venv/bin/activate          # Windows: .venv\Scripts\activate
 pip install -e ".[dev]"
-pytest                             # 31 testes, sem rede
+pytest                             # 34 testes, sem rede
 
 agio coletar --inicio 2020-10-01          # diário: PTAX, Selic, preços, comportamento
 agio coletar-horario --inicio 2020-10-01  # horário: preço na janela da PTAX
@@ -35,7 +35,16 @@ agio coletar-controles             # juro real 10 anos (Tesouro Direto) e VIX (F
 agio coletar-controles --so-vix    # só o VIX, sem baixar o Tesouro de novo
 agio testar                        # teste formal -> dados/resultados/
 agio robustez                      # mesma regressão em especificações alternativas
+agio relatorio                     # gráficos (docs/figuras) e tabelas (docs/resultados_tabelas.md)
+agio testar --inicio 2026-11-02    # validação fora da amostra (docs/pre-registro.md)
 ```
+
+## Documentação dos resultados
+
+- `docs/resultados.md`: todos os testes e verificações, na ordem em que foram feitos, com a interpretação.
+- `docs/resultados_tabelas.md` e `docs/figuras/`: números e gráficos, regenerados por `agio relatorio`.
+- `docs/pre-registro.md`: hipóteses e regras da validação com dados a partir de 02/11/2026.
+- `docs/decisoes.md`: diário de decisões metodológicas.
 
 ## Teste formal
 

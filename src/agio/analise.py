@@ -150,6 +150,7 @@ def estudo_evento(base: pd.DataFrame, eventos: pd.DataFrame, coluna: str = "agio
                        "p_valor_t": p_t, "p_valor_permutacao": p_perm})
     grupos = pd.DataFrame(linhas)
     grupos.attrs["n_placebo"] = len(car_placebo)
+    grupos.attrs["placebo_media"] = float(car_placebo.mean())
 
     dom = ev[ev["tipo"].isin(DOMESTICOS)]["car"].to_numpy()
     ext = ev[ev["tipo"].isin(EXTERNOS)]["car"].to_numpy()
@@ -214,6 +215,7 @@ def resumo_especificacao(nome: str, base: pd.DataFrame, metodo: str = "ols",
         if v in t.index:
             linha[f"{v}_coef"] = t.loc[v, "coeficiente"]
             linha[f"{v}_p"] = t.loc[v, "p_valor"]
+            linha[f"{v}_ep"] = t.loc[v, "erro_padrao"]
     return linha
 
 
@@ -225,3 +227,129 @@ def periodo(base: pd.DataFrame, inicio=None, fim=None) -> pd.DataFrame:
     if fim is not None:
         dados = dados[dados["data"] < pd.Timestamp(fim)]
     return dados
+
+
+# --- Repasse do câmbio e trajetória em torno dos eventos -------------------
+
+def regressao_repasse(base: pd.DataFrame, y: str = "agio_anormal", defasagens: int = 3,
+                      lags_hac: int = 5):
+    """Ágio anormal sobre a variação do dólar no dia e nos dias anteriores.
+
+    Pergunta (pré-registrada para a amostra de validação; ver
+    docs/pre-registro.md): o ágio cai quando o dólar oficial sobe (repasse
+    incompleto ao USDT) e volta nos dias seguintes (o repasse se completa
+    com atraso)? Devolve (modelo, tabela, teste da soma das defasagens).
+    """
+    dados = base.copy()
+    nomes = []
+    for k in range(1, defasagens + 1):
+        dados[f"d_dolar_l{k}"] = dados["d_dolar"].shift(k)
+        nomes.append(f"d_dolar_l{k}")
+    controles = [c for c in ["d_juro_bp", "d_vix", "d_vix_ant", "log_mercado"]
+                 if c in dados and dados[c].notna().any()]
+    x = ["d_dolar"] + nomes + controles
+    dados = dados[[y] + x].replace([np.inf, -np.inf], np.nan).dropna()
+    modelo = smf.ols(f"{y} ~ " + " + ".join(x), data=dados).fit(
+        cov_type="HAC", cov_kwds={"maxlags": lags_hac})
+    tabela = pd.DataFrame({"coeficiente": modelo.params, "erro_padrao": modelo.bse,
+                           "t": modelo.tvalues, "p_valor": modelo.pvalues})
+    tabela.index.name = "variavel"
+    teste = modelo.t_test(" + ".join(nomes) + " = 0")
+    soma = {"soma_defasagens": float(np.squeeze(teste.effect)),
+            "erro_padrao": float(np.squeeze(teste.sd)),
+            "p_valor": float(np.squeeze(teste.pvalue))}
+    return modelo, tabela.reset_index(), soma
+
+
+def trajetoria_evento(base: pd.DataFrame, eventos: pd.DataFrame, coluna: str,
+                      antes: int = 5, depois: int = 10, n_sorteios: int = 2000,
+                      semente: int = 42) -> pd.DataFrame:
+    """Média da variável em cada dia relativo ao evento, com faixa placebo.
+
+    A faixa placebo (percentis 2,5 e 97,5) vem de médias de datas sorteadas
+    fora dos eventos, com o mesmo número de datas do grupo. Serve aos
+    gráficos; o teste formal continua sendo estudo_evento.
+    """
+    valores = base[coluna].to_numpy(dtype=float)
+    ev = _posicoes_eventos(base, eventos)
+    rel = np.arange(-antes, depois + 1)
+    validas = [p for p in ev["pos"] if p - antes >= 0 and p + depois < len(valores)]
+    matriz = np.array([valores[p + rel] for p in validas])
+    proibidas = set()
+    for p in ev["pos"]:
+        proibidas.update(range(p - antes - EXCLUSAO_PLACEBO, p + depois + EXCLUSAO_PLACEBO + 1))
+    candidatas = np.array([p for p in range(antes, len(valores) - depois) if p not in proibidas])
+    rng = np.random.default_rng(semente)
+    n = max(len(validas), 1)
+    medias = np.array([np.nanmean(valores[rng.choice(candidatas, n)[:, None] + rel], axis=0)
+                       for _ in range(n_sorteios)])
+    return pd.DataFrame({
+        "dia": rel, "media": np.nanmean(matriz, axis=0) if len(validas) else np.nan,
+        "placebo_media": medias.mean(axis=0),
+        "placebo_p025": np.percentile(medias, 2.5, axis=0),
+        "placebo_p975": np.percentile(medias, 97.5, axis=0),
+        "n_eventos": len(validas),
+    })
+
+
+# --- Quadro das hipóteses pré-registradas (docs/pre-registro.md) -----------
+
+def holm(p_valores: list[float]) -> list[float]:
+    """P-valores ajustados pelo método de Holm (controle do erro familiar)."""
+    p = np.asarray(p_valores, dtype=float)
+    ordem = np.argsort(p)
+    m = len(p)
+    ajustado = np.empty(m)
+    acumulado = 0.0
+    for posicao, i in enumerate(ordem):
+        acumulado = max(acumulado, min(1.0, (m - posicao) * p[i]))
+        ajustado[i] = acumulado
+    return list(ajustado)
+
+
+def quadro_hipoteses(reg_agio: pd.DataFrame, soma_repasse: dict,
+                     grupos_negocios: pd.DataFrame, comp_agio: dict | None,
+                     grupos_ajustado_isolados: pd.DataFrame | None,
+                     alfa: float = 0.05) -> pd.DataFrame:
+    """V1 a V5 do pré-registro: estimativa, p-valor, Holm e decisão."""
+    t = reg_agio.set_index("variavel")
+    g = grupos_negocios.set_index("tipo")
+
+    def coef(v):
+        return (t.loc[v, "coeficiente"], t.loc[v, "p_valor"]) if v in t.index else (np.nan, np.nan)
+
+    linhas = []
+    b, p = coef("d_juro_bp")
+    dif = comp_agio["diferenca"] if comp_agio else np.nan
+    p_dif = comp_agio["p_valor_permutacao"] if comp_agio else np.nan
+    linhas.append(("V1", "Estresse fiscal eleva o ágio", f"juro {b:.4f}; dom−ext {dif:.3f}",
+                   np.nanmax([p, p_dif]), b > 0 and dif > 0))
+    car = g.loc["todos", "car_medio"] if "todos" in g.index else np.nan
+    linhas.append(("V2", "Crises elevam a participação", f"CAR negócios {car:.3f}",
+                   g.loc["todos", "p_valor_permutacao"] if "todos" in g.index else np.nan,
+                   car > g.attrs.get("placebo_media", 0)))
+    b, p = coef("d_vix_ant")
+    linhas.append(("V3", "Medo global eleva o ágio", f"VIX anterior {b:.4f}", p, b > 0))
+    b, p = coef("d_dolar")
+    linhas.append(("V4a", "Repasse incompleto no dia", f"dólar {b:.4f}", p, b < 0))
+    linhas.append(("V4b", "Repasse se completa depois",
+                   f"soma defasagens {soma_repasse['soma_defasagens']:.4f}",
+                   soma_repasse["p_valor"], soma_repasse["soma_defasagens"] > 0))
+    if grupos_ajustado_isolados is not None and "externo" in set(grupos_ajustado_isolados["tipo"]):
+        ge = grupos_ajustado_isolados.set_index("tipo")
+        car = ge.loc["externo", "car_medio"]
+        linhas.append(("V5", "Choques externos isolados reduzem o ágio",
+                       f"CAR externos {car:.3f} (n={int(ge.loc['externo', 'n'])})",
+                       ge.loc["externo", "p_valor_permutacao"],
+                       car < ge.attrs.get("placebo_media", 0)))
+    q = pd.DataFrame(linhas, columns=["hipotese", "descricao", "estimativa", "p_valor", "sinal_previsto"])
+    q["p_holm"] = holm(q["p_valor"].fillna(1.0).tolist())
+    q["confirma"] = np.where(q["sinal_previsto"] & (q["p_valor"] < alfa), "sim", "nao")
+    # Pré-registro: menos de 10 eventos = sem poder, resultado inconclusivo.
+    n_eventos = {"V2": g.loc["todos", "n"] if "todos" in g.index else 0}
+    if grupos_ajustado_isolados is not None and "externo" in set(grupos_ajustado_isolados["tipo"]):
+        n_eventos["V5"] = grupos_ajustado_isolados.set_index("tipo").loc["externo", "n"]
+    for h, n in n_eventos.items():
+        if n < 10:
+            q.loc[q["hipotese"] == h, "confirma"] = "inconclusivo"
+    return q

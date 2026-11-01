@@ -148,3 +148,11 @@ R² = 0,095; curtose dos resíduos = 15,3 (poucos dias extremos pesam muito).
 - **Correções da lista provisória:** a pausa nas tarifas dos EUA foi anunciada às 14h de 09/04/2025, depois da janela, e passa para 10/04. O evento de 04/05/2026 era o início previsto das obrigações de informação da Resolução 521; a Resolução 574 (18/06/2026) adiou o reporte de operações com ativos virtuais no câmbio para 03/11/2026. O corte de robustez em 04/05/2026 continua, mas deve ser lido como "início previsto", não como mudança efetiva.
 - **Pendente de conferência:** as datas do PLDO, do PLOA e dos relatórios bimestrais seguem o prazo legal; a data efetiva de cada um ainda precisa ser conferida (a janela de −1 a +3 tolera pequenas diferenças).
 - **Compromisso:** rodar `agio testar` uma vez com esta lista e aceitar o resultado. Mudanças posteriores na lista precisam de registro aqui, com o motivo.
+
+## 2026-11-01 — Resultado da lista fechada e validação fora da amostra
+
+- **Estudo de evento com a lista fechada (154 eventos usados):** nenhum grupo difere das datas sorteadas (ágio, todos: p = 0,36; domésticos − externos: p = 0,77; negócios, todos: p = 0,63). Sem sobrepostos (62), os choques externos isolados reduzem o ágio ajustado (−0,61 p.p., p = 0,035), resultado exploratório entre cerca de 40 testes.
+- **Regra de decisão:** nem a hipótese original nem a comportamental se confirmam na amostra de descoberta. Detalhes em `resultados.md`.
+- **Decisão do pesquisador:** o TCC mantém a hipótese fiscal como hipótese principal, testada e documentada até o fim. Os resultados que surgiram na análise (medo global e repasse incompleto do câmbio) ficam como ponto de partida para o mestrado.
+- **Validação fora da amostra:** hipóteses V1 a V5 e regras registradas em `pre-registro.md` antes de qualquer dado posterior a 30/10/2026. Análise intermediária em 30/10/2027 (α = 1%) e final em 31/10/2028 (α = 5%), cada uma rodada uma vez.
+- **Documentação:** `resultados.md` (narrativa), `agio relatorio` (8 figuras e tabelas), `agio testar` passa a gravar o quadro das hipóteses com p-valores de Holm.
