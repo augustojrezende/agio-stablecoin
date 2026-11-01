@@ -107,3 +107,25 @@ R² = 0,095; curtose dos resíduos = 15,3 (poucos dias extremos pesam muito).
 - **Interpretação provisória (a testar):** em pânicos globais, investidores de criptoativos migram das moedas voláteis para stablecoins, e a demanda por USDT eleva o ágio. O dólar digital funcionaria mais como proteção contra o medo global do que contra o medo fiscal doméstico.
 - **Conclusão provisória:** o ágio do dólar digital em reais reage mais ao medo global do que ao medo fiscal doméstico; o estresse fiscal mexe pouco no preço e aparece sobretudo no aumento da participação em grandes choques.
 - **Antes de tratar como resultado final:** (1) fechar a lista de eventos com fontes; (2) robustez (`agio robustez`): winsorização, regressão de Huber, ágio de fechamento, cada corretora, antes e depois de 04/05/2026, janela incluindo a consulta das 13h.
+
+## 2026-11-01 — Testes de robustez
+
+*`agio robustez`; variável dependente: ágio anormal (p.p.). Coeficiente (p-valor).*
+
+| Especificação | n | Juro real (bp) | VIX no dia | VIX dia anterior | Dólar oficial |
+| --- | --- | --- | --- | --- | --- |
+| 1. Principal (janela 10h-13h, Newey-West) | 1.490 | 0,0019 (0,088) | 0,021 (0,047) | 0,016 (0,008) | −0,129 (< 0,001) |
+| 2. Winsorizada 1%/99% | 1.490 | 0,0015 (0,171) | 0,011 (0,062) | 0,011 (0,028) | −0,121 (< 0,001) |
+| 3. Regressão robusta (Huber) | 1.490 | 0,0014 (0,055) | 0,007 (0,017) | 0,009 (0,004) | −0,098 (< 0,001) |
+| 4. Ágio de fechamento (21h) | 1.490 | −0,0071 (0,001) | 0,101 (< 0,001) | 0,021 (0,016) | −0,040 (0,082) |
+| 5a. Só Binance | 1.490 | 0,0019 (0,089) | 0,021 (0,046) | 0,016 (0,007) | −0,130 (< 0,001) |
+| 5b. Só Mercado Bitcoin | 884 | −0,0005 (0,753) | 0,014 (0,378) | 0,007 (0,367) | −0,091 (< 0,001) |
+| 6a. Antes de 04/05/2026 | 1.363 | 0,0019 (0,141) | 0,023 (0,040) | 0,017 (0,005) | −0,136 (< 0,001) |
+| 6b. A partir de 04/05/2026 | 127 | −0,0013 (0,671) | −0,012 (0,597) | −0,005 (0,845) | −0,061 (0,111) |
+| 7. Janela 10h-14h (inclui a consulta das 13h) | 1.490 | 0,0006 (0,590) | 0,025 (0,007) | 0,012 (0,027) | −0,105 (< 0,001) |
+
+- **Medo global robusto:** o VIX do dia anterior é significativo a 5% em 7 das 9 especificações, inclusive com os extremos atenuados (winsorização e Huber); o resultado não depende de poucos dias. Ausências explicáveis: Mercado Bitcoin (série desde 2023 e pouca negociação na janela) e o período pós-04/05/2026 (127 dias, sem poder estatístico; não é possível afirmar mudança com a regulação).
+- **Medo fiscal frágil:** o juro real nunca é positivo e significativo a 5%. Com a janela até 14h, cai para 0,0006 (p = 0,59). No ágio de fechamento é significativo, mas negativo; essa medida tem o descasamento de horário que motivou a janela da PTAX (o efeito do dólar cai de −0,13 para −0,04), então não é evidência a favor da hipótese.
+- **Efeito mecânico do dólar:** negativo e forte em todas as especificações alinhadas à PTAX.
+- **Peso da Binance:** a especificação só Binance é praticamente idêntica à principal; o indicador consolidado é, na prática, a Binance, que concentra o volume. Registrar na metodologia.
+- **Decisão:** pela regra fixada antes do teste, a hipótese original (o ágio como termômetro do estresse fiscal) é rejeitada; o resultado principal passa a ser a sensibilidade do ágio ao medo global. Falta fechar a lista de eventos para concluir o estudo de evento e a parte comportamental.
