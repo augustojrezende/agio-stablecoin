@@ -32,12 +32,14 @@ def _get(url: str, params: dict | None = None, tentativas: int = 3, timeout: int
             return resp.text
         except requests.RequestException as e:
             erro = e
-            time.sleep(5 * (i + 1))
+            if i + 1 < tentativas:
+                time.sleep(3)
     raise RuntimeError(f"Falha ao acessar {url}: {erro}")
 
 
-def baixar(serie: str = "VIXCLS") -> str:
-    return _get(CSV_URL, params={"id": serie})
+def baixar(serie: str = "VIXCLS", tentativas: int = 1, timeout: int = 20) -> str:
+    """Uma tentativa curta: se o FRED não responder em 20 s, vale ir para a Cboe."""
+    return _get(CSV_URL, params={"id": serie}, tentativas=tentativas, timeout=timeout)
 
 
 def tratar(texto: str, nome: str = "vix") -> pd.DataFrame:
@@ -68,5 +70,5 @@ def baixar_vix() -> tuple[str, str, pd.DataFrame]:
         return "fred", texto, tratar(texto)
     except RuntimeError as erro:
         print(f"FRED indisponível ({erro}); usando o histórico da Cboe.")
-    texto = _get(CBOE_URL)
+    texto = _get(CBOE_URL, tentativas=2, timeout=60)
     return "cboe", texto, tratar_cboe(texto)

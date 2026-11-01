@@ -6,7 +6,8 @@
     agio grafico                               # salva dados/grafico_agio.png
     agio coletar-horario --inicio 2020-10-01   # candles horários -> preço na janela da PTAX
     agio importar-trends                       # lê os CSVs de dados/manual/google_trends
-    agio coletar-controles                     # juro real (Tesouro Direto) e VIX (FRED)
+    agio coletar-controles                     # juro real (Tesouro Direto) e VIX (FRED/Cboe)
+    agio coletar-controles --so-vix            # só o VIX
     agio testar                                # regressão e estudo de evento -> dados/resultados
 """
 
@@ -88,23 +89,27 @@ def coletar_horario(inicio: date, fim: date) -> None:
         print(f"Preços na janela da PTAX: {len(base)} linhas na base")
 
 
-def coletar_controles() -> None:
-    """Juro real de 10 anos (Tesouro Direto) e VIX (FRED), histórico completo."""
+def coletar_controles(juro: bool = True, vix: bool = True) -> None:
+    """Juro real de 10 anos (Tesouro Direto) e VIX (FRED ou Cboe), histórico completo."""
     hoje = f"{date.today():%Y%m%d}"
-    texto = tesouro.baixar()
-    arm.salvar_bruto_texto("tesouro_direto", texto, hoje)
-    juro = tesouro.juro_real_10a(tesouro.tratar(texto))
-    juro.to_csv(arm.TRATADO / "juro_real_10a.csv", index=False)
-    print(f"Juro real 10 anos: {len(juro)} dias ({juro['data'].min()} a {juro['data'].max()})")
-
-    try:
-        fonte, texto, vix = fred.baixar_vix()
-    except RuntimeError as erro:
-        print(f"VIX: falhou nas duas fontes ({erro}); rode de novo mais tarde.")
-        return
-    arm.salvar_bruto_texto(f"{fonte}_vix", texto, hoje)
-    vix.to_csv(arm.TRATADO / "vix.csv", index=False)
-    print(f"VIX ({fonte}): {len(vix)} dias")
+    if juro:
+        print("Baixando o histórico do Tesouro Direto (cerca de 14 MB)...")
+        texto = tesouro.baixar()
+        arm.salvar_bruto_texto("tesouro_direto", texto, hoje)
+        tabela = tesouro.juro_real_10a(tesouro.tratar(texto))
+        tabela.to_csv(arm.TRATADO / "juro_real_10a.csv", index=False)
+        print(f"Juro real 10 anos: {len(tabela)} dias "
+              f"({tabela['data'].min()} a {tabela['data'].max()})")
+    if vix:
+        print("Baixando o VIX (FRED; se demorar, Cboe)...")
+        try:
+            fonte, texto, tabela = fred.baixar_vix()
+        except RuntimeError as erro:
+            print(f"VIX: falhou nas duas fontes ({erro}); rode `agio coletar-controles --so-vix` mais tarde.")
+            return
+        arm.salvar_bruto_texto(f"{fonte}_vix", texto, hoje)
+        tabela.to_csv(arm.TRATADO / "vix.csv", index=False)
+        print(f"VIX ({fonte}): {len(tabela)} dias")
 
 
 def testar() -> None:
@@ -234,7 +239,10 @@ def main() -> None:
     sub.add_parser("calcular")
     sub.add_parser("grafico")
     sub.add_parser("importar-trends")
-    sub.add_parser("coletar-controles")
+    cc = sub.add_parser("coletar-controles")
+    so = cc.add_mutually_exclusive_group()
+    so.add_argument("--so-vix", action="store_true", help="coleta só o VIX")
+    so.add_argument("--so-juro", action="store_true", help="coleta só o juro real")
     sub.add_parser("testar")
     args = p.parse_args()
     if args.comando == "coletar":
@@ -246,7 +254,7 @@ def main() -> None:
     elif args.comando == "importar-trends":
         importar_trends()
     elif args.comando == "coletar-controles":
-        coletar_controles()
+        coletar_controles(juro=not args.so_vix, vix=not args.so_juro)
     elif args.comando == "testar":
         testar()
     else:
