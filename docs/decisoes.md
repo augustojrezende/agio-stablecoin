@@ -184,3 +184,11 @@ Fontes: [Resolução 574](https://www.letsmoney.com.br/noticias/bc-adia-novembro
 - **Diagnóstico (`agio episodio`):** o ágio alto aparece nas duas corretoras (correlação 0,83), na janela e no fechamento, com liquidez normal na janela (volume 52% maior). Veio da alta do USDT com a PTAX parada; a convergência levou cerca de 4 semanas. Ticket médio 39% maior, número de negócios igual e pressão compradora menor. **Conclusão: fenômeno de mercado, não erro de medição.** Padrão compatível com escassez de vendedores e arbitragem lenta.
 - **Hipótese exploratória:** contração da oferta global de USDT em junho de 2026 (≈ US$ 190 bi → 184 bi; [Cryptonomist](https://en.cryptonomist.ch/2026/07/28/stablecoin-market-dynamics-june-2026/)).
 - **Decisão:** coletar a oferta diária de USDT (DefiLlama, gratuita) e testar, **fora do pré-registro e só na amostra de descoberta**, se a variação de 5 dias da oferta (com 1 dia de defasagem) explica o ágio anormal; sinal esperado negativo. Resultado será apresentado como exploratório no TCC e, se relevante, vira hipótese pré-registrada do mestrado. O teste principal e o pré-registro do TCC não mudam.
+
+## 2026-11-01 — Oferta global de USDT: resultado do teste exploratório
+
+- **Resultado (`agio oferta-usdt`, amostra de descoberta, 1.490 dias):** variação de 5 dias da oferta de USDT, +0,031 (p = 0,051). Sinal oposto ao previsto (negativo).
+- **Oferta no fim do mês (US$ bi):** mai 188,4; jun 185,0; jul 183,5; out 180,1. A queda de outubro, maior que a de junho, não trouxe novo salto do ágio.
+- **Decisão:** a hipótese da escassez global de USDT é descartada como explicação do episódio de jun-jul/2026. O sinal positivo sugere que a oferta acompanha a demanda (emissão quando a procura sobe). A causa do episódio fica em aberto (provável atrito local de arbitragem) e passa a ser uma pergunta do mestrado.
+- **Robustez lateral:** com a oferta na regressão, VIX (p = 0,045 e 0,008) e dólar (−0,128) não mudam; juro real a p = 0,118.
+- A variável não entra no teste principal nem no pré-registro.
