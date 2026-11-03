@@ -4,7 +4,7 @@ Os dados derivados publicados em `dados/tratado/` (séries consolidadas de preç
 
 Você pode copiar, redistribuir, adaptar e usar os dados para qualquer fim, inclusive comercial, desde que atribua o crédito:
 
-> Rezende, Augusto. *O ágio da stablecoin em reais: um termômetro do estresse fiscal no Brasil (2020–2026)*. https://github.com/augustojrezende/agio-stablecoin
+> Rezende, Augusto. *O ágio da stablecoin em reais: reação a choques domésticos e externos no Brasil (2020–2026)*. https://github.com/augustojrezende/agio-stablecoin
 
 Texto completo da licença: https://creativecommons.org/licenses/by/4.0/legalcode.pt
 
