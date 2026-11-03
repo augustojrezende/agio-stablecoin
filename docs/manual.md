@@ -285,7 +285,7 @@ Em que *i* é a corretora, *t* o dia útil e *V* o volume negociado na janela.
 ### Ágio anormal
 
 ```math
-AA_t = A_t - \operatorname{mediana}(A_{t-60}, \dots, A_{t-1})
+AA_t = A_t - {mediana}(A_{t-60}, \dots, A_{t-1})
 ```
 
 A mediana usa só dias anteriores (mínimo de 30). A mesma transformação é aplicada ao log do número de negócios, do ticket médio e das buscas.
