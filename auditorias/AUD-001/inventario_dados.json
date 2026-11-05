@@ -1,0 +1,361 @@
+[
+  {
+    "arquivo": "dados/tratado/agio_diario.csv",
+    "n": 1520,
+    "inicio": "2020-10-13",
+    "fim": "2026-10-30",
+    "duplicatas_chave": 0,
+    "ausentes": {
+      "data": 0,
+      "agio": 0,
+      "agio_pct": 0,
+      "n_fontes": 0
+    }
+  },
+  {
+    "arquivo": "dados/tratado/agio_fechamento_diario.csv",
+    "n": 1520,
+    "inicio": "2020-10-13",
+    "fim": "2026-10-30",
+    "duplicatas_chave": 0,
+    "ausentes": {
+      "data": 0,
+      "agio": 0,
+      "agio_pct": 0,
+      "n_fontes": 0
+    }
+  },
+  {
+    "arquivo": "dados/tratado/agio_fechamento_por_fonte.csv",
+    "n": 2434,
+    "inicio": "2020-10-13",
+    "fim": "2026-10-30",
+    "duplicatas_chave": 0,
+    "ausentes": {
+      "data": 0,
+      "fonte": 0,
+      "fechamento": 0,
+      "ptax_venda": 0,
+      "agio": 0,
+      "agio_pct": 0,
+      "volume_base": 0
+    }
+  },
+  {
+    "arquivo": "dados/tratado/agio_por_fonte.csv",
+    "n": 2434,
+    "inicio": "2020-10-13",
+    "fim": "2026-10-30",
+    "duplicatas_chave": 0,
+    "ausentes": {
+      "data": 0,
+      "fonte": 0,
+      "preco_janela": 0,
+      "ptax_venda": 0,
+      "agio": 0,
+      "agio_pct": 0,
+      "volume_base": 0
+    }
+  },
+  {
+    "arquivo": "dados/tratado/google_trends.csv",
+    "n": 4502,
+    "inicio": "2020-09-01",
+    "fim": "2026-10-30",
+    "duplicatas_chave": 0,
+    "ausentes": {
+      "data": 0,
+      "termo": 0,
+      "interesse": 0
+    }
+  },
+  {
+    "arquivo": "dados/tratado/juro_real_10a.csv",
+    "n": 5314,
+    "inicio": "2005-07-18",
+    "fim": "2026-10-30",
+    "duplicatas_chave": 0,
+    "ausentes": {
+      "data": 0,
+      "juro_real_10a": 0
+    }
+  },
+  {
+    "arquivo": "dados/tratado/painel_diario.csv",
+    "n": 1520,
+    "inicio": "2020-10-13",
+    "fim": "2026-10-30",
+    "duplicatas_chave": 0,
+    "ausentes": {
+      "data": 0,
+      "agio": 0,
+      "agio_pct": 0,
+      "n_fontes": 0,
+      "num_negocios": 0,
+      "pressao_compradora": 0,
+      "ticket_medio_brl": 0,
+      "busca_usdt": 0,
+      "busca_d\u00f3lar": 0,
+      "agio_fechamento_pct": 0
+    }
+  },
+  {
+    "arquivo": "dados/tratado/precos_janela_ptax.csv",
+    "n": 3537,
+    "inicio": "2020-10-13",
+    "fim": "2026-10-30",
+    "duplicatas_chave": 0,
+    "ausentes": {
+      "data": 0,
+      "fonte": 0,
+      "preco_janela": 0,
+      "volume_janela": 0,
+      "horas_janela": 0
+    }
+  },
+  {
+    "arquivo": "dados/tratado/precos_usdt_brl.csv",
+    "n": 3539,
+    "inicio": "2020-10-13",
+    "fim": "2026-10-30",
+    "duplicatas_chave": 0,
+    "ausentes": {
+      "data": 0,
+      "fonte": 0,
+      "abertura": 0,
+      "maxima": 0,
+      "minima": 0,
+      "fechamento": 0,
+      "volume_base": 0,
+      "volume_brl": 1330,
+      "num_negocios": 1330,
+      "volume_compra_taker": 1330
+    }
+  },
+  {
+    "arquivo": "dados/tratado/ptax.csv",
+    "n": 1527,
+    "inicio": "2020-10-01",
+    "fim": "2026-10-30",
+    "duplicatas_chave": 0,
+    "ausentes": {
+      "data": 0,
+      "ptax_compra": 0,
+      "ptax_venda": 0
+    }
+  },
+  {
+    "arquivo": "dados/tratado/selic.csv",
+    "n": 1527,
+    "inicio": "2020-10-01",
+    "fim": "2026-10-30",
+    "duplicatas_chave": 0,
+    "ausentes": {
+      "data": 0,
+      "selic_dia_pct": 0
+    }
+  },
+  {
+    "arquivo": "dados/tratado/sinais_comportamento.csv",
+    "n": 3539,
+    "inicio": "2020-10-13",
+    "fim": "2026-10-30",
+    "duplicatas_chave": 0,
+    "ausentes": {
+      "data": 0,
+      "fonte": 0,
+      "num_negocios": 1330,
+      "pressao_compradora": 1330,
+      "ticket_medio_brl": 1330
+    }
+  },
+  {
+    "arquivo": "dados/tratado/usdt_oferta.csv",
+    "n": 3258,
+    "inicio": "2017-11-29",
+    "fim": "2026-10-30",
+    "duplicatas_chave": 0,
+    "ausentes": {
+      "data": 0,
+      "usdt_oferta_bi": 0
+    }
+  },
+  {
+    "arquivo": "dados/tratado/vix.csv",
+    "n": 9306,
+    "inicio": "1990-01-02",
+    "fim": "2026-10-30",
+    "duplicatas_chave": 0,
+    "ausentes": {
+      "data": 0,
+      "vix": 0
+    }
+  },
+  {
+    "arquivo": "dados/resultados/base_buscas.csv",
+    "n": 1520,
+    "inicio": "2020-10-13",
+    "fim": "2026-10-30",
+    "duplicatas_chave": 0,
+    "ausentes": {
+      "data": 0,
+      "agio_pct": 0,
+      "agio_anormal": 30,
+      "ptax_venda": 0,
+      "d_dolar": 1,
+      "volume": 0,
+      "log_mercado": 30,
+      "num_negocios": 0,
+      "ticket_medio_brl": 0,
+      "busca_usdt": 0,
+      "busca_d\u00f3lar": 0,
+      "negocios_anormal": 30,
+      "ticket_anormal": 30,
+      "busca_usdt_anormal": 30,
+      "busca_dolar_anormal": 30,
+      "juro_real_10a": 0,
+      "d_juro_bp": 1,
+      "vix": 0,
+      "d_vix": 1,
+      "d_vix_ant": 2
+    }
+  },
+  {
+    "arquivo": "dados/resultados/base_teste.csv",
+    "n": 1520,
+    "inicio": "2020-10-13",
+    "fim": "2026-10-30",
+    "duplicatas_chave": 0,
+    "ausentes": {
+      "data": 0,
+      "agio_pct": 0,
+      "agio_anormal": 30,
+      "ptax_venda": 0,
+      "d_dolar": 1,
+      "volume": 0,
+      "log_mercado": 30,
+      "num_negocios": 0,
+      "ticket_medio_brl": 0,
+      "negocios_anormal": 30,
+      "ticket_anormal": 30,
+      "juro_real_10a": 0,
+      "d_juro_bp": 1,
+      "vix": 0,
+      "d_vix": 1,
+      "d_vix_ant": 2,
+      "agio_ajustado_dolar": 30
+    }
+  },
+  {
+    "arquivo": "dados/resultados/episodio_20260601_20260815.csv",
+    "n": 115,
+    "inicio": "2026-03-03",
+    "fim": "2026-08-14",
+    "duplicatas_chave": 0,
+    "ausentes": {
+      "data": 0,
+      "ptax_venda": 0,
+      "agio_janela_binance": 0,
+      "agio_janela_mercadobitcoin": 0,
+      "preco_janela_binance": 0,
+      "preco_janela_mercadobitcoin": 0,
+      "agio_fech_binance": 0,
+      "agio_fech_mercadobitcoin": 0,
+      "agio_consolidado": 0,
+      "horas_janela_binance": 0,
+      "horas_janela_mercadobitcoin": 0,
+      "volume_janela_binance": 0,
+      "volume_janela_mercadobitcoin": 0,
+      "num_negocios": 0,
+      "pressao_compradora": 0,
+      "ticket_medio_brl": 0,
+      "usdt_oferta_bi": 0,
+      "var_ptax_pct": 0,
+      "agio_janela_binance_normal": 0,
+      "agio_janela_mercadobitcoin_normal": 0,
+      "agio_fech_binance_normal": 0,
+      "agio_fech_mercadobitcoin_normal": 0,
+      "agio_consolidado_normal": 0,
+      "num_negocios_normal": 0,
+      "no_episodio": 0
+    }
+  },
+  {
+    "arquivo": "dados/resultados/eventos_agio_ajustado_dolar.csv",
+    "n": 154,
+    "inicio": "2020-12-10",
+    "fim": "2026-10-26",
+    "duplicatas_chave": 0,
+    "ausentes": {
+      "data": 0,
+      "tipo": 0,
+      "descricao": 0,
+      "car": 0
+    }
+  },
+  {
+    "arquivo": "dados/resultados/eventos_agio_ajustado_dolar_sem_sobrepostos.csv",
+    "n": 62,
+    "inicio": "2020-12-10",
+    "fim": "2026-10-05",
+    "duplicatas_chave": 0,
+    "ausentes": {
+      "data": 0,
+      "tipo": 0,
+      "descricao": 0,
+      "car": 0
+    }
+  },
+  {
+    "arquivo": "dados/resultados/eventos_agio_anormal.csv",
+    "n": 154,
+    "inicio": "2020-12-10",
+    "fim": "2026-10-26",
+    "duplicatas_chave": 0,
+    "ausentes": {
+      "data": 0,
+      "tipo": 0,
+      "descricao": 0,
+      "car": 0
+    }
+  },
+  {
+    "arquivo": "dados/resultados/eventos_agio_anormal_sem_sobrepostos.csv",
+    "n": 62,
+    "inicio": "2020-12-10",
+    "fim": "2026-10-05",
+    "duplicatas_chave": 0,
+    "ausentes": {
+      "data": 0,
+      "tipo": 0,
+      "descricao": 0,
+      "car": 0
+    }
+  },
+  {
+    "arquivo": "dados/resultados/eventos_negocios_anormal.csv",
+    "n": 154,
+    "inicio": "2020-12-10",
+    "fim": "2026-10-26",
+    "duplicatas_chave": 0,
+    "ausentes": {
+      "data": 0,
+      "tipo": 0,
+      "descricao": 0,
+      "car": 0
+    }
+  },
+  {
+    "arquivo": "dados/resultados/eventos_negocios_anormal_sem_sobrepostos.csv",
+    "n": 62,
+    "inicio": "2020-12-10",
+    "fim": "2026-10-05",
+    "duplicatas_chave": 0,
+    "ausentes": {
+      "data": 0,
+      "tipo": 0,
+      "descricao": 0,
+      "car": 0
+    }
+  }
+]

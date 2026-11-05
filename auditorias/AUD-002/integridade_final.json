@@ -1,0 +1,12 @@
+{
+  "arquivos_originais_verificados": 430,
+  "alterados_ou_ausentes": 2,
+  "divergencias": [
+    ".git/refs/codex/turn-diffs/checkpoints/cbfc9babb0f0ede75accb67acfc0078a/4562c1478bab306c62cb4b9ae6fe785c/1793656175030/8d75e6ec-bd2a-44a4-b72b-7b093e957e3e",
+    ".git/refs/codex/turn-diffs/captures/1793656265822/5b0cb4db-f458-497b-926d-e83355348124/base"
+  ],
+  "snapshot_arquivos": 150,
+  "snapshot_alterados": 0,
+  "hardlinks_compartilhados": [],
+  "data_verificacao_utc": "2026-11-02T22:05:40.133418+00:00"
+}

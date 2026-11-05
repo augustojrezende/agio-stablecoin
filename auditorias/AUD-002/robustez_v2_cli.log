@@ -1,0 +1,13 @@
+=== Robustez: ágio anormal (coeficiente e p-valor) ===
+                                  especificacao    n  d_juro_bp_coef  d_juro_bp_p  d_vix_coef  d_vix_p  d_vix_ant_coef  d_vix_ant_p  d_dolar_coef  d_dolar_p
+1. Principal (janela 10h-13h, MQO + Newey-West) 1490          0.0019       0.0876      0.0212   0.0468          0.0156       0.0078       -0.1290     0.0000
+                          2. Winsorizado 1%/99% 1490          0.0015       0.1706      0.0113   0.0615          0.0111       0.0275       -0.1214     0.0000
+                   3. Regressão robusta (Huber) 1490          0.0014       0.0552      0.0072   0.0172          0.0087       0.0039       -0.0977     0.0000
+                    4. Ágio de fechamento (21h) 1490         -0.0071       0.0010      0.1006   0.0000          0.0212       0.0158       -0.0399     0.0822
+                                  5. Só binance 1490          0.0019       0.0893      0.0214   0.0463          0.0159       0.0071       -0.1295     0.0000
+                           5. Só mercadobitcoin  884         -0.0005       0.7531      0.0139   0.3778          0.0073       0.3668       -0.0908     0.0000
+                        6a. Antes de 04/05/2026 1363          0.0019       0.1415      0.0227   0.0402          0.0170       0.0047       -0.1360     0.0000
+                     6b. A partir de 04/05/2026  127         -0.0013       0.6705     -0.0123   0.5975         -0.0047       0.8454       -0.0607     0.1107
+  7. Janela 10h-14h (inclui a consulta das 13h) 1490          0.0006       0.5903      0.0247   0.0066          0.0124       0.0266       -0.1052     0.0000
+
+Resultados salvos em /Users/augustojrezende/Projetos/agio-stablecoin_v2/dados/resultados_v2/robustez.csv

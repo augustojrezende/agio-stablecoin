@@ -179,7 +179,9 @@ def test_lista_de_eventos_segue_a_regra():
     spec = importlib.util.spec_from_file_location("montar_eventos", caminho)
     mod = importlib.util.module_from_spec(spec)
     spec.loader.exec_module(mod)
-    ev = mod.montar()
+    # Calendário sintético: a regra dos eventos não depende dos dados coletados
+    # (a sobreposição com o calendário da PTAX é testada em test_aud002.py).
+    ev = mod.montar(calendario=pd.bdate_range("2020-10-01", "2026-10-30"))
     gravado = pd.read_csv(caminho.parents[1] / "dados" / "manual" / "eventos.csv")
     assert len(ev) == len(gravado)  # o CSV foi gerado pelo script, não editado à mão
     assert (ev["fonte"].str.len() > 0).all()

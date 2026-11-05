@@ -1,0 +1,116 @@
+{
+  "V1_com_2_eventos": [
+    {
+      "hipotese": "V1",
+      "descricao": "Estresse fiscal eleva o \u00e1gio",
+      "estimativa": "juro 0.0019; dom\u2212ext -1.935",
+      "p_valor": 1.0,
+      "sinal_previsto": false,
+      "p_holm": 1.0,
+      "confirma": "nao",
+      "confirma_holm": "nao"
+    }
+  ],
+  "familia_sem_V5": [
+    "V1",
+    "V2",
+    "V3",
+    "V4a",
+    "V4b",
+    "V6"
+  ],
+  "janelas_incompletas_na_amostra": [
+    {
+      "data": "2020-12-21",
+      "fonte": "binance",
+      "preco_janela": 5.197,
+      "volume_janela": 37973.1,
+      "horas_janela": 1.0
+    },
+    {
+      "data": "2023-03-23",
+      "fonte": "mercadobitcoin",
+      "preco_janela": 5.278075628947881,
+      "volume_janela": 1840.87316268,
+      "horas_janela": 2.0
+    },
+    {
+      "data": "2023-03-24",
+      "fonte": "binance",
+      "preco_janela": 5.308957251581655,
+      "volume_janela": 1334486.8,
+      "horas_janela": 2.0
+    },
+    {
+      "data": "2023-05-10",
+      "fonte": "mercadobitcoin",
+      "preco_janela": 4.974506764836669,
+      "volume_janela": 1232.50825932,
+      "horas_janela": 2.0
+    },
+    {
+      "data": "2023-05-19",
+      "fonte": "mercadobitcoin",
+      "preco_janela": 5.026968565888363,
+      "volume_janela": 292.9452777,
+      "horas_janela": 2.0
+    },
+    {
+      "data": "2023-05-24",
+      "fonte": "mercadobitcoin",
+      "preco_janela": 4.987459963698259,
+      "volume_janela": 15179.015944,
+      "horas_janela": 2.0
+    },
+    {
+      "data": "2023-05-25",
+      "fonte": "mercadobitcoin",
+      "preco_janela": 5.016084470529715,
+      "volume_janela": 634.9050534200001,
+      "horas_janela": 2.0
+    },
+    {
+      "data": "2023-06-05",
+      "fonte": "mercadobitcoin",
+      "preco_janela": 4.964089338200788,
+      "volume_janela": 3659.1916541,
+      "horas_janela": 2.0
+    },
+    {
+      "data": "2023-10-10",
+      "fonte": "mercadobitcoin",
+      "preco_janela": 5.13429944772482,
+      "volume_janela": 11034.986310780001,
+      "horas_janela": 2.0
+    },
+    {
+      "data": "2024-09-05",
+      "fonte": "mercadobitcoin",
+      "preco_janela": 5.563937212441209,
+      "volume_janela": 505749.60206824,
+      "horas_janela": 2.0
+    },
+    {
+      "data": "2026-06-23",
+      "fonte": "mercadobitcoin",
+      "preco_janela": 5.179166666666666,
+      "volume_janela": 5775.9043,
+      "horas_janela": 1.0
+    },
+    {
+      "data": "2026-07-23",
+      "fonte": "mercadobitcoin",
+      "preco_janela": 5.101365932781006,
+      "volume_janela": 369176.6137,
+      "horas_janela": 2.0
+    },
+    {
+      "data": "2026-08-19",
+      "fonte": "mercadobitcoin",
+      "preco_janela": 5.193063439365397,
+      "volume_janela": 6358.5986,
+      "horas_janela": 2.0
+    }
+  ],
+  "tabelas_iguais_exceto_data": true
+}

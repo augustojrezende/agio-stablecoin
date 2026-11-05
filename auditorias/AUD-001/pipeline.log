@@ -1,0 +1,436 @@
+Ágio alinhado à janela da PTAX (10h-13h): 1520 dias úteis.
+Correlação alinhado x fechamento: 0.535
+Dias em que o horário mais mudou o resultado:
+      data  agio_pct  agio_pct_fechamento
+2025-04-09 -0.041084            -3.510158
+2024-08-05  3.448005             0.282705
+2025-10-10  0.070877             2.894843
+2021-01-12  1.591295            -1.110969
+2021-03-24  0.882327             3.506235
+2020-11-06  1.423111            -1.180554
+2025-12-05  0.127529             2.526262
+2021-02-25  0.618104             2.985348
+Painel diário (ágio + comportamento): 1520 dias.
+      data      agio  agio_pct  n_fontes  num_negocios  pressao_compradora  ticket_medio_brl  busca_usdt  busca_dólar  agio_fechamento_pct
+2026-10-19  0.000673  0.067311       2.0       37561.0            0.499545      11023.600726   86.425024    51.288811            -0.165779
+2026-10-20  0.001356  0.135627       2.0       43766.0            0.506860      10577.983099   81.876339    45.590054             0.506807
+2026-10-21  0.000558  0.055759       2.0       41691.0            0.473718      10084.829857   77.327653    45.590054             0.290985
+2026-10-22  0.001193  0.119273       2.0       40800.0            0.525329       9566.281483   81.876339    45.590054             0.498157
+2026-10-23  0.000778  0.077815       2.0       46625.0            0.550661      10282.708964   90.973710    45.590054            -0.420900
+2026-10-26 -0.005532 -0.553242       2.0      105376.0            0.454738       6213.736861  454.868548   569.875678            -2.118850
+2026-10-27 -0.000007 -0.000709       2.0       45317.0            0.492840       8389.108710  150.106621   250.745298             0.457651
+2026-10-28  0.000709  0.070897       2.0       44434.0            0.533804       9777.894821  127.363193   136.770163             0.292502
+2026-10-29  0.000592  0.059202       2.0       70827.0            0.559542       7003.991220  122.814508    96.878865             0.120723
+2026-10-30 -0.004431 -0.443123       2.0       57042.0            0.516745       2672.256960  154.655306    85.481352            -0.647385
+
+=== Regressão: Ágio anormal (p.p.) ===
+                            OLS Regression Results                            
+==============================================================================
+Dep. Variable:           agio_anormal   R-squared:                       0.095
+Model:                            OLS   Adj. R-squared:                  0.092
+Method:                 Least Squares   F-statistic:                     20.51
+Date:                Mon, 02 Nov 2026   Prob (F-statistic):           7.60e-20
+Time:                        18:28:42   Log-Likelihood:                -445.34
+No. Observations:                1490   AIC:                             902.7
+Df Residuals:                    1484   BIC:                             934.5
+Df Model:                           5                                         
+Covariance Type:                  HAC                                         
+===============================================================================
+                  coef    std err          z      P>|z|      [0.025      0.975]
+-------------------------------------------------------------------------------
+Intercept      -0.5229      0.289     -1.807      0.071      -1.090       0.044
+d_dolar        -0.1290      0.013     -9.589      0.000      -0.155      -0.103
+d_juro_bp       0.0019      0.001      1.708      0.088      -0.000       0.004
+d_vix           0.0212      0.011      1.988      0.047       0.000       0.042
+d_vix_ant       0.0156      0.006      2.659      0.008       0.004       0.027
+log_mercado     0.0294      0.017      1.713      0.087      -0.004       0.063
+==============================================================================
+Omnibus:                      520.365   Durbin-Watson:                   0.987
+Prob(Omnibus):                  0.000   Jarque-Bera (JB):             9773.014
+Skew:                           1.140   Prob(JB):                         0.00
+Kurtosis:                      15.338   Cond. No.                         278.
+==============================================================================
+
+Notes:
+[1] Standard Errors are heteroscedasticity and autocorrelation robust (HAC) using 5 lags and without small sample correction
+
+=== Regressão: Número de negócios anormal (log) ===
+                            OLS Regression Results                            
+==============================================================================
+Dep. Variable:       negocios_anormal   R-squared:                       0.260
+Model:                            OLS   Adj. R-squared:                  0.258
+Method:                 Least Squares   F-statistic:                     11.99
+Date:                Mon, 02 Nov 2026   Prob (F-statistic):           2.11e-11
+Time:                        18:28:42   Log-Likelihood:                -569.67
+No. Observations:                1490   AIC:                             1151.
+Df Residuals:                    1484   BIC:                             1183.
+Df Model:                           5                                         
+Covariance Type:                  HAC                                         
+===============================================================================
+                  coef    std err          z      P>|z|      [0.025      0.975]
+-------------------------------------------------------------------------------
+Intercept       3.5419      0.485      7.299      0.000       2.591       4.493
+d_dolar         0.0103      0.013      0.772      0.440      -0.016       0.036
+d_juro_bp       0.0015      0.001      1.048      0.294      -0.001       0.004
+d_vix           0.0076      0.005      1.383      0.167      -0.003       0.018
+d_vix_ant       0.0075      0.005      1.586      0.113      -0.002       0.017
+log_mercado    -0.2056      0.029     -7.209      0.000      -0.261      -0.150
+==============================================================================
+Omnibus:                       52.389   Durbin-Watson:                   0.344
+Prob(Omnibus):                  0.000   Jarque-Bera (JB):               57.281
+Skew:                           0.459   Prob(JB):                     3.64e-13
+Kurtosis:                       3.284   Cond. No.                         278.
+==============================================================================
+
+Notes:
+[1] Standard Errors are heteroscedasticity and autocorrelation robust (HAC) using 5 lags and without small sample correction
+
+=== Regressão: Ticket médio anormal (log) ===
+                            OLS Regression Results                            
+==============================================================================
+Dep. Variable:         ticket_anormal   R-squared:                       0.018
+Model:                            OLS   Adj. R-squared:                  0.014
+Method:                 Least Squares   F-statistic:                     1.997
+Date:                Mon, 02 Nov 2026   Prob (F-statistic):             0.0763
+Time:                        18:28:42   Log-Likelihood:                 431.15
+No. Observations:                1490   AIC:                            -850.3
+Df Residuals:                    1484   BIC:                            -818.5
+Df Model:                           5                                         
+Covariance Type:                  HAC                                         
+===============================================================================
+                  coef    std err          z      P>|z|      [0.025      0.975]
+-------------------------------------------------------------------------------
+Intercept      -0.3357      0.135     -2.483      0.013      -0.601      -0.071
+d_dolar        -0.0119      0.006     -2.010      0.044      -0.024      -0.000
+d_juro_bp       0.0004      0.001      0.614      0.539      -0.001       0.002
+d_vix           0.0016      0.003      0.573      0.566      -0.004       0.007
+d_vix_ant       0.0012      0.002      0.507      0.612      -0.003       0.006
+log_mercado     0.0222      0.008      2.720      0.007       0.006       0.038
+==============================================================================
+Omnibus:                       65.579   Durbin-Watson:                   0.726
+Prob(Omnibus):                  0.000   Jarque-Bera (JB):              177.574
+Skew:                          -0.173   Prob(JB):                     2.76e-39
+Kurtosis:                       4.656   Cond. No.                         278.
+==============================================================================
+
+Notes:
+[1] Standard Errors are heteroscedasticity and autocorrelation robust (HAC) using 5 lags and without small sample correction
+
+=== Repasse do câmbio: ágio anormal ~ dólar no dia e 3 dias antes ===
+   variavel  coeficiente  erro_padrao       t  p_valor
+  Intercept      -0.5142       0.2944 -1.7462   0.0808
+    d_dolar      -0.1257       0.0130 -9.6991   0.0000
+ d_dolar_l1      -0.0573       0.0125 -4.6042   0.0000
+ d_dolar_l2      -0.0245       0.0091 -2.6832   0.0073
+ d_dolar_l3       0.0020       0.0104  0.1955   0.8450
+  d_juro_bp       0.0015       0.0011  1.3661   0.1719
+      d_vix       0.0211       0.0109  1.9413   0.0522
+  d_vix_ant       0.0191       0.0059  3.2178   0.0013
+log_mercado       0.0289       0.0175  1.6532   0.0983
+Soma das defasagens (volta do ágio nos dias seguintes): soma_defasagens=-0.0798, erro_padrao=0.0218, p_valor=0.0003
+
+=== Estudo de evento: agio_anormal ===
+Datas placebo disponíveis: 654
+        tipo   n  car_medio      t  p_valor_t  p_valor_permutacao
+     externo  53     -0.202 -1.147      0.256               0.498
+      fiscal  46     -0.133 -0.824      0.415               0.800
+   monetario  47     -0.224 -1.636      0.109               0.430
+    politico   4     -0.105 -0.204      0.852               0.966
+ regulatorio   4      0.204  0.418      0.704               0.509
+       todos 154     -0.175 -1.965      0.051               0.363
+agendado=nao  13     -0.006 -0.013      0.990               0.778
+agendado=sim 141     -0.191 -2.145      0.034               0.307
+Domésticos x externos: car_domesticos=-0.131, car_externos=-0.202, diferenca=0.072, p_valor_permutacao=0.766
+
+=== Estudo de evento: agio_ajustado_dolar ===
+Datas placebo disponíveis: 654
+        tipo   n  car_medio      t  p_valor_t  p_valor_permutacao
+     externo  53     -0.075 -0.433      0.667               0.442
+      fiscal  46      0.056  0.372      0.712               0.979
+   monetario  47     -0.093 -0.679      0.500               0.396
+    politico   4     -0.125 -0.438      0.691               0.668
+ regulatorio   4      0.383  0.669      0.551               0.461
+       todos 154     -0.031 -0.354      0.724               0.384
+agendado=nao  13      0.234  0.555      0.589               0.547
+agendado=sim 141     -0.055 -0.635      0.526               0.276
+Domésticos x externos: car_domesticos=0.042, car_externos=-0.075, diferenca=0.116, p_valor_permutacao=0.602
+
+=== Estudo de evento: negocios_anormal ===
+Datas placebo disponíveis: 654
+        tipo   n  car_medio     t  p_valor_t  p_valor_permutacao
+     externo  53      0.542 2.131      0.038               0.899
+      fiscal  46      0.252 1.253      0.217               0.406
+   monetario  47      0.443 1.759      0.085               0.847
+    politico   4      0.977 2.048      0.133               0.655
+ regulatorio   4      0.132 0.352      0.748               0.720
+       todos 154      0.426 3.240      0.001               0.631
+agendado=nao  13      0.861 2.075      0.060               0.531
+agendado=sim 141      0.385 2.789      0.006               0.489
+Domésticos x externos: car_domesticos=0.310, car_externos=0.542, diferenca=-0.232, p_valor_permutacao=0.490
+
+=== Estudo de evento: agio_anormal (sem sobrepostos) ===
+Datas placebo disponíveis: 1006
+        tipo  n  car_medio      t  p_valor_t  p_valor_permutacao
+     externo 15     -0.757 -1.967      0.069               0.036
+      fiscal 30      0.005  0.025      0.980               0.562
+   monetario 15     -0.342 -1.406      0.182               0.420
+    politico  2     -0.069 -0.787      0.576               0.932
+       todos 62     -0.265 -1.752      0.085               0.299
+agendado=nao  7     -0.790 -1.725      0.135               0.116
+agendado=sim 55     -0.199 -1.244      0.219               0.593
+Domésticos x externos: car_domesticos=0.000, car_externos=-0.757, diferenca=0.757, p_valor_permutacao=0.053
+
+=== Estudo de evento: agio_ajustado_dolar (sem sobrepostos) ===
+Datas placebo disponíveis: 1006
+        tipo  n  car_medio      t  p_valor_t  p_valor_permutacao
+     externo 15     -0.614 -1.646      0.122               0.035
+      fiscal 30      0.218  1.132      0.267               0.347
+   monetario 15     -0.163 -0.670      0.514               0.502
+    politico  2     -0.328 -4.375      0.143               0.484
+       todos 62     -0.093 -0.636      0.527               0.407
+agendado=nao  7     -0.483 -1.182      0.282               0.209
+agendado=sim 55     -0.043 -0.278      0.782               0.655
+Domésticos x externos: car_domesticos=0.184, car_externos=-0.614, diferenca=0.797, p_valor_permutacao=0.033
+
+=== Estudo de evento: negocios_anormal (sem sobrepostos) ===
+Datas placebo disponíveis: 1006
+        tipo  n  car_medio     t  p_valor_t  p_valor_permutacao
+     externo 15      0.973 1.430      0.175               0.266
+      fiscal 30      0.491 1.883      0.070               0.870
+   monetario 15      0.680 1.127      0.279               0.627
+    politico  2      0.858 0.791      0.574               0.720
+       todos 62      0.665 2.654      0.010               0.353
+agendado=nao  7      0.973 1.639      0.152               0.440
+agendado=sim 55      0.626 2.289      0.026               0.453
+Domésticos x externos: car_domesticos=0.514, car_externos=0.973, diferenca=-0.459, p_valor_permutacao=0.452
+
+=== Hipóteses do pré-registro (alfa = 5%; ver docs/pre-registro.md) ===
+hipotese                                      descricao                 estimativa  p_valor  sinal_previsto  p_holm confirma confirma_holm
+      V1                   Estresse fiscal eleva o ágio juro 0.0019; dom−ext 0.072   0.7656            True  1.0000      nao           nao
+      V2                   Crises elevam a participação         CAR negócios 0.426   0.6310           False  1.0000      nao           nao
+      V3                       Medo global eleva o ágio        VIX anterior 0.0156   0.0078            True  0.0313      sim           sim
+     V4a                      Repasse incompleto no dia              dólar -0.1290   0.0000            True  0.0000      sim           sim
+     V4b                     Repasse se completa depois    soma defasagens -0.0798   0.0003           False  0.0015      nao           nao
+      V6 Realização de ganhos: ágio segue caindo depois    soma defasagens -0.0798   0.0003            True  0.0015      sim           sim
+      V5       Choques externos isolados reduzem o ágio CAR externos -0.614 (n=15)   0.0348            True  0.1044      sim           nao
+Amostra completa: V3 a V5 são exploratórias aqui; a confirmação é na amostra de validação.
+
+Resultados salvos em /private/tmp/AUD-001-62cglz_p/dados/resultados
+Traceback (most recent call last):
+  File "/private/tmp/AUD-001-62cglz_p/reproduzir.py", line 37, in <module>
+    try:cli.robustez()
+        ~~~~~~~~~~~~^^
+  File "/private/tmp/AUD-001-62cglz_p/src/agio/cli.py", line 390, in robustez
+    lotes.append(preco_janela_ptax(horas, hora_fim=14))
+                 ~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^
+  File "/private/tmp/AUD-001-62cglz_p/src/agio/janela.py", line 36, in preco_janela_ptax
+    df["data"] = local.loc[df.index].dt.date
+    ~~^^^^^^^^
+  File "/Users/augustojrezende/Projetos/agio-stablecoin/.venv/lib/python3.14/site-packages/pandas/core/frame.py", line 4659, in __setitem__
+    self._set_item(key, value)
+    ~~~~~~~~~~~~~~^^^^^^^^^^^^
+  File "/Users/augustojrezende/Projetos/agio-stablecoin/.venv/lib/python3.14/site-packages/pandas/core/frame.py", line 4895, in _set_item
+    value, refs = self._sanitize_column(value)
+                  ~~~~~~~~~~~~~~~~~~~~~^^^^^^^
+  File "/Users/augustojrezende/Projetos/agio-stablecoin/.venv/lib/python3.14/site-packages/pandas/core/frame.py", line 6403, in _sanitize_column
+    return _reindex_for_setitem(value, self.index)
+  File "/Users/augustojrezende/Projetos/agio-stablecoin/.venv/lib/python3.14/site-packages/pandas/core/frame.py", line 20421, in _reindex_for_setitem
+    raise err
+  File "/Users/augustojrezende/Projetos/agio-stablecoin/.venv/lib/python3.14/site-packages/pandas/core/frame.py", line 20416, in _reindex_for_setitem
+    reindexed_value = value.reindex(index)._values
+                      ~~~~~~~~~~~~~^^^^^^^
+  File "/Users/augustojrezende/Projetos/agio-stablecoin/.venv/lib/python3.14/site-packages/pandas/core/series.py", line 6035, in reindex
+    return super().reindex(
+           ~~~~~~~~~~~~~~~^
+        index=index,
+        ^^^^^^^^^^^^
+    ...<5 lines>...
+        copy=copy,
+        ^^^^^^^^^^
+    )
+    ^
+  File "/Users/augustojrezende/Projetos/agio-stablecoin/.venv/lib/python3.14/site-packages/pandas/core/generic.py", line 5544, in reindex
+    return self._reindex_axes(
+           ~~~~~~~~~~~~~~~~~~^
+        axes, level, limit, tolerance, method, fill_value
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    ).__finalize__(self, method="reindex")
+    ^
+  File "/Users/augustojrezende/Projetos/agio-stablecoin/.venv/lib/python3.14/site-packages/pandas/core/generic.py", line 5566, in _reindex_axes
+    new_index, indexer = ax.reindex(
+                         ~~~~~~~~~~^
+        labels, level=level, limit=limit, tolerance=tolerance, method=method
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "/Users/augustojrezende/Projetos/agio-stablecoin/.venv/lib/python3.14/site-packages/pandas/core/indexes/base.py", line 4450, in reindex
+    raise ValueError("cannot reindex on an axis with duplicate labels")
+ValueError: cannot reindex on an axis with duplicate labels
+=== EXPLORATÓRIO (fora do pré-registro): ágio anormal e oferta global de USDT ===
+var_oferta_usdt = variação % da oferta em 5 dias, com 1 dia de defasagem; sinal esperado: negativo.
+                            OLS Regression Results                            
+==============================================================================
+Dep. Variable:           agio_anormal   R-squared:                       0.110
+Model:                            OLS   Adj. R-squared:                  0.106
+Method:                 Least Squares   F-statistic:                     17.75
+Date:                Mon, 02 Nov 2026   Prob (F-statistic):           5.98e-20
+Time:                        18:28:43   Log-Likelihood:                -433.12
+No. Observations:                1490   AIC:                             880.2
+Df Residuals:                    1483   BIC:                             917.4
+Df Model:                           6                                         
+Covariance Type:                  HAC                                         
+===================================================================================
+                      coef    std err          z      P>|z|      [0.025      0.975]
+-----------------------------------------------------------------------------------
+Intercept          -0.8617      0.278     -3.096      0.002      -1.407      -0.316
+d_dolar            -0.1283      0.013     -9.645      0.000      -0.154      -0.102
+d_juro_bp           0.0018      0.001      1.564      0.118      -0.000       0.004
+d_vix               0.0216      0.011      2.007      0.045       0.001       0.043
+d_vix_ant           0.0157      0.006      2.648      0.008       0.004       0.027
+log_mercado         0.0487      0.016      2.956      0.003       0.016       0.081
+var_oferta_usdt     0.0313      0.016      1.949      0.051      -0.000       0.063
+==============================================================================
+Omnibus:                      511.788   Durbin-Watson:                   1.006
+Prob(Omnibus):                  0.000   Jarque-Bera (JB):            10104.221
+Skew:                           1.098   Prob(JB):                         0.00
+Kurtosis:                      15.567   Cond. No.                         310.
+==============================================================================
+
+Notes:
+[1] Standard Errors are heteroscedasticity and autocorrelation robust (HAC) using 5 lags and without small sample correction
+
+Oferta de USDT no fim de cada mês de 2026 (US$ bi):
+data
+2026-01-31    185.6
+2026-02-28    183.6
+2026-03-31    184.2
+2026-04-30    189.6
+2026-05-31    188.4
+2026-06-30    185.0
+2026-07-31    183.5
+2026-08-31    183.5
+2026-09-30    183.8
+2026-10-31    180.5
+Freq: ME
+=== EXPLORATÓRIO (fora do pré-registro): atenção do público (Google Trends) ===
+
+--- Eventos: busca_usdt_anormal (log; janela −1 a +3; média placebo 0.625) ---
+        tipo   n  car_medio     t  p_valor_t  p_valor_permutacao
+     externo  53      0.427 1.743      0.087               0.623
+      fiscal  46      0.320 1.753      0.086               0.475
+   monetario  47      0.321 1.247      0.219               0.480
+    politico   4      1.120 2.223      0.113               0.635
+ regulatorio   4      0.325 0.690      0.540               0.787
+       todos 154      0.378 2.955      0.004               0.293
+agendado=nao  13      0.882 2.815      0.016               0.784
+agendado=sim 141      0.332 2.432      0.016               0.235
+Domésticos x externos: car_domesticos=0.384, car_externos=0.427, diferenca=-0.043, p_valor_permutacao=0.893
+
+--- Eventos: busca_dolar_anormal (log; janela −1 a +3; média placebo 0.053) ---
+        tipo   n  car_medio     t  p_valor_t  p_valor_permutacao
+     externo  53      0.383 2.016      0.049               0.013
+      fiscal  46      0.068 0.411      0.683               0.918
+   monetario  47      0.210 1.178      0.245               0.257
+    politico   4      3.012 2.391      0.097               0.000
+ regulatorio   4      0.106 0.307      0.779               0.900
+       todos 154      0.297 2.735      0.007               0.002
+agendado=nao  13      1.119 2.257      0.043               0.000
+agendado=sim 141      0.221 2.050      0.042               0.036
+Domésticos x externos: car_domesticos=0.304, car_externos=0.383, diferenca=-0.080, p_valor_permutacao=0.781
+
+--- Regressão: ágio anormal ~ controles + buscas anormais do dia anterior ---
+               variavel  coeficiente  erro_padrao       t  p_valor
+              Intercept      -0.7973       0.2823 -2.8241   0.0047
+                d_dolar      -0.1301       0.0133 -9.7682   0.0000
+              d_juro_bp       0.0018       0.0011  1.5860   0.1127
+                  d_vix       0.0210       0.0107  1.9560   0.0505
+              d_vix_ant       0.0159       0.0059  2.7077   0.0068
+            log_mercado       0.0455       0.0169  2.6996   0.0069
+ busca_usdt_anormal_ant       0.0669       0.0440  1.5191   0.1287
+busca_dolar_anormal_ant      -0.0613       0.0485 -1.2638   0.2063
+n = 1489
+
+Figuras em /private/tmp/AUD-001-62cglz_p/docs/figuras: 09_buscas_usdt.png, 09_buscas_dolar.png
+Gerando figuras...
+8 figuras em /private/tmp/AUD-001-62cglz_p/docs/figuras
+Tabelas em /private/tmp/AUD-001-62cglz_p/docs/resultados_tabelas.md
+      data  ptax_venda  var_ptax_pct  agio_janela_binance  agio_janela_mercadobitcoin  agio_fech_binance  agio_fech_mercadobitcoin  horas_janela_binance  horas_janela_mercadobitcoin  num_negocios  pressao_compradora
+2026-06-01       5.030        -0.526                0.110                      -0.402             -0.032                    -0.068                 3.000                        3.000     49203.000               0.438
+2026-06-02       5.016        -0.284               -0.001                      -0.015             -0.022                    -0.016                 3.000                        3.000     52918.000               0.512
+2026-06-03       5.042         0.508                0.083                      -0.189              0.653                     0.631                 3.000                        3.000     49425.000               0.543
+2026-06-05       5.124         1.644                0.083                      -0.607              1.346                     1.319                 3.000                        3.000     69571.000               0.554
+2026-06-08       5.170         0.880                0.173                       0.170              0.489                     0.464                 3.000                        3.000     48647.000               0.567
+2026-06-09       5.169        -0.004                0.072                       0.003              0.244                     0.261                 3.000                        3.000     44023.000               0.533
+2026-06-10       5.176         0.135               -0.017                       0.011              0.307                     0.296                 3.000                        3.000     47088.000               0.468
+2026-06-11       5.148        -0.551               -0.017                       0.014             -0.775                    -0.828                 3.000                        3.000     41387.000               0.480
+2026-06-12       5.083        -1.265               -0.028                      -0.063              0.006                     0.002                 3.000                        3.000     41586.000               0.547
+2026-06-15       5.043        -0.781                0.031                       0.069              0.531                     0.533                 3.000                        3.000     39953.000               0.553
+2026-06-16       5.078         0.694                0.139                       0.092              0.345                     0.370                 3.000                        3.000     37332.000               0.517
+2026-06-17       5.064        -0.274                0.027                       0.072              1.049                     1.001                 3.000                        3.000     39267.000               0.503
+2026-06-18       5.161         1.919               -0.107                      -0.025              0.213                     0.217                 3.000                        3.000     36271.000               0.582
+2026-06-19       5.144        -0.331                0.256                      -0.058              0.420                     0.288                 3.000                        3.000     39959.000               0.430
+2026-06-22       5.139        -0.091                0.073                      -0.376              0.218                     0.218                 3.000                        3.000     39818.000               0.485
+2026-06-23       5.174         0.677                0.208                       0.094              0.682                     0.761                 3.000                        1.000     49149.000               0.523
+2026-06-24       5.210         0.686                1.474                       1.345              1.323                     1.275                 3.000                        3.000     56798.000               0.539
+2026-06-25       5.189        -0.395                1.718                       1.210              0.865                     0.802                 3.000                        3.000     70738.000               0.502
+2026-06-26       5.170        -0.380                0.621                       0.584              1.580                     1.555                 3.000                        3.000     82455.000               0.433
+2026-06-29       5.172         0.043                1.186                       1.195              1.058                     1.007                 3.000                        3.000     51296.000               0.483
+2026-06-30       5.177         0.095                1.150                       0.546              1.379                     1.379                 3.000                        3.000     57976.000               0.562
+2026-07-01       5.195         0.355                1.159                       1.085              1.371                     1.349                 3.000                        3.000     69535.000               0.467
+2026-07-02       5.194        -0.010                0.946                       0.468              1.249                     1.217                 3.000                        3.000     67166.000               0.497
+2026-07-03       5.172        -0.439                1.780                       1.175              2.249                     2.158                 3.000                        3.000     49905.000               0.593
+2026-07-06       5.167        -0.091                1.633                       1.559              1.090                     1.152                 3.000                        3.000     58249.000               0.487
+2026-07-07       5.146        -0.410                1.214                       1.135              1.710                     1.557                 3.000                        3.000     59005.000               0.506
+2026-07-08       5.155         0.183                1.071                       0.054              1.007                     1.042                 3.000                        3.000     63216.000               0.469
+2026-07-09       5.133        -0.433                0.944                       0.867              0.485                     0.493                 3.000                        3.000     47576.000               0.425
+2026-07-10       5.109        -0.470                0.784                       0.733              0.883                     0.914                 3.000                        3.000     60832.000               0.365
+2026-07-13       5.118         0.186                0.898                       0.777              1.073                     1.037                 3.000                        3.000     49179.000               0.449
+2026-07-14       5.074        -0.862                0.757                       0.666              0.737                     0.729                 3.000                        3.000     57459.000               0.417
+2026-07-15       5.073        -0.030                0.606                      -0.398              0.775                     0.725                 3.000                        3.000     44857.000               0.448
+2026-07-16       5.098         0.489                0.508                      -0.282              0.704                     0.677                 3.000                        3.000     39100.000               0.520
+2026-07-17       5.118         0.394                0.480                       0.479              0.553                     0.571                 3.000                        3.000     41884.000               0.542
+2026-07-20       5.089        -0.551                0.575                       0.513              0.701                     0.662                 3.000                        3.000     43737.000               0.486
+2026-07-21       5.078        -0.224                0.510                       0.443              0.414                     0.439                 3.000                        3.000     39466.000               0.501
+2026-07-22       5.064        -0.280                0.385                       0.104              0.448                     0.456                 3.000                        3.000     34940.000               0.541
+2026-07-23       5.081         0.334                0.425                       0.407              0.547                     0.480                 3.000                        2.000     34941.000               0.556
+2026-07-24       5.067        -0.278                0.515                       0.482              0.898                     0.888                 3.000                        3.000     40597.000               0.540
+2026-07-27       5.101         0.669                0.316                       0.269              0.520                     0.535                 3.000                        3.000     38741.000               0.611
+2026-07-28       5.118         0.337                0.272                       0.243              0.432                     0.383                 3.000                        3.000     34136.000               0.560
+2026-07-29       5.122         0.078                0.283                       0.266              0.211                     0.242                 3.000                        3.000     38210.000               0.524
+2026-07-30       5.074        -0.933                0.277                       0.234              0.313                     0.319                 3.000                        3.000     36087.000               0.489
+2026-07-31       5.077         0.067                0.358                       0.389              0.534                     0.520                 3.000                        3.000     41211.000               0.512
+2026-08-03       5.072        -0.098                0.395                       0.584              0.582                     0.554                 3.000                        3.000     39577.000               0.505
+2026-08-04       5.105         0.651                0.217                       0.208              0.891                     0.897                 3.000                        3.000     37018.000               0.584
+2026-08-05       5.115         0.198                0.260                       0.256              0.479                     0.412                 3.000                        3.000     41028.000               0.524
+2026-08-06       5.102        -0.268                0.259                       0.252              0.498                     0.437                 3.000                        3.000     40997.000               0.491
+2026-08-07       5.091        -0.214                0.319                       0.362              0.297                     0.251                 3.000                        3.000     42179.000               0.432
+2026-08-10       5.096         0.108                0.417                       0.393              0.679                     0.661                 3.000                        3.000     39228.000               0.505
+2026-08-11       5.128         0.632                0.341                       0.442              0.844                     0.862                 3.000                        3.000     35832.000               0.482
+2026-08-12       5.164         0.690                0.368                       0.375              0.765                     0.755                 3.000                        3.000     36968.000               0.577
+2026-08-13       5.186         0.426                0.292                       0.265              0.289                     0.330                 3.000                        3.000     30989.000               0.535
+2026-08-14       5.224         0.727                0.228                       0.203              0.167                     0.224                 3.000                        3.000     35692.000               0.475
+
+Média nos 90 dias antes x durante o episódio:
+  agio_janela_binance                     0.068        0.501
+  agio_janela_mercadobitcoin              0.014        0.346
+  agio_fech_binance                       0.169        0.672
+  agio_fech_mercadobitcoin                0.166        0.656
+  agio_consolidado                        0.067        0.497
+  horas_janela_binance                    3.000        3.000
+  horas_janela_mercadobitcoin             3.000        2.944
+  volume_janela_binance            17145743.589 26068573.294
+  volume_janela_mercadobitcoin       382405.167   447159.073
+  num_negocios                        47703.656    46562.907
+  pressao_compradora                      0.551        0.507
+  ticket_medio_brl                     6465.683     8983.494
+  usdt_oferta_bi                        186.647      184.930
+  var_ptax_pct                           -0.043        0.062
+Correlação entre corretoras no episódio: 0.83 (54 dias com as duas)
+Leitura:
+  - Ágio alto nas duas corretoras -> fenômeno de mercado; só em uma -> problema local.
+  - Alto na janela e no fechamento -> nível; só na janela -> horário ou pouca liquidez.
+  - horas_janela ou volume_janela muito menores -> preço de poucos negócios.
+  - Pressão compradora > 0,5 e mais negócios -> procura; ticket menor -> varejo.
+
+Tabela: /private/tmp/AUD-001-62cglz_p/dados/resultados/episodio_20260601_20260815.csv
+Gráfico: /private/tmp/AUD-001-62cglz_p/docs/figuras/episodio_20260601_20260815.png

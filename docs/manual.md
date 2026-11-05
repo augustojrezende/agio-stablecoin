@@ -36,7 +36,7 @@ O **agio-stablecoin** é um programa em Python, de linha de comando, que constr�
 - Permitir que qualquer pesquisador reproduza todos os resultados do TCC com poucos comandos e continue a série com dados novos.
 - Servir de base para artigos e para o mestrado (validação fora da amostra até 2028).
 
-**Em números:** 1.520 dias úteis analisados (13/10/2020 a 30/10/2026), 7 fontes de dados, 12 comandos, 158 eventos com fonte, 41 testes automatizados.
+**Em números:** 1.520 dias úteis analisados (13/10/2020 a 30/10/2026), 7 fontes de dados, 12 comandos, 158 eventos com fonte, 64 testes automatizados.
 
 ## O que é stablecoin
 
@@ -154,7 +154,7 @@ cd agio-stablecoin
 python -m venv .venv
 source .venv/bin/activate          # Windows: .venv\Scripts\activate
 pip install -e ".[dev]"
-pytest                             # 41 testes, sem acesso à rede
+pytest                             # 64 testes, sem acesso à rede
 ```
 
 Depois disso, o comando `agio` fica disponível no terminal enquanto o ambiente virtual (`.venv`) estiver ativo. Todas as datas usam o formato `AAAA-MM-DD`.
@@ -199,7 +199,7 @@ Forma geral: `agio <comando> [parâmetros]`. `agio <comando> --help` mostra os p
 
 | Script | O que faz |
 | --- | --- |
-| `python scripts/montar_eventos.py` | Gera `dados/manual/eventos.csv` (158 eventos) a partir da regra registrada no diário |
+| `python scripts/montar_eventos.py` | Gera `dados/manual/eventos.csv` (158 eventos) a partir da regra registrada no diário; as sobreposições usam o calendário de dias com PTAX |
 | `./scripts/coleta_semanal.sh` | Coleta os últimos 10 dias, recalcula o ágio e grava um log em `dados/logs/` |
 | `./scripts/agendar_coleta_mac.sh` | Agenda a coleta semanal no macOS (segunda-feira, 20h) |
 
@@ -245,9 +245,11 @@ A coleta é idempotente: rodar de novo o mesmo período só substitui pelos dado
 ### Validação fora da amostra (pré-registro)
 
 ```bash
-agio testar --inicio 2026-11-02 --fim 2027-10-30   # intermediária (α = 1%)
-agio testar --inicio 2026-11-02 --fim 2028-11-01   # final (α = 5%)
+agio testar --inicio 2026-11-02 --fim 2027-10-30   # leitura descritiva (dados até 29/10/2027)
+agio testar --inicio 2026-11-02 --fim 2028-11-01   # decisão (dados até 31/10/2028, α = 5%)
 ```
+
+`--fim` é exclusivo: entram os dias anteriores à data. Na leitura de 2027 o programa ainda imprime as colunas `confirma`, mas pelo adendo 2 do pré-registro elas não são decisão. Antes de cada análise, a lista de eventos do período é gerada e versionada (`python scripts/montar_eventos.py`, com o calendário tirado das datas da PTAX), sem rodar nenhum teste.
 
 ### Investigar um período específico
 
@@ -319,13 +321,14 @@ Cada janela exportada vem normalizada de 0 a 100. As janelas sobrepostas são re
 
 ## Qualidade, reprodutibilidade e licenças
 
-- **Testes automatizados:** 41 testes (pytest), que rodam sem rede, com dados sintéticos de efeito conhecido. Cobrem a leitura de cada fonte, o cálculo do ágio e da janela, a recuperação de efeitos conhecidos pela regressão e pelo estudo de evento, e os comandos de ponta a ponta.
+- **Testes automatizados:** 64 testes (pytest), que rodam sem rede, com dados sintéticos de efeito conhecido (dois deles, que conferem a lista de eventos e os lotes horários com os dados reais, só rodam depois da coleta). Cobrem a leitura de cada fonte, o cálculo do ágio e da janela, a recuperação de efeitos conhecidos pela regressão e pelo estudo de evento, e os comandos de ponta a ponta.
 - **Dados brutos imutáveis:** toda transformação sai do código; nada é editado à mão.
 - **Lista de eventos por regra:** gerada por script, com a fonte de cada evento; 17 datas conferidas pelo pesquisador.
 - **Diário de decisões** (`docs/decisoes.md`): cada escolha metodológica com data, motivo e erros encontrados e corrigidos.
 - **Pré-registro** (`docs/pre-registro.md`): hipóteses e regras fixadas antes dos dados de validação, com adendo datado.
 - **Separação explícita** entre análises confirmatórias e exploratórias nas saídas do programa.
-- **Histórico completo no Git:** cada mudança entrou por pull request, com descrição.
+- **Auditorias independentes** (`auditorias/`): diagnóstico, correção e parecer final em nov/2026; sete erros corrigidos, nenhum mudou a decisão de uma hipótese.
+- **Histórico completo no Git:** cada mudança entrou por pull request, com descrição. A versão original da descoberta está na tag `descoberta-v1`.
 - **Licenças:** código sob MIT; dados derivados (séries do ágio) sob Creative Commons Atribuição 4.0 (CC BY 4.0). Os dados de origem seguem os termos de cada fonte.
 
 ## Limitações e próximos passos
@@ -340,7 +343,7 @@ Cada janela exportada vem normalizada de 0 a 100. As janelas sobrepostas são re
 
 **Próximos passos:**
 
-- Validação fora da amostra em out/2027 e out/2028.
+- Validação fora da amostra: leitura descritiva em out/2027 e decisão em out/2028.
 - Novas corretoras e outras stablecoins (por exemplo, USDC).
 - Migração do armazenamento para Parquet ou DuckDB quando a base crescer.
 - Dados on-chain (fluxos na blockchain), na pesquisa de mestrado.

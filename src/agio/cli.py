@@ -336,7 +336,9 @@ def _horas_do_bruto(nome: str) -> pd.DataFrame:
     lotes = [l for l in lotes if not l.empty]
     if not lotes:
         return pd.DataFrame()
-    return pd.concat(lotes).drop_duplicates(["inicio_utc", "fonte"], keep="last")
+    return (pd.concat(lotes, ignore_index=True)
+            .drop_duplicates(["inicio_utc", "fonte"], keep="last")
+            .sort_values(["inicio_utc", "fonte"]).reset_index(drop=True))
 
 
 def robustez() -> None:

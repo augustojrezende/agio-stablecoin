@@ -1,0 +1,285 @@
+diff --git a/docs/resultados.md b/docs/resultados.md
+index 0ca5d3f..92efe5c 100644
+--- a/docs/resultados.md
++++ b/docs/resultados.md
+@@ -1,5 +1,7 @@
+ # Resultados: Medo fiscal ou medo global? O ágio da stablecoin em reais diante de choques domésticos e externos (2020–2026)
+ 
++*V2 — AUD-002: neste documento, somente a unidade do volume na seção 3.1 foi corrigida. A narrativa histórica restante foi preservada; os resultados V2 e suas diferenças estão em auditorias/AUD-002/.*
++
+ *Registro completo dos testes e verificações da amostra de descoberta (13/10/2020 a 30/10/2026), na ordem em que foram feitos. Números das tabelas: `resultados_tabelas.md`, gerado por `agio relatorio`. Decisões e motivos: `decisoes.md`. Validação fora da amostra: `pre-registro.md`.*
+ 
+ ## Resumo
+@@ -49,7 +51,7 @@
+ | --- | --- | --- |
+ | Duas corretoras? | Sim: correlação de 0,83 no episódio; média de +0,50 p.p. na Binance e +0,35 p.p. no Mercado Bitcoin (antes: 0,07 e 0,01) | Fenômeno de mercado, não de uma corretora |
+ | Janela e fechamento? | Os dois sobem juntos (fechamento: 0,17 → 0,67 p.p.) | Nível do preço, não horário |
+-| Liquidez na janela | 3 horas com negócio todos os dias; volume 52% maior (R$ 17,1 mi → R$ 26,1 mi) | Não é preço de poucos negócios |
++| Liquidez na janela | 3 horas com negócio todos os dias; volume 52% maior (17,1 mi → 26,1 mi de USDT) | Não é preço de poucos negócios |
+ | De que lado veio? | A PTAX ficou em R$ 5,17–5,21 e o USDT subiu até R$ 5,28; depois a PTAX caiu e o USDT acompanhou devagar | O USDT ficou caro, e a diferença levou cerca de 4 semanas para fechar |
+ | Quem comprou? | Ticket médio 39% maior (R$ 6,5 mil → R$ 9,0 mil); número de negócios igual; pressão compradora menor (0,55 → 0,51) | Operações maiores, sem pressa de compra; não é corrida do varejo |
+ 
+diff --git a/scripts/montar_eventos.py b/scripts/montar_eventos.py
+index be2683c..ed679fd 100644
+--- a/scripts/montar_eventos.py
++++ b/scripts/montar_eventos.py
+@@ -1,4 +1,4 @@
+-"""Gera dados/manual/eventos.csv a partir da regra fixada em docs/decisoes.md.
++"""Gera dados/manual/eventos_v2.csv a partir da regra fixada em docs/decisoes.md.
+ 
+ Rode `python scripts/montar_eventos.py` para reproduzir a lista. Mudanças na
+ lista devem ser feitas aqui (e registradas no diário), nunca à mão no CSV.
+@@ -16,7 +16,7 @@ from pathlib import Path
+ 
+ import pandas as pd
+ 
+-SAIDA = Path(__file__).resolve().parents[1] / "dados" / "manual" / "eventos.csv"
++SAIDA = Path(__file__).resolve().parents[1] / "dados" / "manual" / "eventos_v2.csv"
+ FIM_DADOS = date(2026, 10, 30)
+ 
+ FONTES_COPOM = {
+@@ -122,7 +122,32 @@ def _linha(anuncio: date, depois: bool, tipo: str, descricao: str, fonte: str, a
+             "agendado": "sim" if agendado else "nao", "fonte": fonte}
+ 
+ 
+-def montar() -> pd.DataFrame:
++def marcar_sobreposicoes(eventos: pd.DataFrame, calendario) -> pd.DataFrame:
++    """V2: interseção de janelas −1,+3 nas datas efetivamente observadas.
++
++    Preserva a regra de comparar apenas tipos diferentes. Eventos após o
++    fim da base não possuem janela observada; nenhuma data é inventada.
++    """
++    from agio.analise import JANELA_EVENTO
++
++    datas = pd.DatetimeIndex(pd.to_datetime(calendario))
++    if datas.empty or datas.hasnans or datas.has_duplicates or not datas.is_monotonic_increasing:
++        raise ValueError("O calendário efetivo deve ser ordenado, único, não vazio e sem NaT")
++    posicoes = datas.searchsorted(pd.to_datetime(eventos["data"]))
++    janelas = [set(range(max(0, p + JANELA_EVENTO[0]),
++                         min(len(datas), p + JANELA_EVENTO[1] + 1)))
++               if p < len(datas) else set() for p in posicoes]
++    tipos = eventos["tipo"].to_numpy()
++    saida = eventos.copy()
++    saida["sobreposto"] = [
++        "sim" if any(tipos[i] != tipos[j] and bool(janela & outra)
++                     for j, outra in enumerate(janelas)) else "nao"
++        for i, janela in enumerate(janelas)
++    ]
++    return saida
++
++
++def montar(calendario=None) -> pd.DataFrame:
+     linhas = []
+     for s in COPOM:
+         d = _d(s)
+@@ -151,15 +176,10 @@ def montar() -> pd.DataFrame:
+     ev = pd.DataFrame(linhas)
+     ev = ev[ev["data"] <= FIM_DADOS].sort_values(["data", "tipo"]).reset_index(drop=True)
+ 
+-    # Sobreposição: outro evento de tipo diferente a até 4 dias úteis (janelas -1 a +3 se cruzam).
+-    datas = pd.to_datetime(ev["data"])
+-    sobreposto = []
+-    for i, (d, t) in enumerate(zip(datas, ev["tipo"])):
+-        outros = ev.index[(ev["tipo"] != t)]
+-        dist = [abs(len(pd.bdate_range(min(d, datas[j]), max(d, datas[j]))) - 1) for j in outros
+-                if abs((datas[j] - d).days) <= 7]
+-        sobreposto.append("sim" if any(x <= 4 for x in dist) else "nao")
+-    ev["sobreposto"] = sobreposto
++    if calendario is None:
++        caminho = SAIDA.parents[1] / "resultados" / "base_teste.csv"
++        calendario = pd.read_csv(caminho, usecols=["data"])["data"]
++    ev = marcar_sobreposicoes(ev, calendario)
+     return ev[["data", "tipo", "descricao", "data_anuncio", "agendado", "sobreposto", "fonte"]]
+ 
+ 
+diff --git a/src/agio/analise.py b/src/agio/analise.py
+index 8765d9c..d37b320 100644
+--- a/src/agio/analise.py
++++ b/src/agio/analise.py
+@@ -169,6 +169,7 @@ def estudo_evento(base: pd.DataFrame, eventos: pd.DataFrame, coluna: str = "agio
+             rng.shuffle(juntos)
+             difs.append(juntos[:len(dom)].mean() - juntos[len(dom):].mean())
+         comparacao = {"car_domesticos": dom.mean(), "car_externos": ext.mean(),
++                      "n_domesticos": len(dom), "n_externos": len(ext),
+                       "diferenca": dif,
+                       "p_valor_permutacao": float((np.abs(difs) >= abs(dif)).mean())}
+     return ev[["data", "tipo", "descricao", "car"]], grupos, comparacao
+@@ -294,7 +295,9 @@ def trajetoria_evento(base: pd.DataFrame, eventos: pd.DataFrame, coluna: str,
+         "placebo_media": medias.mean(axis=0),
+         "placebo_p025": np.percentile(medias, 2.5, axis=0),
+         "placebo_p975": np.percentile(medias, 97.5, axis=0),
+-        "n_eventos": len(validas),
++        "n_eventos": np.sum(~np.isnan(matriz), axis=0) if len(validas) else np.zeros(len(rel), dtype=int),
++        "n_eventos_nominal": len(validas),
++        "n_placebo_sorteado": n,
+     })
+ 
+ 
+@@ -333,7 +336,8 @@ def quadro_hipoteses(reg_agio: pd.DataFrame, soma_repasse: dict,
+     dif = comp_agio["diferenca"] if comp_agio else np.nan
+     p_dif = comp_agio["p_valor_permutacao"] if comp_agio else np.nan
+     linhas.append(("V1", "Estresse fiscal eleva o ágio", f"juro {b:.4f}; dom−ext {dif:.3f}",
+-                   np.nanmax([p, p_dif]), b > 0 and dif > 0))
++                   max(p, p_dif) if np.isfinite(p) and np.isfinite(p_dif) else np.nan,
++                   b > 0 and dif > 0))
+     car = g.loc["todos", "car_medio"] if "todos" in g.index else np.nan
+     linhas.append(("V2", "Crises elevam a participação", f"CAR negócios {car:.3f}",
+                    g.loc["todos", "p_valor_permutacao"] if "todos" in g.index else np.nan,
+@@ -357,17 +361,30 @@ def quadro_hipoteses(reg_agio: pd.DataFrame, soma_repasse: dict,
+                        f"CAR externos {car:.3f} (n={int(ge.loc['externo', 'n'])})",
+                        ge.loc["externo", "p_valor_permutacao"],
+                        car < ge.attrs.get("placebo_media", 0)))
++    else:
++        linhas.append(("V5", "Choques externos isolados reduzem o ágio",
++                       "não estimável: sem grupo externo isolado", np.nan, False))
+     q = pd.DataFrame(linhas, columns=["hipotese", "descricao", "estimativa", "p_valor", "sinal_previsto"])
++    # AUD-002: família fixa. O 1 é apenas reserva conservadora no cálculo,
++    # não é p observado. Ausência permanece explícita nas colunas públicas.
++    q["estimavel"] = np.isfinite(q["p_valor"])
++    q.loc[~q["estimavel"], "p_valor"] = np.nan
+     q["p_holm"] = holm(q["p_valor"].fillna(1.0).tolist())
+     q["confirma"] = np.where(q["sinal_previsto"] & (q["p_valor"] < alfa), "sim", "nao")
+     q["confirma_holm"] = np.where(q["sinal_previsto"] & (q["p_holm"] < alfa), "sim", "nao")
+     # Pré-registro: menos de 10 eventos = sem poder, resultado inconclusivo.
+-    n_eventos = {"V2": g.loc["todos", "n"] if "todos" in g.index else 0}
++    # Decisão do pesquisador, AUD-002: mínimo de dez em CADA braço de V1.
++    n_dom = comp_agio.get("n_domesticos", 0) if comp_agio else 0
++    n_ext = comp_agio.get("n_externos", 0) if comp_agio else 0
++    n_eventos = {"V1": min(n_dom, n_ext),
++                "V2": g.loc["todos", "n"] if "todos" in g.index else 0}
+     if grupos_ajustado_isolados is not None and "externo" in set(grupos_ajustado_isolados["tipo"]):
+         n_eventos["V5"] = grupos_ajustado_isolados.set_index("tipo").loc["externo", "n"]
+     for h, n in n_eventos.items():
+         if n < 10:
+             q.loc[q["hipotese"] == h, ["confirma", "confirma_holm"]] = "inconclusivo"
++    q.loc[~q["estimavel"], ["confirma", "confirma_holm"]] = "inconclusivo"
++    q.loc[~q["estimavel"], "p_holm"] = np.nan
+     return q
+ 
+ 
+diff --git a/src/agio/cli.py b/src/agio/cli.py
+index 92cf3cd..a499dd4 100644
+--- a/src/agio/cli.py
++++ b/src/agio/cli.py
+@@ -32,8 +32,8 @@ from agio.indicador import calcular_agio, consolidar
+ from agio.janela import preco_janela_ptax
+ 
+ PASTA_TRENDS = arm.RAIZ / "manual" / "google_trends"
+-ARQUIVO_EVENTOS = arm.RAIZ / "manual" / "eventos.csv"
+-PASTA_RESULTADOS = arm.RAIZ / "resultados"
++ARQUIVO_EVENTOS = arm.RAIZ / "manual" / "eventos_v2.csv"
++PASTA_RESULTADOS = arm.RAIZ / "resultados_v2"
+ 
+ CORRETORAS = {
+     "binance": (binance, "USDTBRL"),
+@@ -336,7 +336,9 @@ def _horas_do_bruto(nome: str) -> pd.DataFrame:
+     lotes = [l for l in lotes if not l.empty]
+     if not lotes:
+         return pd.DataFrame()
+-    return pd.concat(lotes).drop_duplicates(["inicio_utc", "fonte"], keep="last")
++    return (pd.concat(lotes, ignore_index=True)
++            .drop_duplicates(["inicio_utc", "fonte"], keep="last")
++            .sort_values(["inicio_utc", "fonte"]).reset_index(drop=True))
+ 
+ 
+ def robustez() -> None:
+diff --git a/src/agio/episodio.py b/src/agio/episodio.py
+index 01e66c2..183c8fc 100644
+--- a/src/agio/episodio.py
++++ b/src/agio/episodio.py
+@@ -23,8 +23,8 @@ import pandas as pd
+ 
+ from agio import armazenamento as arm
+ 
+-RESULTADOS = arm.RAIZ / "resultados"
+-FIGURAS = arm.RAIZ.parent / "docs" / "figuras"
++RESULTADOS = arm.RAIZ / "resultados_v2"
++FIGURAS = arm.RAIZ.parent / "docs" / "v2" / "figuras"
+ 
+ 
+ def _opcional(nome: str) -> pd.DataFrame | None:
+@@ -101,7 +101,11 @@ def resumo(base: pd.DataFrame) -> str:
+                ("num_negocios", "pressao_compradora", "ticket_medio_brl", "var_ptax_pct",
+                     "usdt_oferta_bi")]
+     for c in colunas:
+-        linhas.append(f"  {c:32s} {antes[c].mean():>12.3f} {durante[c].mean():>12.3f}")
++        rotulo = f"{c} (USDT)" if c.startswith("volume_janela") else c
++        anterior, atual = antes[c].mean(), durante[c].mean()
++        variacao = (f"; variação {100 * (atual / anterior - 1):+.2f}%"
++                    if c.startswith("volume_janela") and anterior > 0 else "")
++        linhas.append(f"  {rotulo:40s} {anterior:>12.3f} {atual:>12.3f}{variacao}")
+     duas = [c for c in base.columns if c.startswith("agio_janela_")]
+     if len(duas) >= 2:
+         d = durante[duas].dropna()
+diff --git a/src/agio/relatorio.py b/src/agio/relatorio.py
+index a000efe..aa275b7 100644
+--- a/src/agio/relatorio.py
++++ b/src/agio/relatorio.py
+@@ -18,10 +18,10 @@ import pandas as pd
+ 
+ from agio import armazenamento as arm
+ 
+-DOCS = arm.RAIZ.parent / "docs"
++DOCS = arm.RAIZ.parent / "docs" / "v2"
+ FIGURAS = DOCS / "figuras"
+-RESULTADOS = arm.RAIZ / "resultados"
+-EVENTOS = arm.RAIZ / "manual" / "eventos.csv"
++RESULTADOS = arm.RAIZ / "resultados_v2"
++EVENTOS = arm.RAIZ / "manual" / "eventos_v2.csv"
+ 
+ CORES = {"fiscal": "#c0392b", "externo": "#2471a3", "monetario": "#7d3c98",
+          "politico": "#d68910", "regulatorio": "#148f77", "placebo": "#7f8c8d"}
+@@ -69,7 +69,9 @@ def fig_serie(plt, figs):
+                 label="Fechamento (21h), comparação")
+     ax.plot(alinhado["data"], alinhado["agio_pct"], color="#1a5276", lw=0.7,
+             label="Janela da PTAX (10h-13h), medida principal")
+-    med = alinhado.set_index("data")["agio_pct"].rolling(60, min_periods=30).median()
++    from agio.analise import JANELA_NORMAL, MINIMO_NORMAL
++    med = (alinhado.set_index("data")["agio_pct"].shift(1)
++           .rolling(JANELA_NORMAL, min_periods=MINIMO_NORMAL).median())
+     ax.plot(med.index, med.values, color="#e67e22", lw=1.4, label="Mediana móvel de 60 dias úteis")
+     ax.axhline(0, color="black", lw=0.6)
+     ax.set_ylabel("Ágio sobre a PTAX (%)")
+@@ -179,12 +181,22 @@ def fig_trajetorias(plt, figs, base, eventos, coluna, nome, titulo, ylabel, lege
+         ax.axvspan(-1, 3, color="#f9e79f", alpha=0.35, zorder=0)
+         ax.axvline(0, color="black", lw=0.6)
+         ax.axhline(0, color="black", lw=0.4)
+-        ax.set_title(f"{NOMES_TIPO[tipo]} (n = {int(tr['n_eventos'].iloc[0])})")
++        n_min, n_max = int(tr["n_eventos"].min()), int(tr["n_eventos"].max())
++        rotulo_n = str(n_min) if n_min == n_max else f"{n_min}–{n_max}"
++        ax.set_title(f"{NOMES_TIPO[tipo]} (n válido = {rotulo_n})", pad=35)
++        contagens = ax.secondary_xaxis("top")
++        contagens.set_xticks(tr["dia"], [str(int(n)) for n in tr["n_eventos"]])
++        contagens.tick_params(labelsize=6, length=2, pad=1)
++        contagens.set_xlabel("n válido por dia", fontsize=6, labelpad=2)
++        FIGURAS.mkdir(parents=True, exist_ok=True)
++        tr.to_csv(FIGURAS / f"{Path(nome).stem}_{tipo}.csv", index=False)
+         ax.set_xlabel("Dias úteis em relação ao evento")
+     np.atleast_1d(eixos)[0].set_ylabel(ylabel)
+     np.atleast_1d(eixos)[0].legend(frameon=False, fontsize=7, loc="lower left")
+     fig.suptitle(titulo)
+-    _salvar(fig, nome, legenda, figs)
++    _salvar(fig, nome, legenda + " n válido por dia indicado acima de cada ponto; "
++            "pode variar por dados ausentes. Contagens, médias e faixas nos CSVs por tipo. "
++            "O número nominal de datas do sorteio placebo foi preservado.", figs)
+     plt.close(fig)
+ 
+ 
+@@ -230,7 +242,7 @@ def _tabela_md(df: pd.DataFrame, casas: int = 4) -> str:
+ 
+ 
+ def tabelas() -> str:
+-    partes = [f"# Tabelas de resultados\n\n*Gerado por `agio relatorio` em {date.today():%d/%m/%Y}. "
++    partes = [f"# Tabelas de resultados — V2 (AUD-002)\n\n*Gerado por `agio relatorio` em {date.today():%d/%m/%Y}. "
+               "Não edite: rode o comando de novo. A interpretação está em `resultados.md`.*\n"]
+     titulos = {"agio_anormal": "Ágio anormal (p.p.)",
+                "negocios_anormal": "Número de negócios anormal (log)",
+@@ -268,7 +280,7 @@ def tabelas() -> str:
+     ev = _ler(EVENTOS, datas=())
+     if ev is not None:
+         resumo = ev.groupby(["tipo", "agendado"]).size().rename("n").reset_index()
+-        partes += ["## Lista de eventos\n", f"{len(ev)} eventos em `dados/manual/eventos.csv` "
++        partes += ["## Lista de eventos\n", f"{len(ev)} eventos em `dados/manual/eventos_v2.csv` "
+                    "(regra em `decisoes.md`).\n", _tabela_md(resumo, 0), ""]
+     return "\n".join(partes)
+ 

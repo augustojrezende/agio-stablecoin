@@ -1,0 +1,3 @@
+data,tipo,descricao,data_anuncio,agendado,sobreposto,fonte,pos,data_efetiva,car,motivo,sobreposto_calendario_real
+2021-10-28,monetario,Decisão do Copom,2021-10-27,sim,nao,https://www.suno.com.br/noticias/?p=69971,262,2021-10-28,1.1522866184525138,incluído,sim
+2021-11-04,externo,Decisão do Fed (FOMC),2021-11-03,sim,nao,https://www.federalreserve.gov/monetarypolicy/fomccalendars.htm,266,2021-11-04,0.38268468568993796,incluído,sim

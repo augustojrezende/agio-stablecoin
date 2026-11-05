@@ -1,0 +1,3 @@
+Após ajuste dos rótulos V2: pytest -q -p no:cacheprovider
+64 passed, 1 warning in 8.23s
+Aviso preexistente scipy: precision loss no teste sintético test_estudo_evento_detecta_choque.

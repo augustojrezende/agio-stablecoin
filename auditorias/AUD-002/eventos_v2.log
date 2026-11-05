@@ -1,0 +1,11 @@
+158 eventos gravados em /Users/augustojrezende/Projetos/agio-stablecoin_v2/dados/manual/eventos_v2.csv
+tipo         agendado
+externo      nao          6
+             sim         49
+fiscal       nao          5
+             sim         42
+monetario    sim         48
+politico     sim          4
+regulatorio  nao          2
+             sim          2
+Sobrepostos a evento de outro tipo: 95

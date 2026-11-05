@@ -1,0 +1,25 @@
+{
+  "n_indicador": 1520,
+  "n_regressao": 1490,
+  "robustez_especificacoes": 9,
+  "eventos_cadastrados": 158,
+  "eventos_validos_v1": 154,
+  "eventos_validos_v2": 154,
+  "isolados_v1": 62,
+  "isolados_v2": 60,
+  "volume_usdt_antes": 17145743.588524587,
+  "volume_usdt_durante": 26068573.294444438,
+  "variacao_volume_pct": 52.041077482879075,
+  "principal_preservada": true,
+  "pipeline_sem_rede": true,
+  "sys_prefix": "/Users/augustojrezende/Projetos/agio-stablecoin_v2/.venv",
+  "packages": {
+    "numpy": "2.5.4",
+    "pandas": "3.1.0",
+    "scipy": "1.18.1",
+    "statsmodels": "0.15.0",
+    "matplotlib": "3.11.2",
+    "requests": "2.34.2",
+    "pytest": "9.2.0"
+  }
+}

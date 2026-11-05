@@ -1,6 +1,6 @@
 # Resultados: O ágio da stablecoin em reais: reação a choques domésticos e externos no Brasil (2020–2026)
 
-*Registro completo dos testes e verificações da amostra de descoberta (13/10/2020 a 30/10/2026), na ordem em que foram feitos. Números das tabelas: `resultados_tabelas.md`, gerado por `agio relatorio`. Decisões e motivos: `decisoes.md`. Validação fora da amostra: `pre-registro.md`.*
+*Registro completo dos testes e verificações da amostra de descoberta (13/10/2020 a 30/10/2026), na ordem em que foram feitos. Números das tabelas: `resultados_tabelas.md`, gerado por `agio relatorio`. Decisões e motivos: `decisoes.md`. Validação fora da amostra: `pre-registro.md`. Atualizado em 05/11/2026 com as correções das auditorias AUD-001 a AUD-003 (seção 11); os números deste arquivo são os da versão corrigida.*
 
 ## Resumo
 
@@ -9,11 +9,11 @@
 | O estresse fiscal (juro real de 10 anos) eleva o ágio? | Não: efeito pequeno, só a 10% (p = 0,088), e frágil na robustez | Hipótese original **não confirmada**; repetida na validação (V1) |
 | Anúncios domésticos elevam o ágio mais que choques externos? | Não na lista completa (p = 0,77) | **Não confirmada** |
 | Crises elevam a participação no mercado? | Não mais que em dias sorteados (p = 0,63) | Hipótese comportamental **não confirmada**; repetida (V2) |
-| O medo global (VIX) eleva o ágio? | Sim, robusto (7 de 9 especificações) | Exploratória; confirmação na validação (V3) |
-| O câmbio oficial passa para o USDT por inteiro no dia? | Não: o ágio cai 0,13 p.p. a cada 1% de alta do dólar | Exploratória; confirmação na validação (V4a) |
-| O ágio volta nos dias seguintes? | Não: continua caindo por mais 2 dias (total de cerca de −0,21 p.p. por 1%) | Contrário à V4b; nova V6, realização de ganhos (adendo ao pré-registro) |
+| O medo global (VIX) está associado a ágio maior? | Sim: positivo em 7 de 9 especificações, mas concentrado em 2020–2022 e sensível a poucos dias | Exploratória; confirmação na validação (V3) |
+| O câmbio oficial passa para o USDT por inteiro no dia? | Não: o preço do USDT acompanha cerca de 86% da variação da PTAX; o ágio cai 0,13 p.p. a cada 1% de alta | Exploratória; confirmação na validação (V4a) |
+| O ágio volta nos dias seguintes? | Não: continua caindo por mais 2 dias (total de cerca de −0,21 p.p. por 1%) | Contrário à V4b; nova V6, persistência negativa (adendo ao pré-registro); mecanismo não identificado |
 
-**Conclusão provisória:** o ágio do USDT em reais não funciona como termômetro do estresse fiscal brasileiro. Ele é movido pelo câmbio oficial, que o USDT acompanha só em parte no mesmo dia, e pelo medo global.
+**Conclusão provisória:** o ágio do USDT em reais não se comportou como termômetro do estresse fiscal brasileiro medido pelo juro real, o que não prova que o risco fiscal seja irrelevante. As associações mais claras são com o câmbio oficial, que o USDT acompanha só em parte no mesmo dia, e com o medo global. São associações observadas, não relações de causa.
 
 ## 1. Dados e cobertura
 
@@ -49,7 +49,7 @@
 | --- | --- | --- |
 | Duas corretoras? | Sim: correlação de 0,83 no episódio; média de +0,50 p.p. na Binance e +0,35 p.p. no Mercado Bitcoin (antes: 0,07 e 0,01) | Fenômeno de mercado, não de uma corretora |
 | Janela e fechamento? | Os dois sobem juntos (fechamento: 0,17 → 0,67 p.p.) | Nível do preço, não horário |
-| Liquidez na janela | 3 horas com negócio todos os dias; volume 52% maior (R$ 17,1 mi → R$ 26,1 mi) | Não é preço de poucos negócios |
+| Liquidez na janela | 3 horas com negócio todos os dias; volume 52% maior (17,1 mi → 26,1 mi de USDT) | Não é preço de poucos negócios |
 | De que lado veio? | A PTAX ficou em R$ 5,17–5,21 e o USDT subiu até R$ 5,28; depois a PTAX caiu e o USDT acompanhou devagar | O USDT ficou caro, e a diferença levou cerca de 4 semanas para fechar |
 | Quem comprou? | Ticket médio 39% maior (R$ 6,5 mil → R$ 9,0 mil); número de negócios igual; pressão compradora menor (0,55 → 0,51) | Operações maiores, sem pressa de compra; não é corrida do varejo |
 
@@ -98,7 +98,7 @@
 R² = 0,095; curtose dos resíduos = 15,3.
 
 - **Juro real:** um choque fiscal forte, de +20 bp, move o ágio em cerca de 0,04 p.p.
-- **VIX:** um salto de 10 pontos eleva o ágio em cerca de 0,2 p.p. no dia e 0,15 p.p. no dia seguinte.
+- **VIX:** um salto de 10 pontos está associado a ágio cerca de 0,2 p.p. maior no dia e 0,15 p.p. no dia seguinte.
 - **Participação:** o número de negócios anormal não responde ao juro nem ao VIX. O ticket médio cai quando o dólar sobe (p = 0,044).
 
 ### 5.1 Repasse do câmbio nos dias seguintes
@@ -114,7 +114,8 @@ A regressão de repasse acrescenta a variação do dólar de 1, 2 e 3 dias antes
 | Soma das defasagens | −0,080 | < 0,001 |
 
 - **A previsão registrada (V4b) não se confirma.** Ela dizia que o ágio voltaria nos dias seguintes, porque o USDT alcançaria o dólar com atraso. O ágio continua caindo por mais dois dias, e o efeito total chega a cerca de −0,21 p.p. por 1% de alta.
-- **Leitura comportamental.** Quem tem USDT vende para realizar o ganho quando o dólar sobe, e essa venda se espalha por alguns dias. A leitura já constava da análise descritiva (seção 3).
+- **Leituras possíveis, não testadas.** Uma é a realização de ganhos (quem tem USDT vende ao longo de alguns dias depois da alta do dólar). Outras são ordens de venda que se ajustam devagar, arbitragem com atraso ou estoque das mesas de liquidez. Os dados agregados não distinguem entre elas.
+- **Cuidado com a parte mecânica.** Como ágio = preço do USDT / PTAX − 1, se o USDT reage menos que a PTAX o ágio cai por construção. Com os mesmos controles, o retorno do USDT tem coeficiente 0,856 sobre o dólar (AUD-001): o repasse no dia é de cerca de 86%. A persistência nas defasagens não é identidade contábil, mas também não revela o motivo.
 - **Como fica no pré-registro.** Entrou como V6 no adendo 1, para ser confirmada na validação. A V4b continua sendo testada como foi escrita.
 
 ### 5.2 Verificação: dias extremos do dólar
@@ -138,7 +139,8 @@ O teste repete a regressão em 9 especificações: winsorizada, Huber, ágio de 
 
 - **VIX do dia anterior:** significativo em 7 de 9. As duas exceções têm poucos dados: Mercado Bitcoin, com 884 dias, e o período pós-04/05/2026, com 127 dias.
 - **Juro real:** nunca positivo e significativo a 5%. Com a janela até 14h, cai para 0,0006 (p = 0,59). No ágio de fechamento sai negativo, o que reflete o problema de horário.
-- **Dólar:** negativo e forte em todas as especificações alinhadas à PTAX.
+- **Dólar:** negativo em todas as especificações; significativo em todas, exceto depois de 04/05/2026 (p = 0,111, 127 dias).
+- **Sensibilidade do VIX (AUD-001):** com HAC de 10 e 20 defasagens, p = 0,005 e 0,004. Sem os 5 dias de maior influência (o maior é 05/08/2024), o coeficiente cai para 0,006 (p = 0,10); sem 15, 0,008 (p = 0,02). Por subperíodo: 0,025 em 2020–2022 e 0,003 em 2025–2026. A associação existe, mas é concentrada no início da amostra.
 
 ## 7. Lista de eventos e estudo de evento (Figuras 6 e 7)
 
@@ -163,11 +165,14 @@ O teste repete a regressão em 9 especificações: winsorizada, Huber, ágio de 
 | Lista | Ágio anormal: todos (p perm.) | Domésticos − externos (p perm.) | Negócios: todos (p perm.) |
 | --- | --- | --- | --- |
 | Completa (154 eventos) | −0,175 (0,36) | +0,07 (0,77) | +0,43 (0,63) |
-| Sem sobrepostos (62 eventos) | −0,265 (0,30) | +0,80 no ágio ajustado (0,033) | +0,67 (0,35) |
+| Sem sobrepostos (60 eventos) | −0,300 (0,20) | +0,85 no ágio ajustado (0,031) | +0,59 (0,57) |
 
 - **Teste t contra teste de permutação.** O número de negócios parece subir nos eventos pelo teste t (p = 0,001), mas sobe igual nos dias sorteados, porque o mercado cresceu no período. A comparação válida é a de permutação.
-- **Sem os eventos sobrepostos,** os choques externos isolados *reduzem* o ágio ajustado em 0,61 p.p. (p = 0,035). É daí que vem a diferença entre domésticos e externos, já que os domésticos ficam perto de zero.
-- **Cuidado com testes múltiplos.** Foram cerca de 40 testes, e ao nível de 5% se esperam cerca de 2 significativos só por acaso. O resultado dos externos isolados é exploratório (V5 no pré-registro) e não resiste à correção de Holm (p ajustado = 0,104). V3 (0,031) e V4a (< 0,001) resistem.
+- **Correção da auditoria:** o calendário das sobreposições não tinha o feriado de Finados. Com o calendário da PTAX, Copom 28/10/2021 e Fed 04/11/2021 passam a sobrepostos, e a lista isolada cai de 62 para 60 eventos (32 domésticos, 14 externos, 14 monetários). A lista completa não muda.
+- **Sem os eventos sobrepostos,** os choques externos isolados ficam associados a ágio ajustado *menor*: −0,67 p.p. (p = 0,024, 14 eventos). É daí que vem a diferença entre domésticos e externos (+0,85, p = 0,031), já que os domésticos ficam perto de zero.
+- **A diferença não resiste a placebos temporais.** Embaralhando os rótulos só dentro de cada ano, p = 0,091 (ajustado) e 0,135 (anormal); deslocando as séries dentro de cada ano, p = 0,086 e 0,107. O p = 0,03 depende de comparar eventos de anos diferentes. Leitura correta: diferença nominal, sensível ao desenho do placebo.
+- **Cuidado com testes múltiplos.** Foram cerca de 40 testes, e ao nível de 5% se esperam cerca de 2 significativos só por acaso. O resultado dos externos isolados é exploratório (V5 no pré-registro) e não resiste à correção de Holm (p ajustado = 0,072). V3 (0,031), V4a (< 0,001) e V6 (0,002) resistem, o que na descoberta não é confirmação.
+- **O rótulo de origem não é sorteado.** 47 dos 53 externos são decisões agendadas do Fed, e os domésticos são quase todos relatórios fiscais agendados. A permutação compara grupos, não mede efeito causal da origem do choque.
 
 ### 7.1 Atenção do público (Google Trends), exploratório
 
@@ -185,7 +190,7 @@ O teste repete a regressão em 9 especificações: winsorizada, Huber, ágio de 
 - **A atenção ao dólar reage a choques externos e políticos, não aos fiscais.** Nos choques externos, as buscas saltam no dia do evento e saem da faixa das datas sorteadas. Nos anúncios fiscais, ficam dentro dela.
 - **As buscas por USDT não reagem aos eventos.** Como o número de negócios, elas crescem com o tempo em qualquer dia.
 - **As buscas não antecipam o ágio.** Na regressão com as buscas do dia anterior: USDT +0,067 (p = 0,13) e dólar −0,061 (p = 0,21). Dólar e VIX não mudam.
-- **Leitura:** o público presta atenção ao dólar nas eleições e nos choques externos, mas anúncios fiscais nem chegam a chamar a atenção; e atenção alta não vira procura por dólar digital nem ágio. Reforça a resposta do título: medo global e político, não fiscal.
+- **Leitura:** o público presta atenção ao dólar nas eleições e nos choques externos, mas anúncios fiscais nem chegam a chamar a atenção; e atenção alta não vira procura por dólar digital nem ágio.
 - **Cuidados:** o grupo político tem 4 eventos (efeito forte, poucos casos); são mais cerca de 12 testes, então a análise ilustra e não confirma.
 
 ## 8. Aplicação da regra de decisão
@@ -193,7 +198,7 @@ O teste repete a regressão em 9 especificações: winsorizada, Huber, ágio de 
 | Hipótese | Condição | Resultado |
 | --- | --- | --- |
 | Original | Juro real > 0, p < 5% | Não (p = 0,088) |
-| | e domésticos > externos | Não na lista completa; só sem sobrepostos, e porque os externos são negativos |
+| | e domésticos > externos | Não na lista completa (p = 0,77); a regra usa a lista completa |
 | Comportamental | Participação nas crises > dias sorteados | Não (p = 0,63) |
 
 As duas hipóteses do TCC não se confirmam na amostra de descoberta.
@@ -205,16 +210,16 @@ As duas hipóteses do TCC não se confirmam na amostra de descoberta.
 - **Proxy do estresse fiscal:** o juro real de 10 anos é uma medida indireta; o CDS ficou de fora por custo.
 - **Horário do VIX:** o VIX fecha depois da janela da PTAX. Por isso o resultado mais limpo é o do dia anterior.
 - **Pouco tempo depois da regulação:** 127 dias, sem poder estatístico.
-- **Google Trends ainda não importado:** os sinais de busca ficam para a próxima rodada.
+- **Repasse e identidade:** a PTAX está no denominador do ágio; parte da relação com o dólar é mecânica (seção 5.1).
+- **Estudo de evento:** a permutação não reproduz um sorteio da origem dos choques, e o contraste dos isolados depende do placebo (seção 7).
 - **Testes múltiplos:** ver a seção 7.
 - **Episódio de jun–jul/2026:** causa não identificada; a escassez global de USDT foi testada e não se confirmou.
 
 ## 10. Próximos passos
 
-1. **Validação fora da amostra** (`pre-registro.md`): análise intermediária em 30/10/2027 e final em 31/10/2028.
+1. **Validação fora da amostra** (`pre-registro.md`, adendo 2): leitura descritiva com dados até 29/10/2027 e decisão única com dados até 31/10/2028.
 2. **Episódio de jun–jul/2026:** fenômeno de mercado confirmado; escassez global de USDT descartada (seção 3.1). A causa fica em aberto para o mestrado.
-3. **Google Trends:** importar os CSVs e repetir a análise comportamental.
-4. **Ponte para o mestrado:** repasse incompleto do câmbio e medo global, se confirmados na validação.
+3. **Ponte para o mestrado:** repasse incompleto do câmbio e medo global, se confirmados na validação.
 
 ## Registro de erros encontrados e corrigidos
 
@@ -226,6 +231,22 @@ As duas hipóteses do TCC não se confirmam na amostra de descoberta.
 | 01/11/2026 | Pausa das tarifas datada no dia do anúncio (14h, depois da janela) | 10/04/2025 |
 | 01/11/2026 | 04/05/2026 tratado como início efetivo da obrigação de reporte | Registrado como início previsto; adiamento (Res. 574) entra como evento |
 | 01/11/2026 | Exclusão do placebo de 10 dias esgotaria o sorteio com 158 eventos | 4 dias úteis (janelas não se cruzam) |
+| 02/11/2026 | `agio robustez` falhava com índices duplicados ao juntar lotes (AUD-001-06) | Índice novo e remoção de duplicatas; 9 especificações iguais |
+| 02/11/2026 | Calendário das sobreposições sem feriados (AUD-001-10) | Calendário da PTAX; 62 → 60 isolados |
+| 02/11/2026 | V1 sem mínimo de eventos (AUD-001-21) | Mínimo de 10 por grupo, senão inconclusivo |
+| 02/11/2026 | Família de Holm encolhia sem a V5 (AUD-001-22) | Sete posições sempre |
+| 02/11/2026 | Mediana da Figura 1 incluía o próprio dia (AUD-001-26) | Mesma mediana do indicador |
+| 02/11/2026 | Trajetórias mostravam n nominal (AUD-001-27) | n válido por dia |
+| 02/11/2026 | Volume do episódio rotulado em reais (AUD-001-31) | USDT |
+
+## 11. Auditoria independente (AUD-001 a AUD-003)
+
+Três auditorias revisaram o projeto em 02/11/2026: diagnóstico (AUD-001), correção numa cópia separada (AUD-002) e parecer final (AUD-003). Os relatórios estão em `auditorias/`.
+
+- **Sete erros comprovados, todos corrigidos** (tabela acima). Nenhum mudou a regressão principal, a robustez ou a decisão de qualquer hipótese.
+- **Reprodução:** com o código corrigido, `agio testar` e `agio robustez` reproduzem do zero todos os resultados da cópia auditada; 64 testes automatizados.
+- **Parecer:** aprovado com ressalvas, como estudo observacional e exploratório. As ressalvas estão nas seções 5.1, 6, 7 e 9.
+- **O que mudou nos números:** a lista isolada (seção 7) e o rótulo da V6, que passou a descrever o padrão ("ágio segue caindo após alta do dólar") em vez de um mecanismo.
 
 ## Figuras
 
