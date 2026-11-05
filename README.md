@@ -1,5 +1,7 @@
 # Ágio da stablecoin em reais
 
+*[English version](docs/en/README.md)*
+
 Indicador diário do ágio do USDT negociado em reais sobre o dólar oficial (PTAX) e sua reação a choques domésticos e externos (2020–2026). Código e dados abertos do TCC em Economia *O ágio da stablecoin em reais: reação a choques domésticos e externos no Brasil (2020–2026)*.
 
 **[Manual completo do programa](docs/manual.md)**: o que faz, conceitos, tecnologias, todos os comandos e parâmetros, arquivos gerados e métodos.
@@ -71,6 +73,7 @@ Banco Central (PTAX e Selic), Binance e Mercado Bitcoin (USDT/BRL), Tesouro Tran
 | [`docs/resultados_tabelas.md`](docs/resultados_tabelas.md) e `docs/figuras/` | Tabelas e gráficos, gerados por `agio relatorio` |
 | [`docs/pre-registro.md`](docs/pre-registro.md) | Hipóteses e regras da validação com dados a partir de 02/11/2026 |
 | [`docs/decisoes.md`](docs/decisoes.md) | Diário de decisões metodológicas |
+| [`docs/en/`](docs/en/README.md) | Tradução para o inglês do README, manual, resultados, pré-registro e congelamento |
 | [`docs/congelamento.md`](docs/congelamento.md) | Versão congelada para a validação: commit, hashes, dependências e exposição a dados novos |
 | [`auditorias/`](auditorias/) | Relatórios das auditorias AUD-001 e AUD-002 |
 

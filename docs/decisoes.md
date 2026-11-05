@@ -238,3 +238,10 @@ Fontes: [Resolução 574](https://www.letsmoney.com.br/noticias/bc-adia-novembro
 - **Reprodução:** com os caminhos de sempre, `agio testar` e `agio robustez` geram resultados idênticos aos da V2 auditada (só o rótulo da V6 muda); 64 testes passam.
 - **Testes sem os dados coletados:** os dois testes que conferem a lista de eventos e os lotes horários com os dados reais são pulados num clone sem dados; o teste da regra dos eventos usa um calendário sintético.
 - **Decisão (aprovada pelo pesquisador):** adendo 2 ao pré-registro (P1 a P5) e congelamento na tag `congelamento-v2`.
+
+## 2026-11-05 — Documentação em inglês
+
+- **O que entrou:** tradução para o inglês do README, do manual, dos resultados, do pré-registro (com os adendos 1 e 2), do congelamento e da licença dos dados, em `docs/en/` e `LICENSE-DATA.md`.
+- **Motivo:** permitir a leitura por pesquisadores de fora do Brasil e preparar artigos.
+- **Regras:** o português continua sendo a versão oficial, e cada tradução diz isso no início. Nenhum arquivo congelado foi alterado; os hashes de `congelamento.md` continuam valendo. Gráficos e tabelas automáticas ficam em português, porque são gerados pelo código congelado.
+- **Fica só em português:** este diário, `resultados_tabelas.md` e os relatórios das auditorias.
