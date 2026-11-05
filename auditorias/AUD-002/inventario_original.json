@@ -1,0 +1,1722 @@
+[
+  {
+    "arquivo": "LICENSE-DADOS.md",
+    "bytes": 988
+  },
+  {
+    "arquivo": ".DS_Store",
+    "bytes": 10244
+  },
+  {
+    "arquivo": "LICENSE",
+    "bytes": 1072
+  },
+  {
+    "arquivo": "pyproject.toml",
+    "bytes": 583
+  },
+  {
+    "arquivo": "README.md",
+    "bytes": 9103
+  },
+  {
+    "arquivo": ".gitignore",
+    "bytes": 82
+  },
+  {
+    "arquivo": "tests/test_janela.py",
+    "bytes": 2998
+  },
+  {
+    "arquivo": "tests/test_analise.py",
+    "bytes": 16941
+  },
+  {
+    "arquivo": "tests/test_comportamento.py",
+    "bytes": 4418
+  },
+  {
+    "arquivo": "tests/test_tratamento.py",
+    "bytes": 2569
+  },
+  {
+    "arquivo": "docs/.DS_Store",
+    "bytes": 8196
+  },
+  {
+    "arquivo": "docs/pre-registro.md",
+    "bytes": 6497
+  },
+  {
+    "arquivo": "docs/decisoes.md",
+    "bytes": 25374
+  },
+  {
+    "arquivo": "docs/resultados_tabelas.md",
+    "bytes": 12643
+  },
+  {
+    "arquivo": "docs/resultados.md",
+    "bytes": 16334
+  },
+  {
+    "arquivo": "scripts/montar_eventos.py",
+    "bytes": 11153
+  },
+  {
+    "arquivo": "scripts/coleta_semanal.sh",
+    "bytes": 991
+  },
+  {
+    "arquivo": "scripts/agendar_coleta_mac.sh",
+    "bytes": 1439
+  },
+  {
+    "arquivo": "dados/.DS_Store",
+    "bytes": 8196
+  },
+  {
+    "arquivo": "dados/grafico_agio.png",
+    "bytes": 132017
+  },
+  {
+    "arquivo": "auditorias/AUD-001.zip",
+    "bytes": 681006
+  },
+  {
+    "arquivo": ".git/ORIG_HEAD",
+    "bytes": 41
+  },
+  {
+    "arquivo": ".git/config",
+    "bytes": 320
+  },
+  {
+    "arquivo": ".git/HEAD",
+    "bytes": 21
+  },
+  {
+    "arquivo": ".git/description",
+    "bytes": 73
+  },
+  {
+    "arquivo": ".git/index",
+    "bytes": 7197
+  },
+  {
+    "arquivo": ".git/packed-refs",
+    "bytes": 1481
+  },
+  {
+    "arquivo": ".git/COMMIT_EDITMSG",
+    "bytes": 35
+  },
+  {
+    "arquivo": ".git/FETCH_HEAD",
+    "bytes": 2782
+  },
+  {
+    "arquivo": "src/.DS_Store",
+    "bytes": 6148
+  },
+  {
+    "arquivo": "src/agio_stablecoin.egg-info/PKG-INFO",
+    "bytes": 459
+  },
+  {
+    "arquivo": "src/agio_stablecoin.egg-info/SOURCES.txt",
+    "bytes": 768
+  },
+  {
+    "arquivo": "src/agio_stablecoin.egg-info/entry_points.txt",
+    "bytes": 39
+  },
+  {
+    "arquivo": "src/agio_stablecoin.egg-info/requires.txt",
+    "bytes": 90
+  },
+  {
+    "arquivo": "src/agio_stablecoin.egg-info/top_level.txt",
+    "bytes": 5
+  },
+  {
+    "arquivo": "src/agio_stablecoin.egg-info/dependency_links.txt",
+    "bytes": 1
+  },
+  {
+    "arquivo": "src/agio/janela.py",
+    "bytes": 2086
+  },
+  {
+    "arquivo": "src/agio/.DS_Store",
+    "bytes": 6148
+  },
+  {
+    "arquivo": "src/agio/episodio.py",
+    "bytes": 7840
+  },
+  {
+    "arquivo": "src/agio/armazenamento.py",
+    "bytes": 2278
+  },
+  {
+    "arquivo": "src/agio/__init__.py",
+    "bytes": 100
+  },
+  {
+    "arquivo": "src/agio/cli.py",
+    "bytes": 25938
+  },
+  {
+    "arquivo": "src/agio/analise.py",
+    "bytes": 20955
+  },
+  {
+    "arquivo": "src/agio/http.py",
+    "bytes": 1041
+  },
+  {
+    "arquivo": "src/agio/relatorio.py",
+    "bytes": 14670
+  },
+  {
+    "arquivo": "src/agio/comportamento.py",
+    "bytes": 2173
+  },
+  {
+    "arquivo": "src/agio/indicador.py",
+    "bytes": 2208
+  },
+  {
+    "arquivo": "src/agio/fontes/google_trends.py",
+    "bytes": 4801
+  },
+  {
+    "arquivo": "src/agio/fontes/.DS_Store",
+    "bytes": 6148
+  },
+  {
+    "arquivo": "src/agio/fontes/tesouro.py",
+    "bytes": 3074
+  },
+  {
+    "arquivo": "src/agio/fontes/bcb.py",
+    "bytes": 2100
+  },
+  {
+    "arquivo": "src/agio/fontes/mercadobitcoin.py",
+    "bytes": 3267
+  },
+  {
+    "arquivo": "src/agio/fontes/__init__.py",
+    "bytes": 0
+  },
+  {
+    "arquivo": "src/agio/fontes/defillama.py",
+    "bytes": 1463
+  },
+  {
+    "arquivo": "src/agio/fontes/fred.py",
+    "bytes": 2804
+  },
+  {
+    "arquivo": "src/agio/fontes/binance.py",
+    "bytes": 3296
+  },
+  {
+    "arquivo": ".git/info/exclude",
+    "bytes": 240
+  },
+  {
+    "arquivo": ".git/info/refs",
+    "bytes": 1572
+  },
+  {
+    "arquivo": ".git/logs/HEAD",
+    "bytes": 3065
+  },
+  {
+    "arquivo": ".git/hooks/commit-msg.sample",
+    "bytes": 1972
+  },
+  {
+    "arquivo": ".git/hooks/pre-rebase.sample",
+    "bytes": 4898
+  },
+  {
+    "arquivo": ".git/hooks/sendemail-validate.sample",
+    "bytes": 2308
+  },
+  {
+    "arquivo": ".git/hooks/pre-commit.sample",
+    "bytes": 1649
+  },
+  {
+    "arquivo": ".git/hooks/applypatch-msg.sample",
+    "bytes": 478
+  },
+  {
+    "arquivo": ".git/hooks/fsmonitor-watchman.sample",
+    "bytes": 4611
+  },
+  {
+    "arquivo": ".git/hooks/pre-receive.sample",
+    "bytes": 544
+  },
+  {
+    "arquivo": ".git/hooks/prepare-commit-msg.sample",
+    "bytes": 1492
+  },
+  {
+    "arquivo": ".git/hooks/post-update.sample",
+    "bytes": 189
+  },
+  {
+    "arquivo": ".git/hooks/pre-merge-commit.sample",
+    "bytes": 416
+  },
+  {
+    "arquivo": ".git/hooks/pre-applypatch.sample",
+    "bytes": 424
+  },
+  {
+    "arquivo": ".git/hooks/pre-push.sample",
+    "bytes": 1374
+  },
+  {
+    "arquivo": ".git/hooks/update.sample",
+    "bytes": 3650
+  },
+  {
+    "arquivo": ".git/hooks/push-to-checkout.sample",
+    "bytes": 2783
+  },
+  {
+    "arquivo": ".git/refs/heads/main",
+    "bytes": 41
+  },
+  {
+    "arquivo": ".git/refs/remotes/origin/trends-encadeamento",
+    "bytes": 41
+  },
+  {
+    "arquivo": ".git/refs/remotes/origin/HEAD",
+    "bytes": 30
+  },
+  {
+    "arquivo": ".git/refs/remotes/origin/adendo-v6",
+    "bytes": 41
+  },
+  {
+    "arquivo": ".git/refs/remotes/origin/main",
+    "bytes": 41
+  },
+  {
+    "arquivo": ".git/refs/remotes/origin/buscas",
+    "bytes": 41
+  },
+  {
+    "arquivo": ".git/refs/codex/turn-diffs/checkpoints/cbfc9babb0f0ede75accb67acfc0078a/4562c1478bab306c62cb4b9ae6fe785c/1793656175030/8d75e6ec-bd2a-44a4-b72b-7b093e957e3e",
+    "bytes": 41
+  },
+  {
+    "arquivo": ".git/refs/codex/turn-diffs/captures/1793656265822/5b0cb4db-f458-497b-926d-e83355348124/base",
+    "bytes": 41
+  },
+  {
+    "arquivo": ".git/logs/refs/heads/main",
+    "bytes": 3065
+  },
+  {
+    "arquivo": ".git/logs/refs/remotes/origin/robustez",
+    "bytes": 162
+  },
+  {
+    "arquivo": ".git/logs/refs/remotes/origin/oferta-resultado",
+    "bytes": 162
+  },
+  {
+    "arquivo": ".git/logs/refs/remotes/origin/corrige-oferta",
+    "bytes": 162
+  },
+  {
+    "arquivo": ".git/logs/refs/remotes/origin/teste-formal",
+    "bytes": 162
+  },
+  {
+    "arquivo": ".git/logs/refs/remotes/origin/trends-encadeamento",
+    "bytes": 162
+  },
+  {
+    "arquivo": ".git/logs/refs/remotes/origin/novo-titulo",
+    "bytes": 162
+  },
+  {
+    "arquivo": ".git/logs/refs/remotes/origin/diagnostico-episodio",
+    "bytes": 162
+  },
+  {
+    "arquivo": ".git/logs/refs/remotes/origin/HEAD",
+    "bytes": 210
+  },
+  {
+    "arquivo": ".git/logs/refs/remotes/origin/vix-alternativo",
+    "bytes": 162
+  },
+  {
+    "arquivo": ".git/logs/refs/remotes/origin/coleta-semanal",
+    "bytes": 162
+  },
+  {
+    "arquivo": ".git/logs/refs/remotes/origin/resultados-preliminares",
+    "bytes": 162
+  },
+  {
+    "arquivo": ".git/logs/refs/remotes/origin/adendo-v6",
+    "bytes": 162
+  },
+  {
+    "arquivo": ".git/logs/refs/remotes/origin/oferta-usdt",
+    "bytes": 162
+  },
+  {
+    "arquivo": ".git/logs/refs/remotes/origin/robustez-resultados",
+    "bytes": 162
+  },
+  {
+    "arquivo": ".git/logs/refs/remotes/origin/janela-ptax",
+    "bytes": 162
+  },
+  {
+    "arquivo": ".git/logs/refs/remotes/origin/relatorio-preregistro",
+    "bytes": 162
+  },
+  {
+    "arquivo": ".git/logs/refs/remotes/origin/main",
+    "bytes": 2738
+  },
+  {
+    "arquivo": ".git/logs/refs/remotes/origin/controles-rapidos",
+    "bytes": 162
+  },
+  {
+    "arquivo": ".git/logs/refs/remotes/origin/buscas",
+    "bytes": 162
+  },
+  {
+    "arquivo": ".git/logs/refs/remotes/origin/eventos-fechados",
+    "bytes": 324
+  },
+  {
+    "arquivo": ".git/objects/61/3d537ee05e5b34522abf2e8bf80daec4692253",
+    "bytes": 364
+  },
+  {
+    "arquivo": ".git/objects/61/64a234b104832003c4b50e6586b32397e05d01",
+    "bytes": 974
+  },
+  {
+    "arquivo": ".git/objects/0d/c3b735ee930fe0742baacc2f26bee1f7707ef5",
+    "bytes": 126
+  },
+  {
+    "arquivo": ".git/objects/95/34606160bc50ec6317113354414ce3da7deaa8",
+    "bytes": 491
+  },
+  {
+    "arquivo": ".git/objects/92/5c460e4ffdcc17ac70caca356600ad6343fdab",
+    "bytes": 943
+  },
+  {
+    "arquivo": ".git/objects/92/cf3cde10e4d4ff5df58cebbe86ea7d6cd4dfb2",
+    "bytes": 8577
+  },
+  {
+    "arquivo": ".git/objects/92/113ad22deacc0a021f35217a89f33192138645",
+    "bytes": 418
+  },
+  {
+    "arquivo": ".git/objects/66/620c09ec0f0247825a6319a29c2a4cd7a5e918",
+    "bytes": 1064
+  },
+  {
+    "arquivo": ".git/objects/50/915b5d819da660d6cff81e56ea97828291a633",
+    "bytes": 91
+  },
+  {
+    "arquivo": ".git/objects/68/c218d80342108634c4445843d0ac5f4063b5c8",
+    "bytes": 333
+  },
+  {
+    "arquivo": ".git/objects/57/05f500f33d61ec5d81e2d119dc894017caf400",
+    "bytes": 159
+  },
+  {
+    "arquivo": ".git/objects/9e/0fc4bc01261f98f3f729f7508418255f0c0919",
+    "bytes": 5617
+  },
+  {
+    "arquivo": ".git/objects/04/68bee906dd90e4ed2485afe65cc2592b96291f",
+    "bytes": 191663
+  },
+  {
+    "arquivo": ".git/objects/04/91004615da9745e7317fc62e082a27fb6f3cc6",
+    "bytes": 2343
+  },
+  {
+    "arquivo": ".git/objects/6a/05f48ef4c68ceb7edcdc80fcb1c77b65b0d9e1",
+    "bytes": 239
+  },
+  {
+    "arquivo": ".git/objects/35/8695645fbc10b0e5ed2128dccbebf6c4dab5b7",
+    "bytes": 471
+  },
+  {
+    "arquivo": ".git/objects/51/6d228c7e115af28e8718b3f272230628c3a513",
+    "bytes": 364
+  },
+  {
+    "arquivo": ".git/objects/93/35fc7f3815a54160c9edd3737a35a28e10bb18",
+    "bytes": 13876
+  },
+  {
+    "arquivo": ".git/objects/93/835d08f9233b6ff45f60ce9469b0a73ec770dd",
+    "bytes": 227
+  },
+  {
+    "arquivo": ".git/objects/94/36d68fcdd151dc36c3e656ff77b6d080ba6b2c",
+    "bytes": 277
+  },
+  {
+    "arquivo": ".git/objects/0e/7357f997fd3099a779100bf9a98da103559eba",
+    "bytes": 366
+  },
+  {
+    "arquivo": ".git/objects/34/be059eb222d618fd16c42f55ed77d92730b319",
+    "bytes": 378
+  },
+  {
+    "arquivo": ".git/objects/5f/538fe769ade5bbe91a652ba109a0baea7190ba",
+    "bytes": 10801
+  },
+  {
+    "arquivo": ".git/objects/5f/d96c19e662d07260bd8c57fe9a22a573baff30",
+    "bytes": 118
+  },
+  {
+    "arquivo": ".git/objects/5f/5ba2c617f8f52915336f58b0357f8848e8d27b",
+    "bytes": 363
+  },
+  {
+    "arquivo": ".git/objects/9c/19543e43d7a7bab8835158d66fbbe70e329249",
+    "bytes": 94798
+  },
+  {
+    "arquivo": ".git/objects/b5/d33be19b6df80e0ad4dad42c9a3796d3116548",
+    "bytes": 226
+  },
+  {
+    "arquivo": ".git/objects/b5/a8b7f449e4372a6127a56223162968102e8722",
+    "bytes": 10509
+  },
+  {
+    "arquivo": ".git/objects/ad/02030b5102137eb51bcaa38e73c408f0b5f2c8",
+    "bytes": 27851
+  },
+  {
+    "arquivo": ".git/objects/bb/a269cdd2d416b07fc33167db216265701dfca5",
+    "bytes": 11800
+  },
+  {
+    "arquivo": ".git/objects/bb/76a6d5a8131aa43b233e8df98490d32564ea8a",
+    "bytes": 66979
+  },
+  {
+    "arquivo": ".git/objects/d7/8c7d45f19bb06e78d451ee18b438a34decef20",
+    "bytes": 923
+  },
+  {
+    "arquivo": ".git/objects/d0/0685cd0671f07d1bb29378d58ebba148cef4a2",
+    "bytes": 194
+  },
+  {
+    "arquivo": ".git/objects/d0/3563fc212c09a0494645efa5b60b7acc51f544",
+    "bytes": 397
+  },
+  {
+    "arquivo": ".git/objects/d0/5665a8d4d3b2c326bd39dedfed70d7a783d45e",
+    "bytes": 332
+  },
+  {
+    "arquivo": ".git/objects/be/e77ba101d18367d08899e93d26530f5c0ff5c9",
+    "bytes": 158
+  },
+  {
+    "arquivo": ".git/objects/be/83422232c1a84cda2805936ab0b5a6a65bbf2f",
+    "bytes": 27092
+  },
+  {
+    "arquivo": ".git/objects/df/41b5309440cbfe6cd0c3dbde0895b2e4037483",
+    "bytes": 126
+  },
+  {
+    "arquivo": ".git/objects/b4/eb246c49a58dbfb1cbfbb9c162186395476161",
+    "bytes": 348
+  },
+  {
+    "arquivo": ".git/objects/d8/bc37c4b9726742d8284cb30d7b7fb27fd7b2c6",
+    "bytes": 377
+  },
+  {
+    "arquivo": ".git/objects/e5/2e6d5f546ccee37432029f86047fa29b426070",
+    "bytes": 122061
+  },
+  {
+    "arquivo": ".git/objects/e5/f5d248fa7352bf24df2e29d8ed2a04d002a1e4",
+    "bytes": 415
+  },
+  {
+    "arquivo": ".git/objects/f4/27261fa4bb1427b5a8e3e631a3f7665b1820ce",
+    "bytes": 85
+  },
+  {
+    "arquivo": ".git/objects/f4/130bb0494bedfff0eeb4f9a71e6220effdec41",
+    "bytes": 747
+  },
+  {
+    "arquivo": ".git/objects/c0/4910d2371f875e2bb452ac56b1487302967c69",
+    "bytes": 194
+  },
+  {
+    "arquivo": ".git/objects/ee/1f6163732bdb3ae8fe758d3341abead6cda77d",
+    "bytes": 249
+  },
+  {
+    "arquivo": ".git/objects/ee/33ed12c2063787338653e6ee05a884a9f14b49",
+    "bytes": 1780
+  },
+  {
+    "arquivo": ".git/objects/c9/9678bf08882e6ea9c180ab7baf67a3282aac4b",
+    "bytes": 407
+  },
+  {
+    "arquivo": ".git/objects/c9/5aeba3b14fbe7f17c875fe9bda599d3b46b741",
+    "bytes": 11048
+  },
+  {
+    "arquivo": ".git/objects/fc/8fdc04756b5adedce6469601c1044475de5c45",
+    "bytes": 494
+  },
+  {
+    "arquivo": ".git/objects/fd/bdb48c92a6eeab072f9e7c715d16c84aa688d7",
+    "bytes": 117
+  },
+  {
+    "arquivo": ".git/objects/f5/401af1b2a40ffbebcbfa875f8b6e70b34ba295",
+    "bytes": 71008
+  },
+  {
+    "arquivo": ".git/objects/f5/cc9b04a1fa4eac71fba79d31937130db831e93",
+    "bytes": 409
+  },
+  {
+    "arquivo": ".git/objects/f5/519feb662b781317f9aa8e0167b11573ce57ce",
+    "bytes": 132
+  },
+  {
+    "arquivo": ".git/objects/f5/34d9577273aa76171308c2ae7ea0940ca5e859",
+    "bytes": 289
+  },
+  {
+    "arquivo": ".git/objects/cf/5e3c284c85195b2c977393643ebeadb3e6ea85",
+    "bytes": 129
+  },
+  {
+    "arquivo": ".git/objects/cf/b30a84c78267a2022184047846d8d31ad7e30b",
+    "bytes": 3574
+  },
+  {
+    "arquivo": ".git/objects/ca/afb2c9ba8d0fb9f9993bf7c7b1ae9717011d43",
+    "bytes": 406
+  },
+  {
+    "arquivo": ".git/objects/fe/d3b9055a8a554e2e92077faf3d450ce35f3fb0",
+    "bytes": 92546
+  },
+  {
+    "arquivo": ".git/objects/c8/713bcbc1f10a26d3abfc20a1f5ef56b77074c7",
+    "bytes": 7968
+  },
+  {
+    "arquivo": ".git/objects/fb/248328a2276c650061fb134a4bef99aa4044a3",
+    "bytes": 125
+  },
+  {
+    "arquivo": ".git/objects/ed/f031f39476c05c54d6f2f9bb1f77cc6cfe63d5",
+    "bytes": 25167
+  },
+  {
+    "arquivo": ".git/objects/4e/8db6fc4928e1f96a384ce09a824c27679800c3",
+    "bytes": 180
+  },
+  {
+    "arquivo": ".git/objects/4e/c9b72c8e81157463038686a7682b6b11f973ef",
+    "bytes": 361
+  },
+  {
+    "arquivo": ".git/objects/4b/d2add284068633ee1b95fc35f1a8e54b682c20",
+    "bytes": 87687
+  },
+  {
+    "arquivo": ".git/objects/pack/pack-fdb43026c48f2755aaf19d28fb0e3394615b046c.rev",
+    "bytes": 236
+  },
+  {
+    "arquivo": ".git/objects/pack/pack-fdb43026c48f2755aaf19d28fb0e3394615b046c.pack",
+    "bytes": 24412
+  },
+  {
+    "arquivo": ".git/objects/pack/pack-596e25208fc8e1d80d429adc3b9b03d01aada78a.idx",
+    "bytes": 7708
+  },
+  {
+    "arquivo": ".git/objects/pack/pack-596e25208fc8e1d80d429adc3b9b03d01aada78a.rev",
+    "bytes": 1000
+  },
+  {
+    "arquivo": ".git/objects/pack/pack-fdb43026c48f2755aaf19d28fb0e3394615b046c.idx",
+    "bytes": 2360
+  },
+  {
+    "arquivo": ".git/objects/pack/multi-pack-index",
+    "bytes": 9140
+  },
+  {
+    "arquivo": ".git/objects/pack/pack-596e25208fc8e1d80d429adc3b9b03d01aada78a.pack",
+    "bytes": 1140288
+  },
+  {
+    "arquivo": ".git/objects/11/586d44634548190b6c9cf6621a52fbd5afd4fb",
+    "bytes": 118
+  },
+  {
+    "arquivo": ".git/objects/29/2db9472af76a5d1c9db0108aee1a832830c088",
+    "bytes": 118
+  },
+  {
+    "arquivo": ".git/objects/42/ed80789243615e5bbf4c9efcef2abc7094301f",
+    "bytes": 126
+  },
+  {
+    "arquivo": ".git/objects/89/dcf13cc49e751a0c08c0285835d8f59dd4bcfc",
+    "bytes": 775
+  },
+  {
+    "arquivo": ".git/objects/45/18623e971b15cfe09a2044922cc387efbc0cd5",
+    "bytes": 2561
+  },
+  {
+    "arquivo": ".git/objects/1f/a611ab70f74f14861bae593363f1543b6131f8",
+    "bytes": 671516
+  },
+  {
+    "arquivo": ".git/objects/73/9f0c9b76627f3361caeb67ce7644ad8c6e6343",
+    "bytes": 1081
+  },
+  {
+    "arquivo": ".git/objects/87/3afc66febc8d211a5da118e29ac2b31d622a7a",
+    "bytes": 3226
+  },
+  {
+    "arquivo": ".git/objects/87/65d9c36982e73de9934d2122a3bb5834f92352",
+    "bytes": 7215
+  },
+  {
+    "arquivo": ".git/objects/1a/ec6ad1a1d1fd7109ee5f8df1f2ae29aaf6776c",
+    "bytes": 46
+  },
+  {
+    "arquivo": ".git/objects/17/a9cffafd74b33fbbfb3ce4e6015145cee0d495",
+    "bytes": 391
+  },
+  {
+    "arquivo": ".git/objects/17/f0e16c27e7bc89f166de8d4732ff49e118bcf9",
+    "bytes": 3557
+  },
+  {
+    "arquivo": ".git/objects/8f/358c14b6ab8243344fdefa37c205e160cdb968",
+    "bytes": 42147
+  },
+  {
+    "arquivo": ".git/objects/7e/dda1d3f09cad5d3d177183a4b2714d1098df11",
+    "bytes": 411
+  },
+  {
+    "arquivo": ".git/objects/10/9dc703d99330453a10924f5118a53958c49eb8",
+    "bytes": 188
+  },
+  {
+    "arquivo": ".git/objects/19/41668ea8ef8a6ed0deddda4dc8659966e9c890",
+    "bytes": 83
+  },
+  {
+    "arquivo": ".git/objects/19/642084cb3d3b5201175ca117aa8a216db1b2a0",
+    "bytes": 4040
+  },
+  {
+    "arquivo": ".git/objects/4c/b1dd9b04d625101fd272acde5fbbff629ddc8f",
+    "bytes": 3825409
+  },
+  {
+    "arquivo": ".git/objects/21/11b9a137c325cc1308ac8ab5d58ceed62a44b5",
+    "bytes": 1221
+  },
+  {
+    "arquivo": ".git/objects/72/2b6c0a2a6e1a9b8757b761b2fabfff6c204b2a",
+    "bytes": 1155
+  },
+  {
+    "arquivo": ".git/objects/2f/33c4058fdb6531684a815151f427850e5fb3d2",
+    "bytes": 24492
+  },
+  {
+    "arquivo": ".git/objects/43/0251983e5ad13bb7756635019406c48fc3af73",
+    "bytes": 49
+  },
+  {
+    "arquivo": ".git/objects/43/a06131654e5d433bacd940b825c3aaa50970d5",
+    "bytes": 767
+  },
+  {
+    "arquivo": ".git/objects/9f/e28cd62d935daab39a5e1dd620015f1c4a0594",
+    "bytes": 194
+  },
+  {
+    "arquivo": ".git/objects/6b/f725f2d7bda4558e934528ed7ce4fe7faa739c",
+    "bytes": 605
+  },
+  {
+    "arquivo": ".git/objects/38/734ca2de71d90578b12a191d5ff30a57f26d5c",
+    "bytes": 303
+  },
+  {
+    "arquivo": ".git/objects/38/318bb459495c7c276dbfac3b6388ba193ce72e",
+    "bytes": 7309
+  },
+  {
+    "arquivo": ".git/objects/00/3400b9f8b0b5e000d3484d55fd052174fcfc9a",
+    "bytes": 532199
+  },
+  {
+    "arquivo": ".git/objects/6e/d66800b2665106e245dd2f7876e6adf6a2b705",
+    "bytes": 1577
+  },
+  {
+    "arquivo": ".git/objects/6e/b1b8e1be01e722df758e1b190f475f1838e38e",
+    "bytes": 1777
+  },
+  {
+    "arquivo": ".git/objects/9a/fe542969aeeb47552f02a6691a478ccef75502",
+    "bytes": 5635
+  },
+  {
+    "arquivo": ".git/objects/36/cd1c5c9a3ae1a9633d7f4695206355d8e36604",
+    "bytes": 137907
+  },
+  {
+    "arquivo": ".git/objects/5d/e5d1b90c0f0c1b27c541d233ee79b8e529b888",
+    "bytes": 717
+  },
+  {
+    "arquivo": ".git/objects/31/871c1bf3dd289f6ce404bf73b8af9c5feefb1b",
+    "bytes": 192
+  },
+  {
+    "arquivo": ".git/objects/31/27d3a43ba0af96421a057377776f696da65b86",
+    "bytes": 3565
+  },
+  {
+    "arquivo": ".git/objects/info/packs",
+    "bytes": 107
+  },
+  {
+    "arquivo": ".git/objects/96/834e96111cbd13fa39a5a19f348cc5a25ee3a8",
+    "bytes": 332
+  },
+  {
+    "arquivo": ".git/objects/54/3fdea26bc734fbea6d0fa712e5213c0d75d06a",
+    "bytes": 187
+  },
+  {
+    "arquivo": ".git/objects/98/20a8579711168d2a2f3d5de81dd65fbb9db993",
+    "bytes": 117
+  },
+  {
+    "arquivo": ".git/objects/30/8f565da62d11203db79b3080684c3cc7145fb5",
+    "bytes": 837256
+  },
+  {
+    "arquivo": ".git/objects/37/e887ba77ca78e3c284ad088fb499396b903f59",
+    "bytes": 217053
+  },
+  {
+    "arquivo": ".git/objects/08/667fc094b284825beaec2a6cf8738f8cd7877b",
+    "bytes": 4228
+  },
+  {
+    "arquivo": ".git/objects/06/2a880f1920431a20743d29214f8bc581355a6f",
+    "bytes": 142461
+  },
+  {
+    "arquivo": ".git/objects/6c/fe804f77b98adfccc49e85bfd89bdff48ac832",
+    "bytes": 1950
+  },
+  {
+    "arquivo": ".git/objects/39/bb3f42ffe53a179bc21456f05dd4700b1da46d",
+    "bytes": 2137
+  },
+  {
+    "arquivo": ".git/objects/39/0be4befd1e1a1bbb3c0d047fff118c295a472c",
+    "bytes": 373
+  },
+  {
+    "arquivo": ".git/objects/99/de9a41aadf0faafe27287ae087c8252a733f0c",
+    "bytes": 78
+  },
+  {
+    "arquivo": ".git/objects/55/1e66e9e13dc733ee512e74dd4058c31ec2a523",
+    "bytes": 6295
+  },
+  {
+    "arquivo": ".git/objects/63/f1f3dd185eb9098537b743d854b90243cf723b",
+    "bytes": 138
+  },
+  {
+    "arquivo": ".git/objects/0f/1df41bef009f346ec0083bbae23afef3086220",
+    "bytes": 321
+  },
+  {
+    "arquivo": ".git/objects/0f/566d29aa6a4ac706972f71977fa9dbd5e45359",
+    "bytes": 372
+  },
+  {
+    "arquivo": ".git/objects/0a/f7622c552d32db36a393627581ca033d7ea5b9",
+    "bytes": 124
+  },
+  {
+    "arquivo": ".git/objects/64/0d8e3306ba428d0789abce167c4aec8880c652",
+    "bytes": 630
+  },
+  {
+    "arquivo": ".git/objects/bf/193f35918dd5d5433d9a9dd44b512b7ce6d256",
+    "bytes": 88253
+  },
+  {
+    "arquivo": ".git/objects/bf/72cd100ca12cbe95d68c97b4bba33877af1bd8",
+    "bytes": 77370
+  },
+  {
+    "arquivo": ".git/objects/d3/bc165b327bad5dcdcc4e6bf51932292aa4ce89",
+    "bytes": 4230
+  },
+  {
+    "arquivo": ".git/objects/ba/6f893c67203f8fb6842e0a857fc55c629485e7",
+    "bytes": 2739
+  },
+  {
+    "arquivo": ".git/objects/a0/bb004dd67babf0727195810b92409a0d009701",
+    "bytes": 88
+  },
+  {
+    "arquivo": ".git/objects/a7/302241addfc9833e1b49271fa6147452507815",
+    "bytes": 46
+  },
+  {
+    "arquivo": ".git/objects/b8/dc4c634d5e828c302bb5e65d0e60922152b186",
+    "bytes": 932
+  },
+  {
+    "arquivo": ".git/objects/dd/6a3554f027b377e20cc4dc9b0ced74c4509b91",
+    "bytes": 103
+  },
+  {
+    "arquivo": ".git/objects/b6/b285922b1c7a238d6604bcb83cd713de7c0394",
+    "bytes": 6402
+  },
+  {
+    "arquivo": ".git/objects/b6/be5d4e8a9e6fa0aaac96b4a186137b56efc74a",
+    "bytes": 916
+  },
+  {
+    "arquivo": ".git/objects/d5/6fb7d0f8a671458e7ad4108d1ce1957356e551",
+    "bytes": 297
+  },
+  {
+    "arquivo": ".git/objects/d5/043683a686d92507d6bc2498e7dd0606618218",
+    "bytes": 97
+  },
+  {
+    "arquivo": ".git/objects/a8/68c593419f241512b704fc56c8e3279907702b",
+    "bytes": 640
+  },
+  {
+    "arquivo": ".git/objects/b9/ba4612d8fd2766aa3c4035e48b20c4d7adc172",
+    "bytes": 85
+  },
+  {
+    "arquivo": ".git/objects/ef/b57df693f1bdafa2f1012cf190fc0da1bd183c",
+    "bytes": 27272
+  },
+  {
+    "arquivo": ".git/objects/c3/8be9e53682cdceb7be74ee2f5145746553ea8f",
+    "bytes": 903
+  },
+  {
+    "arquivo": ".git/objects/ea/cd2ba09e396eff26128d47be4df64ca5d8b643",
+    "bytes": 126
+  },
+  {
+    "arquivo": ".git/objects/ea/2432ae0dc1b26cca5d83e303933d3245032afa",
+    "bytes": 1838
+  },
+  {
+    "arquivo": ".git/objects/cd/0ed622de538ec23a032f8d5f417563f781009d",
+    "bytes": 804
+  },
+  {
+    "arquivo": ".git/objects/cc/fb79f96baa900b59861fac6fb1f4812a899877",
+    "bytes": 146
+  },
+  {
+    "arquivo": ".git/objects/f0/23dad2ba58d5571d989a56008324a4bb3caecf",
+    "bytes": 52214
+  },
+  {
+    "arquivo": ".git/objects/f0/5abd08689225094af60202cd556db3dd085691",
+    "bytes": 10964
+  },
+  {
+    "arquivo": ".git/objects/f6/47b9399b42009dc7e2abd9424af0d4e55a9ee9",
+    "bytes": 2497
+  },
+  {
+    "arquivo": ".git/objects/e9/3c5eab787404e47e741e6d588d5bdf87f86ec5",
+    "bytes": 442
+  },
+  {
+    "arquivo": ".git/objects/e9/8f47bd888962bb569d49ced25e653ec63fb165",
+    "bytes": 10005
+  },
+  {
+    "arquivo": ".git/objects/cb/cfa40a5d07b53309bd4275476721e8ed7a014b",
+    "bytes": 292
+  },
+  {
+    "arquivo": ".git/objects/f8/dc6998ab2d876f85f3523774916303dd88d503",
+    "bytes": 409
+  },
+  {
+    "arquivo": ".git/objects/f8/5c24d123367f7ab90dce4b9a49855de4a549df",
+    "bytes": 419
+  },
+  {
+    "arquivo": ".git/objects/ce/519284b0737b987d3776b02abff0967d295f1f",
+    "bytes": 954
+  },
+  {
+    "arquivo": ".git/objects/e0/2e66b912d8cf9196cebdcf236bfe91bc9f38ba",
+    "bytes": 666
+  },
+  {
+    "arquivo": ".git/objects/46/c3898954d41fb7d5a8a5c31738b9e2f76bdb2f",
+    "bytes": 32640
+  },
+  {
+    "arquivo": ".git/objects/41/beb9b7b43a1e753a9a29ad037123b3775e95b8",
+    "bytes": 809
+  },
+  {
+    "arquivo": ".git/objects/1b/27191487606c11af0af14b9600eb7f50a78166",
+    "bytes": 120
+  },
+  {
+    "arquivo": ".git/objects/77/b7703f4e133c000dfaa638d5cc5bea49fa417b",
+    "bytes": 3595
+  },
+  {
+    "arquivo": ".git/objects/70/245b66b25b93e4fa6d6885d1c02b400fb83049",
+    "bytes": 377
+  },
+  {
+    "arquivo": ".git/objects/70/9b91e40882801c7026a67d79a3d7d87363d72c",
+    "bytes": 1505
+  },
+  {
+    "arquivo": ".git/objects/84/33df7655defbd9fa7bf81e6fb406c707756627",
+    "bytes": 16073
+  },
+  {
+    "arquivo": ".git/objects/84/f25cfd5b3b53a8884b7756e772e64014144091",
+    "bytes": 72757
+  },
+  {
+    "arquivo": ".git/objects/4a/328a647e0f1d37bea9d015649552b19b158f26",
+    "bytes": 19201
+  },
+  {
+    "arquivo": ".git/objects/23/5acb3cbee1b3995cd4c398ffd1414d33731393",
+    "bytes": 3009388
+  },
+  {
+    "arquivo": ".git/objects/8c/b89006676adb2fcd2fdf403faf8d38555bdaae",
+    "bytes": 1783
+  },
+  {
+    "arquivo": ".git/objects/85/199ebf5cab54d91ee798abc2fe744b916e291c",
+    "bytes": 1632
+  },
+  {
+    "arquivo": ".git/objects/82/fede7b5a4221910f486805369c4f9dbb128f1a",
+    "bytes": 532
+  },
+  {
+    "arquivo": ".git/objects/82/da3b8e553e2a7cf1382dc24b06483a961c48d1",
+    "bytes": 503
+  },
+  {
+    "arquivo": ".git/objects/2e/6fc29b53e629e2ec1d48043dd80123caf9d8fb",
+    "bytes": 527
+  },
+  {
+    "arquivo": ".git/objects/78/43d4479ab5e2c82a61f3afb7478bf2c7728518",
+    "bytes": 6805
+  },
+  {
+    "arquivo": ".git/objects/13/318d2c35c376b4e61a5c9f74553d053cf3b632",
+    "bytes": 4982
+  },
+  {
+    "arquivo": ".git/objects/7f/fa4d3b8fcdb6f5755bade7f6f6712c7199865d",
+    "bytes": 1132
+  },
+  {
+    "arquivo": ".git/objects/7a/a508e10ffe2bbd73522bb0a48fa0207ae2fedc",
+    "bytes": 52745
+  },
+  {
+    "arquivo": ".git/objects/14/0d1d8fa4c7506a0f746dd691416242fca1f40c",
+    "bytes": 396
+  },
+  {
+    "arquivo": ".git/objects/22/b0b8178af3f3be05e421d1c5bad546c7783d30",
+    "bytes": 7343
+  },
+  {
+    "arquivo": "auditorias/AUD-001/ambiente.json",
+    "bytes": 320
+  },
+  {
+    "arquivo": "auditorias/AUD-001/reproduzir.py",
+    "bytes": 5508
+  },
+  {
+    "arquivo": "auditorias/AUD-001/pytest.log",
+    "bytes": 660
+  },
+  {
+    "arquivo": "auditorias/AUD-001/versoes.json",
+    "bytes": 337
+  },
+  {
+    "arquivo": "auditorias/AUD-001/episodio_janela_estreita.txt",
+    "bytes": 1324
+  },
+  {
+    "arquivo": "auditorias/AUD-001/AUD-001_MATRIZ_ACHADOS.md",
+    "bytes": 36637
+  },
+  {
+    "arquivo": "auditorias/AUD-001/sensibilidade_regressoes.csv",
+    "bytes": 5848
+  },
+  {
+    "arquivo": "auditorias/AUD-001/comparacao_figuras.csv",
+    "bytes": 561
+  },
+  {
+    "arquivo": "auditorias/AUD-001/sensibilidade_eventos.csv",
+    "bytes": 2132
+  },
+  {
+    "arquivo": "auditorias/AUD-001/inventario_dados.json",
+    "bytes": 7793
+  },
+  {
+    "arquivo": "auditorias/AUD-001/diferenca_tabelas.diff",
+    "bytes": 0
+  },
+  {
+    "arquivo": "auditorias/AUD-001/reconciliacao_eventos.csv",
+    "bytes": 34702
+  },
+  {
+    "arquivo": "auditorias/AUD-001/hashes_antes.json",
+    "bytes": 17357
+  },
+  {
+    "arquivo": "auditorias/AUD-001/git_depois.txt",
+    "bytes": 5716
+  },
+  {
+    "arquivo": "auditorias/AUD-001/AUD-001_RELATORIO_EXECUTIVO.md",
+    "bytes": 8143
+  },
+  {
+    "arquivo": "auditorias/AUD-001/horarios.json",
+    "bytes": 283
+  },
+  {
+    "arquivo": "auditorias/AUD-001/episodio_separado.log",
+    "bytes": 13377
+  },
+  {
+    "arquivo": "auditorias/AUD-001/git_antes.txt",
+    "bytes": 3928
+  },
+  {
+    "arquivo": "auditorias/AUD-001/suplementar.py",
+    "bytes": 9488
+  },
+  {
+    "arquivo": "auditorias/AUD-001/decomposicao_repasse.csv",
+    "bytes": 1862
+  },
+  {
+    "arquivo": "auditorias/AUD-001/pipeline.log",
+    "bytes": 37024
+  },
+  {
+    "arquivo": "auditorias/AUD-001/comparacoes_colunas.csv",
+    "bytes": 33820
+  },
+  {
+    "arquivo": "auditorias/AUD-001/integridade_final.json",
+    "bytes": 148
+  },
+  {
+    "arquivo": "auditorias/AUD-001/vix_datas_carregadas.csv",
+    "bytes": 360
+  },
+  {
+    "arquivo": "auditorias/AUD-001/figuras_n_efetivo.csv",
+    "bytes": 94
+  },
+  {
+    "arquivo": "auditorias/AUD-001/hipoteses_teste_2_eventos.csv",
+    "bytes": 809
+  },
+  {
+    "arquivo": "auditorias/AUD-001/comparacoes.csv",
+    "bytes": 4111
+  },
+  {
+    "arquivo": "auditorias/AUD-001/AUD-001_SENSIBILIDADE.md",
+    "bytes": 15274
+  },
+  {
+    "arquivo": "auditorias/AUD-001/diagnosticos.json",
+    "bytes": 2684
+  },
+  {
+    "arquivo": "auditorias/AUD-001/verificacoes_finais.py",
+    "bytes": 2224
+  },
+  {
+    "arquivo": "auditorias/AUD-001/AUD-001_REPRODUTIBILIDADE.md",
+    "bytes": 16487
+  },
+  {
+    "arquivo": "auditorias/AUD-001/manifest_artefatos.json",
+    "bytes": 4147
+  },
+  {
+    "arquivo": "auditorias/AUD-001/influencia.csv",
+    "bytes": 1030
+  },
+  {
+    "arquivo": "auditorias/AUD-001/robustez_recalculada_auditoria.csv",
+    "bytes": 2727
+  },
+  {
+    "arquivo": "auditorias/AUD-001/inventario_arquivos.csv",
+    "bytes": 6934
+  },
+  {
+    "arquivo": "auditorias/AUD-001/divergencias_sobreposicao.csv",
+    "bytes": 436
+  },
+  {
+    "arquivo": "auditorias/AUD-001/documentar.py",
+    "bytes": 55375
+  },
+  {
+    "arquivo": "auditorias/AUD-001/achados.json",
+    "bytes": 30622
+  },
+  {
+    "arquivo": "auditorias/AUD-001/hashes_depois.json",
+    "bytes": 17357
+  },
+  {
+    "arquivo": "auditorias/AUD-001/contato_figuras.png",
+    "bytes": 568701
+  },
+  {
+    "arquivo": "auditorias/AUD-001/episodio_render.json",
+    "bytes": 158
+  },
+  {
+    "arquivo": "auditorias/AUD-001/complementar.py",
+    "bytes": 5611
+  },
+  {
+    "arquivo": "auditorias/AUD-001/AUD-001_PLANO_AJUSTES.md",
+    "bytes": 34523
+  },
+  {
+    "arquivo": "auditorias/AUD-001/verificacoes_finais.json",
+    "bytes": 2762
+  },
+  {
+    "arquivo": "auditorias/AUD-001/complementos.json",
+    "bytes": 804
+  },
+  {
+    "arquivo": "dados/resultados/eventos_agio_anormal.csv",
+    "bytes": 12195
+  },
+  {
+    "arquivo": "dados/resultados/eventos_grupos_agio_anormal.csv",
+    "bytes": 683
+  },
+  {
+    "arquivo": "dados/resultados/exploratorio_eventos_busca_usdt_anormal.csv",
+    "bytes": 665
+  },
+  {
+    "arquivo": "dados/resultados/regressao_repasse.csv",
+    "bytes": 867
+  },
+  {
+    "arquivo": "dados/resultados/eventos_grupos_agio_ajustado_dolar.csv",
+    "bytes": 678
+  },
+  {
+    "arquivo": "dados/resultados/exploratorio_eventos_busca_dolar_anormal.csv",
+    "bytes": 664
+  },
+  {
+    "arquivo": "dados/resultados/eventos_grupos_agio_ajustado_dolar_sem_sobrepostos.csv",
+    "bytes": 596
+  },
+  {
+    "arquivo": "dados/resultados/eventos_grupos_agio_anormal_sem_sobrepostos.csv",
+    "bytes": 601
+  },
+  {
+    "arquivo": "dados/resultados/eventos_agio_ajustado_dolar_sem_sobrepostos.csv",
+    "bytes": 5103
+  },
+  {
+    "arquivo": "dados/resultados/hipoteses.csv",
+    "bytes": 811
+  },
+  {
+    "arquivo": "dados/resultados/exploratorio_buscas.txt",
+    "bytes": 2332
+  },
+  {
+    "arquivo": "dados/resultados/eventos_negocios_anormal_sem_sobrepostos.csv",
+    "bytes": 5097
+  },
+  {
+    "arquivo": "dados/resultados/regressao_negocios_anormal.csv",
+    "bytes": 586
+  },
+  {
+    "arquivo": "dados/resultados/eventos_comparacao_agio_ajustado_dolar_sem_sobrepostos.csv",
+    "bytes": 122
+  },
+  {
+    "arquivo": "dados/resultados/episodio_20260601_20260815.csv",
+    "bytes": 44459
+  },
+  {
+    "arquivo": "dados/resultados/robustez.txt",
+    "bytes": 1629
+  },
+  {
+    "arquivo": "dados/resultados/exploratorio_oferta_usdt.txt",
+    "bytes": 2502
+  },
+  {
+    "arquivo": "dados/resultados/eventos_comparacao_agio_anormal.csv",
+    "bytes": 124
+  },
+  {
+    "arquivo": "dados/resultados/base_buscas.csv",
+    "bytes": 500683
+  },
+  {
+    "arquivo": "dados/resultados/eventos_agio_ajustado_dolar.csv",
+    "bytes": 12186
+  },
+  {
+    "arquivo": "dados/resultados/relatorio.txt",
+    "bytes": 13263
+  },
+  {
+    "arquivo": "dados/resultados/eventos_grupos_negocios_anormal_sem_sobrepostos.csv",
+    "bytes": 583
+  },
+  {
+    "arquivo": "dados/resultados/eventos_comparacao_negocios_anormal_sem_sobrepostos.csv",
+    "bytes": 122
+  },
+  {
+    "arquivo": "dados/resultados/eventos_comparacao_agio_anormal_sem_sobrepostos.csv",
+    "bytes": 125
+  },
+  {
+    "arquivo": "dados/resultados/base_teste.csv",
+    "bytes": 420793
+  },
+  {
+    "arquivo": "dados/resultados/eventos_grupos_negocios_anormal.csv",
+    "bytes": 664
+  },
+  {
+    "arquivo": "dados/resultados/eventos_comparacao_agio_ajustado_dolar.csv",
+    "bytes": 124
+  },
+  {
+    "arquivo": "dados/resultados/eventos_agio_anormal_sem_sobrepostos.csv",
+    "bytes": 5111
+  },
+  {
+    "arquivo": "dados/resultados/regressao_repasse_soma.csv",
+    "bytes": 99
+  },
+  {
+    "arquivo": "dados/resultados/regressao_ticket_anormal.csv",
+    "bytes": 588
+  },
+  {
+    "arquivo": "dados/resultados/regressao_agio_anormal.csv",
+    "bytes": 584
+  },
+  {
+    "arquivo": "dados/resultados/robustez.csv",
+    "bytes": 2727
+  },
+  {
+    "arquivo": "dados/resultados/exploratorio_oferta_usdt.csv",
+    "bytes": 677
+  },
+  {
+    "arquivo": "dados/resultados/eventos_comparacao_negocios_anormal.csv",
+    "bytes": 124
+  },
+  {
+    "arquivo": "dados/resultados/eventos_negocios_anormal.csv",
+    "bytes": 12164
+  },
+  {
+    "arquivo": "dados/resultados/exploratorio_atencao.csv",
+    "bytes": 793
+  },
+  {
+    "arquivo": "dados/manual/.DS_Store",
+    "bytes": 6148
+  },
+  {
+    "arquivo": "dados/manual/eventos.csv",
+    "bytes": 27481
+  },
+  {
+    "arquivo": "dados/logs/coleta_20261101_1714.log",
+    "bytes": 2707
+  },
+  {
+    "arquivo": "dados/bruto/.gitkeep",
+    "bytes": 0
+  },
+  {
+    "arquivo": "dados/tratado/precos_usdt_brl.csv",
+    "bytes": 295075
+  },
+  {
+    "arquivo": "dados/tratado/sinais_comportamento.csv",
+    "bytes": 181317
+  },
+  {
+    "arquivo": "dados/tratado/painel_diario.csv",
+    "bytes": 235123
+  },
+  {
+    "arquivo": "dados/tratado/precos_janela_ptax.csv",
+    "bytes": 202623
+  },
+  {
+    "arquivo": "dados/tratado/agio_fechamento_diario.csv",
+    "bytes": 84724
+  },
+  {
+    "arquivo": "dados/tratado/.gitkeep",
+    "bytes": 0
+  },
+  {
+    "arquivo": "dados/tratado/agio_diario.csv",
+    "bytes": 84734
+  },
+  {
+    "arquivo": "dados/tratado/juro_real_10a.csv",
+    "bytes": 153733
+  },
+  {
+    "arquivo": "dados/tratado/ptax.csv",
+    "bytes": 37839
+  },
+  {
+    "arquivo": "dados/tratado/selic.csv",
+    "bytes": 30336
+  },
+  {
+    "arquivo": "dados/tratado/agio_por_fonte.csv",
+    "bytes": 246412
+  },
+  {
+    "arquivo": "dados/tratado/google_trends.csv",
+    "bytes": 152073
+  },
+  {
+    "arquivo": "dados/tratado/vix.csv",
+    "bytes": 157232
+  },
+  {
+    "arquivo": "dados/tratado/usdt_oferta.csv",
+    "bytes": 77775
+  },
+  {
+    "arquivo": "dados/tratado/agio_fechamento_por_fonte.csv",
+    "bytes": 216859
+  },
+  {
+    "arquivo": "dados/bruto/binance_1h/20261022-20261101_coletado-20261101T201505Z.json",
+    "bytes": 46266
+  },
+  {
+    "arquivo": "dados/bruto/binance_1h/20201001-20261031_coletado-20261101T023813Z.json",
+    "bytes": 9315842
+  },
+  {
+    "arquivo": "dados/bruto/bcb_ptax/20261022-20261101_coletado-20261101T201457Z.json",
+    "bytes": 698
+  },
+  {
+    "arquivo": "dados/bruto/bcb_ptax/20201001-20261031_coletado-20261101T022735Z.json",
+    "bytes": 147995
+  },
+  {
+    "arquivo": "dados/bruto/cboe_vix/20261101_coletado-20261101T030730Z.csv",
+    "bytes": 474349
+  },
+  {
+    "arquivo": "dados/bruto/cboe_vix/20261101_coletado-20261101T201537Z.csv",
+    "bytes": 474349
+  },
+  {
+    "arquivo": "dados/bruto/mercadobitcoin/20201001-20261031_coletado-20261101T022818Z.json",
+    "bytes": 116373
+  },
+  {
+    "arquivo": "dados/bruto/mercadobitcoin/20261022-20261101_coletado-20261101T201502Z.json",
+    "bytes": 1010
+  },
+  {
+    "arquivo": "dados/bruto/mercadobitcoin_1h/20201001-20261031_coletado-20261101T023959Z.json",
+    "bytes": 2634230
+  },
+  {
+    "arquivo": "dados/bruto/mercadobitcoin_1h/20261022-20261101_coletado-20261101T201506Z.json",
+    "bytes": 22473
+  },
+  {
+    "arquivo": "dados/bruto/defillama_usdt/20261101_coletado-20261101T200230Z.json",
+    "bytes": 506293
+  },
+  {
+    "arquivo": "dados/bruto/bcb_selic/20201001-20261031_coletado-20261101T022758Z.json",
+    "bytes": 68715
+  },
+  {
+    "arquivo": "dados/bruto/bcb_selic/20261022-20261101_coletado-20261101T201458Z.json",
+    "bytes": 315
+  },
+  {
+    "arquivo": "dados/bruto/tesouro_direto/20261101_coletado-20261101T030057Z.csv",
+    "bytes": 14649520
+  },
+  {
+    "arquivo": "dados/bruto/tesouro_direto/20261101_coletado-20261101T201515Z.csv",
+    "bytes": 14649520
+  },
+  {
+    "arquivo": "dados/bruto/tesouro_direto/20261031_coletado-20261101T025601Z.csv",
+    "bytes": 14649520
+  },
+  {
+    "arquivo": "dados/bruto/binance/20201001-20261031_coletado-20261101T022807Z.json",
+    "bytes": 405557
+  },
+  {
+    "arquivo": "dados/bruto/binance/20261022-20261101_coletado-20261101T201501Z.json",
+    "bytes": 2038
+  },
+  {
+    "arquivo": "dados/manual/google_trends/dolar_05.csv",
+    "bytes": 3979
+  },
+  {
+    "arquivo": "dados/manual/google_trends/dolar_11.csv",
+    "bytes": 1984
+  },
+  {
+    "arquivo": "dados/manual/google_trends/dolar_10.csv",
+    "bytes": 3967
+  },
+  {
+    "arquivo": "dados/manual/google_trends/dolar_04.csv",
+    "bytes": 4124
+  },
+  {
+    "arquivo": "dados/manual/google_trends/dolar_06.csv",
+    "bytes": 3983
+  },
+  {
+    "arquivo": "dados/manual/google_trends/dolar_07.csv",
+    "bytes": 3999
+  },
+  {
+    "arquivo": "dados/manual/google_trends/dolar_03.csv",
+    "bytes": 4037
+  },
+  {
+    "arquivo": "dados/manual/google_trends/dolar_02.csv",
+    "bytes": 3983
+  },
+  {
+    "arquivo": "dados/manual/google_trends/dolar_01.csv",
+    "bytes": 3951
+  },
+  {
+    "arquivo": "dados/manual/google_trends/usdt_06.csv",
+    "bytes": 3468
+  },
+  {
+    "arquivo": "dados/manual/google_trends/usdt_07.csv",
+    "bytes": 3482
+  },
+  {
+    "arquivo": "dados/manual/google_trends/usdt_05.csv",
+    "bytes": 3454
+  },
+  {
+    "arquivo": "dados/manual/google_trends/usdt_11.csv",
+    "bytes": 1773
+  },
+  {
+    "arquivo": "dados/manual/google_trends/.gitkeep",
+    "bytes": 0
+  },
+  {
+    "arquivo": "dados/manual/google_trends/usdt_10.csv",
+    "bytes": 3453
+  },
+  {
+    "arquivo": "dados/manual/google_trends/usdt_04.csv",
+    "bytes": 3482
+  },
+  {
+    "arquivo": "dados/manual/google_trends/usdt_01.csv",
+    "bytes": 3308
+  },
+  {
+    "arquivo": "dados/manual/google_trends/usdt_03.csv",
+    "bytes": 3440
+  },
+  {
+    "arquivo": "dados/manual/google_trends/usdt_02.csv",
+    "bytes": 3468
+  },
+  {
+    "arquivo": "dados/manual/google_trends/usdt_09.csv",
+    "bytes": 3482
+  },
+  {
+    "arquivo": "dados/manual/google_trends/usdt_08.csv",
+    "bytes": 3454
+  },
+  {
+    "arquivo": "dados/manual/google_trends/dolar_09.csv",
+    "bytes": 3999
+  },
+  {
+    "arquivo": "dados/manual/google_trends/dolar_08.csv",
+    "bytes": 3855
+  },
+  {
+    "arquivo": "docs/figuras/09_buscas_usdt.png",
+    "bytes": 90830
+  },
+  {
+    "arquivo": "docs/figuras/02_janela_vs_fechamento.png",
+    "bytes": 60741
+  },
+  {
+    "arquivo": "docs/figuras/09_buscas_dolar.png",
+    "bytes": 91296
+  },
+  {
+    "arquivo": "docs/figuras/08_robustez.png",
+    "bytes": 63552
+  },
+  {
+    "arquivo": "docs/figuras/01_serie_agio.png",
+    "bytes": 142342
+  },
+  {
+    "arquivo": "docs/figuras/05_dolar_e_agio.png",
+    "bytes": 58928
+  },
+  {
+    "arquivo": "docs/figuras/07_trajetoria_negocios.png",
+    "bytes": 93155
+  },
+  {
+    "arquivo": "docs/figuras/03_agio_por_corretora.png",
+    "bytes": 117047
+  },
+  {
+    "arquivo": "docs/figuras/episodio_20260601_20260815.png",
+    "bytes": 273096
+  },
+  {
+    "arquivo": "docs/figuras/06_trajetoria_agio.png",
+    "bytes": 100082
+  },
+  {
+    "arquivo": "docs/figuras/04_agio_anormal_eventos.png",
+    "bytes": 78433
+  }
+]

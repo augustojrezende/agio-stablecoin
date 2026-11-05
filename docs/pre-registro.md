@@ -71,3 +71,54 @@ Todas as regressões: MQO com erros de Newey-West (5 defasagens), mesmos control
 - A correção de Holm passa a cobrir 7 hipóteses (V1, V2, V3, V4a, V4b, V5 e V6), e o quadro mostra a decisão pelo p simples (`confirma`) e pelo p ajustado (`confirma_holm`).
 
 **Situação na descoberta, pelo p ajustado de Holm.** V3 (0,031) e V4a (< 0,001) se mantêm. A V5 cai (0,104), e por isso deve ser lida como fraca.
+
+## Adendo 2 (05/11/2026, antes de qualquer análise de dados da validação)
+
+**Motivo.** As auditorias AUD-001 a AUD-003 e um parecer independente apontaram regras que faltavam para a validação. Este adendo as fixa antes de qualquer análise de dados posteriores a 30/10/2026. A exposição a dados novos até esta data está registrada em `congelamento.md`.
+
+**P1. Estratégia sequencial (substitui a regra de α = 1% na intermediária).**
+- **2027, leitura descritiva:** `agio testar --inicio 2026-11-02 --fim 2027-10-30` (dados até 29/10/2027). Relata estimativas e p-valores, sem decisão. As colunas `confirma` e `confirma_holm` dessa saída não valem como confirmação nem como refutação.
+- **2028, decisão única:** `agio testar --inicio 2026-11-02 --fim 2028-11-01` (dados até 31/10/2028), α = 5%. É a única decisão da validação.
+- **Por quê:** decidir em 2027 a 1% e em 2028 a 5% pode levar o erro por hipótese até 6%. Além disso, em 2027 haverá cerca de 8 eventos domésticos e 8 externos, abaixo do mínimo de 10.
+- `--fim` é exclusivo: entram os dias anteriores à data informada.
+
+**P2. Elegibilidade e amostra mínima** (incorpora as regras aprovadas na AUD-002, `auditorias/AUD-002/AUD-002_DECISOES_V2.md`).
+- **V1:** exige pelo menos 10 domésticos (fiscal e político) e 10 externos com CAR válido na lista completa. Abaixo disso, a V1 inteira é inconclusiva, não negativa.
+- **V2 e V5:** menos de 10 eventos com CAR válido torna a hipótese inconclusiva. Declarado agora: a descoberta teve cerca de 2 externos isolados por ano, então a V5 provavelmente será inconclusiva em 2028.
+- **Regressões (V3, V4a, V4b, V6):** exigem pelo menos 200 dias com todas as variáveis. Abaixo disso, inconclusivas.
+- **Família de Holm:** sempre as sete hipóteses (V1, V2, V3, V4a, V4b, V5, V6). Uma hipótese não estimável mantém a posição, com p ausente e decisão inconclusiva.
+- **Dias sem controle** (VIX ou juro real ausentes) saem da regressão, como na descoberta. Nenhum valor é preenchido.
+
+**P3. Critério de confirmação.**
+- A decisão é `confirma_holm`: sinal previsto **e** p ajustado por Holm < α. O p simples é relatado, mas não decide.
+- Os p-valores são bilaterais, com verificação do sinal, como na descoberta.
+- Três resultados possíveis: **confirmada**, **não confirmada** (inclui sinal oposto, registrado como tal) e **inconclusiva** (P2).
+- V4b e V6 usam a mesma estatística com sinais opostos; no máximo uma pode ser confirmada, e as duas não contam como evidências independentes.
+- A V1 usa a lista completa. O contraste dos eventos isolados não a substitui.
+
+**P4. Calendário, eventos e dados.**
+- **Calendário das sobreposições:** dias com PTAX publicada até o fim do período (`calendario_ptax` em `scripts/montar_eventos.py`). Nunca um arquivo de resultados, para que a lista possa ser fechada sem rodar o teste.
+- **Eventos de 2027 e 2028:** entram pela mesma regra do script (Copom, Fed, PLDO, PLOA, relatórios bimestrais e não agendados com fonte, até 30 dias depois do fato). `FIM_DADOS` e os anos do script são estendidos para cobrir o período. Isso é inclusão de dados previstos, não mudança de método, e cada atualização é registrada em `decisoes.md`.
+- **Lista fechada antes da análise:** a lista de cada período vai ao GitHub (commit e push) antes do comando `agio testar` daquele período.
+- **Coleta:** semanal, conforme a seção "Coleta durante a validação". Os dados da descoberta não são substituídos. Se uma fonte deixar de funcionar, isso é registrado e nenhuma série é trocada sem novo adendo.
+
+**P5. Congelamento.**
+- A versão usada na validação é a da tag `congelamento-v2`, criada no commit que incorpora a versão corrigida pela auditoria e este adendo. O manifesto (hashes, dependências e exposição) está em `congelamento.md`.
+- A versão original da descoberta fica na tag `descoberta-v1` (commit `543fdea`).
+- Depois do congelamento, código só muda para corrigir erro, com registro em `decisoes.md` e sem olhar resultados da validação.
+
+**Rótulo da V6.** Passa a ser "Ágio segue caindo após alta do dólar". O teste e o critério não mudam. "Realização de ganhos" fica como uma das explicações possíveis, não como parte da hipótese.
+
+**Situação na descoberta, com a versão corrigida** (substitui os números da tabela de comparação acima):
+
+| # | Descoberta corrigida |
+| --- | --- |
+| V1 | Juro 0,0019 (p = 0,088); domésticos − externos +0,07 (p = 0,77). Não confirmada. |
+| V2 | p = 0,63. Não confirmada. |
+| V3 | 0,016 (p = 0,008; Holm 0,031). Concentrada em 2020–2022 e sensível a dias influentes. |
+| V4a | −0,129 (p < 0,001). |
+| V4b | Soma −0,080 (p < 0,001): sinal contrário ao previsto. |
+| V5 | −0,67 p.p., 14 eventos (p = 0,024; Holm 0,072). Não confirmada após Holm. |
+| V6 | Soma −0,080 (p < 0,001; Holm 0,002). |
+
+Nenhum desses resultados é confirmação: a confirmação depende só da validação.

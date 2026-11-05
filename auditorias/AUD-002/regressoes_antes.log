@@ -1,0 +1,141 @@
+FFFFFFFF                                                                 [100%]
+=================================== FAILURES ===================================
+_________ test_aud06_multiplos_lotes_preservam_candles_e_ultima_coleta _________
+
+tmp_path = PosixPath('/private/var/folders/xr/f3kmmngs1cj9w6cljqtp8kt40000gn/T/pytest-of-augustojrezende/pytest-35/test_aud06_multiplos_lotes_pre0')
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x1108a7bb0>
+
+    def test_aud06_multiplos_lotes_preservam_candles_e_ultima_coleta(tmp_path, monkeypatch):
+        pasta = tmp_path / 'binance_1h'
+        pasta.mkdir()
+        def candle(h, preco):
+            return [int(pd.Timestamp(f'2026-01-02 {h}:00', tz='UTC').timestamp()*1000), str(preco), str(preco+1), str(preco-1), str(preco), '2']
+        (pasta/'a.json').write_text(json.dumps([candle(13, 5), candle(14, 6)]))
+        (pasta/'b.json').write_text(json.dumps([candle(14, 7), candle(15, 8)]))
+        monkeypatch.setattr(cli.arm, 'BRUTO', tmp_path)
+        h = cli._horas_do_bruto('binance')
+>       assert h.index.is_unique
+E       AssertionError: assert False
+E        +  where False = Index([0, 0, 1], dtype='int64').is_unique
+E        +    where Index([0, 0, 1], dtype='int64') =                  inicio_utc    fonte  maxima  minima  fechamento  volume_base\n0 2026-01-02 13:00:00+00:00  binance    ...       8       6           7            2\n1 2026-01-02 15:00:00+00:00  binance       9       7           8            2.index
+
+tests/test_aud002.py:32: AssertionError
+_______________ test_aud06_lotes_reais_sem_perda_nem_duplicacao ________________
+
+    def test_aud06_lotes_reais_sem_perda_nem_duplicacao():
+        for fonte, (mod, _) in cli.CORRETORAS.items():
+            lotes = [mod.tratar_horario(json.loads(p.read_text()), fonte)
+                     for p in sorted((cli.arm.BRUTO/f'{fonte}_1h').glob('*.json'))]
+            esperado = (pd.concat(lotes, ignore_index=True)
+                        .drop_duplicates(['inicio_utc', 'fonte'], keep='last')
+                        .sort_values(['inicio_utc', 'fonte']).reset_index(drop=True))
+            observado = cli._horas_do_bruto(fonte)
+>           assert observado.index.is_unique
+E           AssertionError: assert False
+E            +  where False = Index([  0,   1,   2,   3,   4,   5,   6,   7,   8,   9,\n       ...\n       251, 252, 253, 254, 255, 256, 257, 258, 259, 260],\n      dtype='int64', length=53031).is_unique
+E            +    where Index([  0,   1,   2,   3,   4,   5,   6,   7,   8,   9,\n       ...\n       251, 252, 253, 254, 255, 256, 257, 258, 259, 260],\n      dtype='int64', length=53031) =                    inicio_utc    fonte  maxima  minima  fechamento  volume_base\n0   2020-10-13 10:00:00+00:00  binance...    660878.00\n260 2026-11-01 20:00:00+00:00  binance  5.4570  5.4562      5.4563    160817.60\n\n[53031 rows x 6 columns].index
+
+tests/test_aud002.py:49: AssertionError
+______________ test_aud10_casos_reais_e_somente_duas_flags_mudam _______________
+
+    def test_aud10_casos_reais_e_somente_duas_flags_mudam():
+        mod = carregar_eventos()
+        novo = mod.montar().astype(str)
+        velho = pd.read_csv(ROOT/'dados/manual/eventos.csv').astype(str)
+        pd.testing.assert_frame_equal(novo.drop(columns='sobreposto'), velho.drop(columns='sobreposto'))
+        mudam = novo[novo.sobreposto != velho.sobreposto]
+>       assert set(zip(mudam.data, mudam.tipo)) == {('2021-10-28', 'monetario'), ('2021-11-04', 'externo')}
+E       AssertionError: assert set() == {('2021-10-28...', 'externo')}
+E         
+E         Extra items in the right set:
+E         ('2021-11-04', 'externo')
+E         ('2021-10-28', 'monetario')
+E         Use -v to get more diff
+
+tests/test_aud002.py:60: AssertionError
+_____ test_aud10_intersecao_usa_dias_observados_e_nao_sobrepoe_tipo_igual ______
+
+    def test_aud10_intersecao_usa_dias_observados_e_nao_sobrepoe_tipo_igual():
+        mod = carregar_eventos()
+        cal = pd.to_datetime(['2021-10-27','2021-10-28','2021-10-29','2021-11-01','2021-11-03','2021-11-04','2021-11-05','2021-11-08','2021-11-09','2021-11-10'])
+        ev = pd.DataFrame({'data':['2021-10-28','2021-11-04','2021-11-10'], 'tipo':['monetario','externo','externo']})
+>       out = mod.marcar_sobreposicoes(ev, cal)
+              ^^^^^^^^^^^^^^^^^^^^^^^^
+E       AttributeError: module 'montar_eventos_aud002' has no attribute 'marcar_sobreposicoes'
+
+tests/test_aud002.py:68: AttributeError
+____________ test_aud26_mediana_desenhada_igual_referencia_anormal _____________
+
+tmp_path = PosixPath('/private/var/folders/xr/f3kmmngs1cj9w6cljqtp8kt40000gn/T/pytest-of-augustojrezende/pytest-35/test_aud26_mediana_desenhada_i0')
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x110911220>
+
+    def test_aud26_mediana_desenhada_igual_referencia_anormal(tmp_path, monkeypatch):
+        valores = pd.Series(np.arange(80, dtype=float)**1.2)
+        dados = pd.DataFrame({'data':pd.bdate_range('2024-01-01',periods=80), 'agio_pct':valores})
+        monkeypatch.setattr(relatorio, '_ler', lambda p: dados if p.name=='agio_diario.csv' else None)
+        guardado = []
+        monkeypatch.setattr(relatorio, '_salvar', lambda fig,*args:guardado.append(fig))
+        relatorio.fig_serie(relatorio._plt(), [])
+        curva = guardado[0].axes[0].lines[1].get_ydata()
+        referencia = valores - analise._anormal(valores)
+>       np.testing.assert_allclose(curva, referencia, atol=1e-14, equal_nan=True)
+E       AssertionError: 
+E       Not equal to tolerance rtol=1e-07, atol=1e-14
+E       
+E       nan location mismatch:
+E        ACTUAL: array([       nan,        nan,        nan,        nan,        nan,
+E                     nan,        nan,        nan,        nan,        nan,
+E                     nan,        nan,        nan,        nan,        nan,...
+E        DESIRED: array([       nan,        nan,        nan,        nan,        nan,
+E                     nan,        nan,        nan,        nan,        nan,
+E                     nan,        nan,        nan,        nan,        nan,...
+
+tests/test_aud002.py:83: AssertionError
+___________ test_aud27_n_efetivo_variavel_sem_mudar_media_ou_placebo ___________
+
+    def test_aud27_n_efetivo_variavel_sem_mudar_media_ou_placebo():
+        b,e = dados_trajetoria()
+        tr = analise.trajetoria_evento(b,e,'y',antes=2,depois=2,n_sorteios=100)
+>       assert tr.n_eventos.tolist() == [2,2,1,2,2]
+E       assert [2, 2, 2, 2, 2] == [2, 2, 1, 2, 2]
+E         
+E         At index 2 diff: 2 != 1
+E         Use -v to get more diff
+
+tests/test_aud002.py:99: AssertionError
+________________ test_aud27_grafico_publica_n_por_dia_e_tabela _________________
+
+tmp_path = PosixPath('/private/var/folders/xr/f3kmmngs1cj9w6cljqtp8kt40000gn/T/pytest-of-augustojrezende/pytest-35/test_aud27_grafico_publica_n_p0')
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x11190b650>
+
+    def test_aud27_grafico_publica_n_por_dia_e_tabela(tmp_path, monkeypatch):
+        b,e = dados_trajetoria()
+        monkeypatch.setattr(relatorio,'FIGURAS',tmp_path)
+        figs=[]
+        relatorio.fig_trajetorias(relatorio._plt(),figs,b,e,'y','teste.png','Título','Unidade','Legenda',tipos=('fiscal',))
+        csv = tmp_path/'teste_fiscal.csv'
+>       assert csv.exists()
+E       AssertionError: assert False
+E        +  where False = exists()
+E        +    where exists = PosixPath('/private/var/folders/xr/f3kmmngs1cj9w6cljqtp8kt40000gn/T/pytest-of-augustojrezende/pytest-35/test_aud27_grafico_publica_n_p0/teste_fiscal.csv').exists
+
+tests/test_aud002.py:115: AssertionError
+___________________ test_aud31_volume_usdt_variacao_e_texto ____________________
+
+    def test_aud31_volume_usdt_variacao_e_texto():
+        b=pd.DataFrame({'no_episodio':[False,True], 'volume_janela_binance':[100.,150.]})
+        texto=episodio.resumo(b)
+>       assert 'volume_janela_binance (USDT)' in texto
+E       AssertionError: assert 'volume_janela_binance (USDT)' in 'Média nos 90 dias antes x durante o episódio:\n  volume_janela_binance                 100.000      150.000\nLeitura:...menores -> preço de poucos negócios.\n  - Pressão compradora > 0,5 e mais negócios -> procura; ticket menor -> varejo.'
+
+tests/test_aud002.py:125: AssertionError
+=========================== short test summary info ============================
+FAILED tests/test_aud002.py::test_aud06_multiplos_lotes_preservam_candles_e_ultima_coleta
+FAILED tests/test_aud002.py::test_aud06_lotes_reais_sem_perda_nem_duplicacao
+FAILED tests/test_aud002.py::test_aud10_casos_reais_e_somente_duas_flags_mudam
+FAILED tests/test_aud002.py::test_aud10_intersecao_usa_dias_observados_e_nao_sobrepoe_tipo_igual
+FAILED tests/test_aud002.py::test_aud26_mediana_desenhada_igual_referencia_anormal
+FAILED tests/test_aud002.py::test_aud27_n_efetivo_variavel_sem_mudar_media_ou_placebo
+FAILED tests/test_aud002.py::test_aud27_grafico_publica_n_por_dia_e_tabela - ...
+FAILED tests/test_aud002.py::test_aud31_volume_usdt_variacao_e_texto - Assert...
+8 failed in 4.08s

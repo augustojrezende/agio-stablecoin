@@ -19,10 +19,10 @@ A medida usa o preço do USDT no mesmo horário em que a PTAX é formada, para c
 ## Principais resultados (out/2020 a out/2026)
 
 - Quando o dólar oficial sobe 1%, o ágio cai cerca de 0,13 ponto percentual no dia e continua caindo por dois dias: o USDT acompanha o câmbio oficial só em parte.
-- O medo global (VIX) eleva o ágio, com resultado robusto em 7 de 9 especificações.
+- O medo global (VIX) está associado a ágio maior (positivo em 7 de 9 especificações), sobretudo em 2020–2022.
 - O estresse fiscal doméstico (juro real de 10 anos) quase não mexe no ágio, e os anúncios fiscais não o afetam mais que dias quaisquer.
 
-Detalhes, figuras e todas as verificações em [`docs/resultados.md`](docs/resultados.md). Os resultados novos serão confirmados com dados futuros, conforme o [pré-registro](docs/pre-registro.md).
+Detalhes, figuras e todas as verificações em [`docs/resultados.md`](docs/resultados.md). São associações observadas, não relações de causa. Os resultados novos serão confirmados com dados futuros, conforme o [pré-registro](docs/pre-registro.md). O código passou por três auditorias independentes; relatórios em [`auditorias/`](auditorias/).
 
 ## Começo rápido
 
@@ -32,7 +32,7 @@ cd agio-stablecoin
 python -m venv .venv
 source .venv/bin/activate          # Windows: .venv\Scripts\activate
 pip install -e ".[dev]"
-pytest                             # 41 testes, sem rede
+pytest                             # 64 testes, sem rede
 
 agio coletar --inicio 2020-10-01   # preços diários, PTAX e Selic
 agio coletar-horario --inicio 2020-10-01
@@ -71,6 +71,8 @@ Banco Central (PTAX e Selic), Binance e Mercado Bitcoin (USDT/BRL), Tesouro Tran
 | [`docs/resultados_tabelas.md`](docs/resultados_tabelas.md) e `docs/figuras/` | Tabelas e gráficos, gerados por `agio relatorio` |
 | [`docs/pre-registro.md`](docs/pre-registro.md) | Hipóteses e regras da validação com dados a partir de 02/11/2026 |
 | [`docs/decisoes.md`](docs/decisoes.md) | Diário de decisões metodológicas |
+| [`docs/congelamento.md`](docs/congelamento.md) | Versão congelada para a validação: commit, hashes, dependências e exposição a dados novos |
+| [`auditorias/`](auditorias/) | Relatórios das auditorias AUD-001 e AUD-002 |
 
 ## Licenças
 

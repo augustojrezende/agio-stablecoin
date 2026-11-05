@@ -1,0 +1,21 @@
+Média nos 90 dias antes x durante o episódio:
+  agio_janela_binance                     0.065        1.052
+  agio_janela_mercadobitcoin             -0.030        0.733
+  agio_fech_binance                       0.214        1.116
+  agio_fech_mercadobitcoin                0.204        1.091
+  agio_consolidado                        0.063        1.044
+  horas_janela_binance                    3.000        3.000
+  horas_janela_mercadobitcoin             2.967        3.000
+  volume_janela_binance            18419916.640 33648171.917
+  volume_janela_mercadobitcoin       361024.528   559239.902
+  num_negocios                        45388.633    57068.111
+  pressao_compradora                      0.534        0.484
+  ticket_medio_brl                     7113.518     9155.782
+  usdt_oferta_bi                        187.500      184.631
+  var_ptax_pct                           -0.015       -0.060
+Correlação entre corretoras no episódio: 0.76 (18 dias com as duas)
+Leitura:
+  - Ágio alto nas duas corretoras -> fenômeno de mercado; só em uma -> problema local.
+  - Alto na janela e no fechamento -> nível; só na janela -> horário ou pouca liquidez.
+  - horas_janela ou volume_janela muito menores -> preço de poucos negócios.
+  - Pressão compradora > 0,5 e mais negócios -> procura; ticket menor -> varejo.

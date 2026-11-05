@@ -169,6 +169,7 @@ def estudo_evento(base: pd.DataFrame, eventos: pd.DataFrame, coluna: str = "agio
             rng.shuffle(juntos)
             difs.append(juntos[:len(dom)].mean() - juntos[len(dom):].mean())
         comparacao = {"car_domesticos": dom.mean(), "car_externos": ext.mean(),
+                      "n_domesticos": len(dom), "n_externos": len(ext),
                       "diferenca": dif,
                       "p_valor_permutacao": float((np.abs(difs) >= abs(dif)).mean())}
     return ev[["data", "tipo", "descricao", "car"]], grupos, comparacao
@@ -294,7 +295,9 @@ def trajetoria_evento(base: pd.DataFrame, eventos: pd.DataFrame, coluna: str,
         "placebo_media": medias.mean(axis=0),
         "placebo_p025": np.percentile(medias, 2.5, axis=0),
         "placebo_p975": np.percentile(medias, 97.5, axis=0),
-        "n_eventos": len(validas),
+        "n_eventos": np.sum(~np.isnan(matriz), axis=0) if len(validas) else np.zeros(len(rel), dtype=int),
+        "n_eventos_nominal": len(validas),
+        "n_placebo_sorteado": n,
     })
 
 
@@ -333,7 +336,8 @@ def quadro_hipoteses(reg_agio: pd.DataFrame, soma_repasse: dict,
     dif = comp_agio["diferenca"] if comp_agio else np.nan
     p_dif = comp_agio["p_valor_permutacao"] if comp_agio else np.nan
     linhas.append(("V1", "Estresse fiscal eleva o ágio", f"juro {b:.4f}; dom−ext {dif:.3f}",
-                   np.nanmax([p, p_dif]), b > 0 and dif > 0))
+                   max(p, p_dif) if np.isfinite(p) and np.isfinite(p_dif) else np.nan,
+                   b > 0 and dif > 0))
     car = g.loc["todos", "car_medio"] if "todos" in g.index else np.nan
     linhas.append(("V2", "Crises elevam a participação", f"CAR negócios {car:.3f}",
                    g.loc["todos", "p_valor_permutacao"] if "todos" in g.index else np.nan,
@@ -346,8 +350,9 @@ def quadro_hipoteses(reg_agio: pd.DataFrame, soma_repasse: dict,
                    f"soma defasagens {soma_repasse['soma_defasagens']:.4f}",
                    soma_repasse["p_valor"], soma_repasse["soma_defasagens"] > 0))
     # V6: adendo de 01/11/2026 ao pré-registro (derivada da descoberta): o ágio
-    # continua caindo nos dias seguintes à alta do dólar (realização de ganhos).
-    linhas.append(("V6", "Realização de ganhos: ágio segue caindo depois",
+    # continua caindo nos dias seguintes à alta do dólar. O rótulo descreve o
+    # padrão, não um mecanismo (adendo 2, 05/11/2026).
+    linhas.append(("V6", "Ágio segue caindo após alta do dólar",
                    f"soma defasagens {soma_repasse['soma_defasagens']:.4f}",
                    soma_repasse["p_valor"], soma_repasse["soma_defasagens"] < 0))
     if grupos_ajustado_isolados is not None and "externo" in set(grupos_ajustado_isolados["tipo"]):
@@ -357,17 +362,30 @@ def quadro_hipoteses(reg_agio: pd.DataFrame, soma_repasse: dict,
                        f"CAR externos {car:.3f} (n={int(ge.loc['externo', 'n'])})",
                        ge.loc["externo", "p_valor_permutacao"],
                        car < ge.attrs.get("placebo_media", 0)))
+    else:
+        linhas.append(("V5", "Choques externos isolados reduzem o ágio",
+                       "não estimável: sem grupo externo isolado", np.nan, False))
     q = pd.DataFrame(linhas, columns=["hipotese", "descricao", "estimativa", "p_valor", "sinal_previsto"])
+    # AUD-002: família fixa. O 1 é apenas reserva conservadora no cálculo,
+    # não é p observado. Ausência permanece explícita nas colunas públicas.
+    q["estimavel"] = np.isfinite(q["p_valor"])
+    q.loc[~q["estimavel"], "p_valor"] = np.nan
     q["p_holm"] = holm(q["p_valor"].fillna(1.0).tolist())
     q["confirma"] = np.where(q["sinal_previsto"] & (q["p_valor"] < alfa), "sim", "nao")
     q["confirma_holm"] = np.where(q["sinal_previsto"] & (q["p_holm"] < alfa), "sim", "nao")
     # Pré-registro: menos de 10 eventos = sem poder, resultado inconclusivo.
-    n_eventos = {"V2": g.loc["todos", "n"] if "todos" in g.index else 0}
+    # Decisão do pesquisador, AUD-002: mínimo de dez em CADA braço de V1.
+    n_dom = comp_agio.get("n_domesticos", 0) if comp_agio else 0
+    n_ext = comp_agio.get("n_externos", 0) if comp_agio else 0
+    n_eventos = {"V1": min(n_dom, n_ext),
+                "V2": g.loc["todos", "n"] if "todos" in g.index else 0}
     if grupos_ajustado_isolados is not None and "externo" in set(grupos_ajustado_isolados["tipo"]):
         n_eventos["V5"] = grupos_ajustado_isolados.set_index("tipo").loc["externo", "n"]
     for h, n in n_eventos.items():
         if n < 10:
             q.loc[q["hipotese"] == h, ["confirma", "confirma_holm"]] = "inconclusivo"
+    q.loc[~q["estimavel"], ["confirma", "confirma_holm"]] = "inconclusivo"
+    q.loc[~q["estimavel"], "p_holm"] = np.nan
     return q
 
 

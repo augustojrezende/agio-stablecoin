@@ -1,0 +1,16 @@
+[
+  {
+    "fonte": "binance",
+    "horas": 52989,
+    "duplicatas_entre_lotes": 240,
+    "volume_negativo": 0,
+    "ohlc_invalido": 0
+  },
+  {
+    "fonte": "mercadobitcoin",
+    "horas": 30892,
+    "duplicatas_entre_lotes": 240,
+    "volume_negativo": 0,
+    "ohlc_invalido": 0
+  }
+]

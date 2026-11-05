@@ -1,6 +1,6 @@
-# Tabelas de resultados
+# Tabelas de resultados — V2 (AUD-002)
 
-*Gerado por `agio relatorio` em 01/11/2026. Não edite: rode o comando de novo. A interpretação está em `resultados.md`.*
+*Gerado por `agio relatorio` em 05/11/2026. Não edite: rode o comando de novo. A interpretação está em `resultados.md`.*
 
 ## Regressões (MQO, erros de Newey-West com 5 defasagens)
 
@@ -74,9 +74,9 @@ Soma das defasagens:
 
 Domésticos x externos:
 
-| car_domesticos | car_externos | diferenca | p_valor_permutacao |
-| --- | --- | --- | --- |
-| -0.131 | -0.202 | 0.072 | 0.766 |
+| car_domesticos | car_externos | n_domesticos | n_externos | diferenca | p_valor_permutacao |
+| --- | --- | --- | --- | --- | --- |
+| -0.131 | -0.202 | 50.000 | 53.000 | 0.072 | 0.766 |
 
 ### agio_ajustado_dolar, lista completa
 
@@ -93,9 +93,9 @@ Domésticos x externos:
 
 Domésticos x externos:
 
-| car_domesticos | car_externos | diferenca | p_valor_permutacao |
-| --- | --- | --- | --- |
-| 0.042 | -0.075 | 0.116 | 0.602 |
+| car_domesticos | car_externos | n_domesticos | n_externos | diferenca | p_valor_permutacao |
+| --- | --- | --- | --- | --- | --- |
+| 0.042 | -0.075 | 50.000 | 53.000 | 0.116 | 0.602 |
 
 ### negocios_anormal, lista completa
 
@@ -112,77 +112,77 @@ Domésticos x externos:
 
 Domésticos x externos:
 
-| car_domesticos | car_externos | diferenca | p_valor_permutacao |
-| --- | --- | --- | --- |
-| 0.310 | 0.542 | -0.232 | 0.490 |
+| car_domesticos | car_externos | n_domesticos | n_externos | diferenca | p_valor_permutacao |
+| --- | --- | --- | --- | --- | --- |
+| 0.310 | 0.542 | 50.000 | 53.000 | -0.232 | 0.490 |
 
 ### agio_anormal, sem eventos sobrepostos
 
 | tipo | n | car_medio | t | p_valor_t | p_valor_permutacao |
 | --- | --- | --- | --- | --- | --- |
-| externo | 15.000 | -0.757 | -1.967 | 0.069 | 0.036 |
-| fiscal | 30.000 | 0.005 | 0.025 | 0.980 | 0.562 |
-| monetario | 15.000 | -0.342 | -1.406 | 0.182 | 0.420 |
-| politico | 2.000 | -0.069 | -0.787 | 0.576 | 0.932 |
-| todos | 62.000 | -0.265 | -1.752 | 0.085 | 0.299 |
-| agendado=nao | 7.000 | -0.790 | -1.725 | 0.135 | 0.116 |
-| agendado=sim | 55.000 | -0.199 | -1.244 | 0.219 | 0.593 |
+| externo | 14.000 | -0.838 | -2.075 | 0.058 | 0.022 |
+| fiscal | 30.000 | 0.005 | 0.025 | 0.980 | 0.606 |
+| monetario | 14.000 | -0.449 | -1.911 | 0.078 | 0.237 |
+| politico | 2.000 | -0.069 | -0.787 | 0.576 | 0.943 |
+| todos | 60.000 | -0.300 | -1.943 | 0.057 | 0.197 |
+| agendado=nao | 7.000 | -0.790 | -1.725 | 0.135 | 0.117 |
+| agendado=sim | 53.000 | -0.235 | -1.439 | 0.156 | 0.400 |
 
 Domésticos x externos:
 
-| car_domesticos | car_externos | diferenca | p_valor_permutacao |
-| --- | --- | --- | --- |
-| 0.000 | -0.757 | 0.757 | 0.053 |
+| car_domesticos | car_externos | n_domesticos | n_externos | diferenca | p_valor_permutacao |
+| --- | --- | --- | --- | --- | --- |
+| 0.000 | -0.838 | 32.000 | 14.000 | 0.838 | 0.043 |
 
 ### agio_ajustado_dolar, sem eventos sobrepostos
 
 | tipo | n | car_medio | t | p_valor_t | p_valor_permutacao |
 | --- | --- | --- | --- | --- | --- |
-| externo | 15.000 | -0.614 | -1.646 | 0.122 | 0.035 |
-| fiscal | 30.000 | 0.218 | 1.132 | 0.267 | 0.347 |
-| monetario | 15.000 | -0.163 | -0.670 | 0.514 | 0.502 |
-| politico | 2.000 | -0.328 | -4.375 | 0.143 | 0.484 |
-| todos | 62.000 | -0.093 | -0.636 | 0.527 | 0.407 |
-| agendado=nao | 7.000 | -0.483 | -1.182 | 0.282 | 0.209 |
-| agendado=sim | 55.000 | -0.043 | -0.278 | 0.782 | 0.655 |
+| externo | 14.000 | -0.671 | -1.696 | 0.114 | 0.024 |
+| fiscal | 30.000 | 0.218 | 1.132 | 0.267 | 0.372 |
+| monetario | 14.000 | -0.280 | -1.217 | 0.245 | 0.277 |
+| politico | 2.000 | -0.328 | -4.375 | 0.143 | 0.480 |
+| todos | 60.000 | -0.124 | -0.832 | 0.409 | 0.284 |
+| agendado=nao | 7.000 | -0.483 | -1.182 | 0.282 | 0.207 |
+| agendado=sim | 53.000 | -0.076 | -0.478 | 0.635 | 0.474 |
 
 Domésticos x externos:
 
-| car_domesticos | car_externos | diferenca | p_valor_permutacao |
-| --- | --- | --- | --- |
-| 0.184 | -0.614 | 0.797 | 0.033 |
+| car_domesticos | car_externos | n_domesticos | n_externos | diferenca | p_valor_permutacao |
+| --- | --- | --- | --- | --- | --- |
+| 0.184 | -0.671 | 32.000 | 14.000 | 0.855 | 0.031 |
 
 ### negocios_anormal, sem eventos sobrepostos
 
 | tipo | n | car_medio | t | p_valor_t | p_valor_permutacao |
 | --- | --- | --- | --- | --- | --- |
-| externo | 15.000 | 0.973 | 1.430 | 0.175 | 0.266 |
-| fiscal | 30.000 | 0.491 | 1.883 | 0.070 | 0.870 |
-| monetario | 15.000 | 0.680 | 1.127 | 0.279 | 0.627 |
-| politico | 2.000 | 0.858 | 0.791 | 0.574 | 0.720 |
-| todos | 62.000 | 0.665 | 2.654 | 0.010 | 0.353 |
-| agendado=nao | 7.000 | 0.973 | 1.639 | 0.152 | 0.440 |
-| agendado=sim | 55.000 | 0.626 | 2.289 | 0.026 | 0.453 |
+| externo | 14.000 | 0.869 | 1.203 | 0.250 | 0.416 |
+| fiscal | 30.000 | 0.491 | 1.883 | 0.070 | 0.909 |
+| monetario | 14.000 | 0.501 | 0.810 | 0.433 | 0.933 |
+| politico | 2.000 | 0.858 | 0.791 | 0.574 | 0.731 |
+| todos | 60.000 | 0.594 | 2.341 | 0.023 | 0.567 |
+| agendado=nao | 7.000 | 0.973 | 1.639 | 0.152 | 0.452 |
+| agendado=sim | 53.000 | 0.544 | 1.961 | 0.055 | 0.737 |
 
 Domésticos x externos:
 
-| car_domesticos | car_externos | diferenca | p_valor_permutacao |
-| --- | --- | --- | --- |
-| 0.514 | 0.973 | -0.459 | 0.452 |
+| car_domesticos | car_externos | n_domesticos | n_externos | diferenca | p_valor_permutacao |
+| --- | --- | --- | --- | --- | --- |
+| 0.514 | 0.869 | 32.000 | 14.000 | -0.355 | 0.569 |
 
 ## Hipóteses do pré-registro (amostra de descoberta)
 
 *V3 a V5 surgiram nesta amostra: aqui são exploratórias. A confirmação é na validação (`pre-registro.md`).*
 
-| hipotese | descricao | estimativa | p_valor | sinal_previsto | p_holm | confirma | confirma_holm |
-| --- | --- | --- | --- | --- | --- | --- | --- |
-| V1 | Estresse fiscal eleva o ágio | juro 0.0019; dom−ext 0.072 | 0.7656 | True | 1.0000 | nao | nao |
-| V2 | Crises elevam a participação | CAR negócios 0.426 | 0.6310 | False | 1.0000 | nao | nao |
-| V3 | Medo global eleva o ágio | VIX anterior 0.0156 | 0.0078 | True | 0.0313 | sim | sim |
-| V4a | Repasse incompleto no dia | dólar -0.1290 | 0.0000 | True | 0.0000 | sim | sim |
-| V4b | Repasse se completa depois | soma defasagens -0.0798 | 0.0003 | False | 0.0015 | nao | nao |
-| V6 | Realização de ganhos: ágio segue caindo depois | soma defasagens -0.0798 | 0.0003 | True | 0.0015 | sim | sim |
-| V5 | Choques externos isolados reduzem o ágio | CAR externos -0.614 (n=15) | 0.0348 | True | 0.1044 | sim | nao |
+| hipotese | descricao | estimativa | p_valor | sinal_previsto | estimavel | p_holm | confirma | confirma_holm |
+| --- | --- | --- | --- | --- | --- | --- | --- | --- |
+| V1 | Estresse fiscal eleva o ágio | juro 0.0019; dom−ext 0.072 | 0.7656 | True | True | 1.0000 | nao | nao |
+| V2 | Crises elevam a participação | CAR negócios 0.426 | 0.6310 | False | True | 1.0000 | nao | nao |
+| V3 | Medo global eleva o ágio | VIX anterior 0.0156 | 0.0078 | True | True | 0.0313 | sim | sim |
+| V4a | Repasse incompleto no dia | dólar -0.1290 | 0.0000 | True | True | 0.0000 | sim | sim |
+| V4b | Repasse se completa depois | soma defasagens -0.0798 | 0.0003 | False | True | 0.0015 | nao | nao |
+| V6 | Ágio segue caindo após alta do dólar | soma defasagens -0.0798 | 0.0003 | True | True | 0.0015 | sim | sim |
+| V5 | Choques externos isolados reduzem o ágio | CAR externos -0.671 (n=14) | 0.0240 | True | True | 0.0720 | sim | nao |
 
 ## Robustez (ágio anormal)
 
@@ -235,13 +235,13 @@ Domésticos x externos:
 
 ![Quando o dólar oficial sobe, o ágio cai: o USDT acompanha só parte do movimento no mesmo dia. A reta é simples, sem controles; na regressão com controles o coeficiente é cerca de −0,13, e o ágio continua caindo nos dois dias seguintes. O ponto mais à direita é 26/10/2026 (dólar +8,8% após o segundo turno), dado real conferido no noticiário.](figuras/05_dolar_e_agio.png)
 
-**06_trajetoria_agio.png.** Média diária em torno de cada tipo de evento (faixa amarela: janela do teste, −1 a +3) contra a faixa de 95% de datas sorteadas.
+**06_trajetoria_agio.png.** Média diária em torno de cada tipo de evento (faixa amarela: janela do teste, −1 a +3) contra a faixa de 95% de datas sorteadas. n válido por dia indicado acima de cada ponto; pode variar por dados ausentes. Contagens, médias e faixas nos CSVs por tipo. O número nominal de datas do sorteio placebo foi preservado.
 
-![Média diária em torno de cada tipo de evento (faixa amarela: janela do teste, −1 a +3) contra a faixa de 95% de datas sorteadas.](figuras/06_trajetoria_agio.png)
+![Média diária em torno de cada tipo de evento (faixa amarela: janela do teste, −1 a +3) contra a faixa de 95% de datas sorteadas. n válido por dia indicado acima de cada ponto; pode variar por dados ausentes. Contagens, médias e faixas nos CSVs por tipo. O número nominal de datas do sorteio placebo foi preservado.](figuras/06_trajetoria_agio.png)
 
-**07_trajetoria_negocios.png.** Participação em torno dos eventos contra datas sorteadas. A participação cresce com o mercado, por isso a comparação é com a faixa placebo, não com zero.
+**07_trajetoria_negocios.png.** Participação em torno dos eventos contra datas sorteadas. A participação cresce com o mercado, por isso a comparação é com a faixa placebo, não com zero. n válido por dia indicado acima de cada ponto; pode variar por dados ausentes. Contagens, médias e faixas nos CSVs por tipo. O número nominal de datas do sorteio placebo foi preservado.
 
-![Participação em torno dos eventos contra datas sorteadas. A participação cresce com o mercado, por isso a comparação é com a faixa placebo, não com zero.](figuras/07_trajetoria_negocios.png)
+![Participação em torno dos eventos contra datas sorteadas. A participação cresce com o mercado, por isso a comparação é com a faixa placebo, não com zero. n válido por dia indicado acima de cada ponto; pode variar por dados ausentes. Contagens, médias e faixas nos CSVs por tipo. O número nominal de datas do sorteio placebo foi preservado.](figuras/07_trajetoria_negocios.png)
 
 **08_robustez.png.** Mesma regressão em 9 especificações. O VIX do dia anterior é positivo e significativo em quase todas; o juro real não é positivo e significativo em nenhuma.
 

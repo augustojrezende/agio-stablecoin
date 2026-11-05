@@ -1,0 +1,17 @@
+lista,variavel,teste,n_dom,n_ext,estatistica,p,referencia_nula
+completa,agio_anormal,Original rótulos irrestritos,50.0,53.0,0.07158032691530614,0.7656,0.0
+completa,agio_anormal,Rótulos dentro de ano; CAR centrado por ano,50.0,53.0,0.03495879015103576,0.8762247550489902,0.0
+completa,agio_anormal,"Deslocamento circular anual CAR, mínimo 20 posições",50.0,53.0,0.07158032691530614,0.9412117576484703,0.08615133086667988
+completa,agio_anormal,Placebos todos eventos estratificados por ano,,,-0.17516244538832673,0.2499500099980004,-0.06635259956947046
+completa,agio_ajustado_dolar,Original rótulos irrestritos,50.0,53.0,0.11642407794992482,0.6022,0.0
+completa,agio_ajustado_dolar,Rótulos dentro de ano; CAR centrado por ano,50.0,53.0,0.0883146237036234,0.6714657068586283,0.0
+completa,agio_ajustado_dolar,"Deslocamento circular anual CAR, mínimo 20 posições",50.0,53.0,0.11642407794992482,0.8668266346730654,0.08458491273942376
+completa,agio_ajustado_dolar,Placebos todos eventos estratificados por ano,,,-0.030601161763487022,0.27814437112577484,0.07165339724383137
+sem_sobrepostos,agio_anormal,Original rótulos irrestritos,32.0,15.0,0.7570834681283939,0.0526,0.0
+sem_sobrepostos,agio_anormal,Rótulos dentro de ano; CAR centrado por ano,32.0,15.0,0.5305056317508358,0.14957008598280344,0.0
+sem_sobrepostos,agio_anormal,"Deslocamento circular anual CAR, mínimo 20 posições",32.0,15.0,0.7570834681283939,0.1803639272145571,0.3206514936940126
+sem_sobrepostos,agio_anormal,Placebos todos eventos estratificados por ano,,,-0.265497766274859,0.4391121775644871,-0.15206247496730574
+sem_sobrepostos,agio_ajustado_dolar,Original rótulos irrestritos,32.0,15.0,0.7973879886609845,0.033,0.0
+sem_sobrepostos,agio_ajustado_dolar,Rótulos dentro de ano; CAR centrado por ano,32.0,15.0,0.58538437241398,0.09418116376724656,0.0
+sem_sobrepostos,agio_ajustado_dolar,"Deslocamento circular anual CAR, mínimo 20 posições",32.0,15.0,0.7973879886609845,0.1357728454309138,0.30910810291645957
+sem_sobrepostos,agio_ajustado_dolar,Placebos todos eventos estratificados por ano,,,-0.09312929063931734,0.519496100779844,0.002881379003012697

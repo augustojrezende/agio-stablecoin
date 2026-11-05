@@ -1,0 +1,55 @@
+Traceback (most recent call last):
+  File "<frozen runpy>", line 203, in _run_module_as_main
+  File "<frozen runpy>", line 88, in _run_code
+  File "/Users/augustojrezende/Projetos/agio-stablecoin_v2/src/agio/cli.py", line 543, in <module>
+    main()
+    ~~~~^^
+  File "/Users/augustojrezende/Projetos/agio-stablecoin_v2/src/agio/cli.py", line 537, in main
+    robustez()
+    ~~~~~~~~^^
+  File "/Users/augustojrezende/Projetos/agio-stablecoin_v2/src/agio/cli.py", line 390, in robustez
+    lotes.append(preco_janela_ptax(horas, hora_fim=14))
+                 ~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^
+  File "/Users/augustojrezende/Projetos/agio-stablecoin_v2/src/agio/janela.py", line 36, in preco_janela_ptax
+    df["data"] = local.loc[df.index].dt.date
+    ~~^^^^^^^^
+  File "/Users/augustojrezende/Projetos/agio-stablecoin_v2/.venv/lib/python3.14/site-packages/pandas/core/frame.py", line 4659, in __setitem__
+    self._set_item(key, value)
+    ~~~~~~~~~~~~~~^^^^^^^^^^^^
+  File "/Users/augustojrezende/Projetos/agio-stablecoin_v2/.venv/lib/python3.14/site-packages/pandas/core/frame.py", line 4895, in _set_item
+    value, refs = self._sanitize_column(value)
+                  ~~~~~~~~~~~~~~~~~~~~~^^^^^^^
+  File "/Users/augustojrezende/Projetos/agio-stablecoin_v2/.venv/lib/python3.14/site-packages/pandas/core/frame.py", line 6403, in _sanitize_column
+    return _reindex_for_setitem(value, self.index)
+  File "/Users/augustojrezende/Projetos/agio-stablecoin_v2/.venv/lib/python3.14/site-packages/pandas/core/frame.py", line 20421, in _reindex_for_setitem
+    raise err
+  File "/Users/augustojrezende/Projetos/agio-stablecoin_v2/.venv/lib/python3.14/site-packages/pandas/core/frame.py", line 20416, in _reindex_for_setitem
+    reindexed_value = value.reindex(index)._values
+                      ~~~~~~~~~~~~~^^^^^^^
+  File "/Users/augustojrezende/Projetos/agio-stablecoin_v2/.venv/lib/python3.14/site-packages/pandas/core/series.py", line 6035, in reindex
+    return super().reindex(
+           ~~~~~~~~~~~~~~~^
+        index=index,
+        ^^^^^^^^^^^^
+    ...<5 lines>...
+        copy=copy,
+        ^^^^^^^^^^
+    )
+    ^
+  File "/Users/augustojrezende/Projetos/agio-stablecoin_v2/.venv/lib/python3.14/site-packages/pandas/core/generic.py", line 5544, in reindex
+    return self._reindex_axes(
+           ~~~~~~~~~~~~~~~~~~^
+        axes, level, limit, tolerance, method, fill_value
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    ).__finalize__(self, method="reindex")
+    ^
+  File "/Users/augustojrezende/Projetos/agio-stablecoin_v2/.venv/lib/python3.14/site-packages/pandas/core/generic.py", line 5566, in _reindex_axes
+    new_index, indexer = ax.reindex(
+                         ~~~~~~~~~~^
+        labels, level=level, limit=limit, tolerance=tolerance, method=method
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "/Users/augustojrezende/Projetos/agio-stablecoin_v2/.venv/lib/python3.14/site-packages/pandas/core/indexes/base.py", line 4450, in reindex
+    raise ValueError("cannot reindex on an axis with duplicate labels")
+ValueError: cannot reindex on an axis with duplicate labels

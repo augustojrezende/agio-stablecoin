@@ -1,0 +1,8 @@
+.........................................                                [100%]
+=============================== warnings summary ===============================
+tests/test_analise.py::test_estudo_evento_detecta_choque
+  /Users/augustojrezende/Projetos/agio-stablecoin/.venv/lib/python3.14/site-packages/scipy/stats/_axis_nan_policy.py:601: RuntimeWarning: Precision loss occurred in moment calculation due to catastrophic cancellation. This occurs when the data are nearly identical. Results may be unreliable.
+    res = hypotest_fun_out(*samples, **kwds)
+
+-- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html
+41 passed, 1 warning in 36.78s

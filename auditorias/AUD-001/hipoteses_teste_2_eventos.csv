@@ -1,0 +1,8 @@
+hipotese,descricao,estimativa,p_valor,sinal_previsto,p_holm,confirma,confirma_holm
+V1,Estresse fiscal eleva o ágio,juro 0.0019; dom−ext -1.935,1.0,False,1.0,nao,nao
+V2,Crises elevam a participação,CAR negócios 0.426,0.631,True,1.0,nao,nao
+V3,Medo global eleva o ágio,VIX anterior 0.0156,0.007835943808184666,True,0.031343775232738666,sim,sim
+V4a,Repasse incompleto no dia,dólar -0.1290,8.928146515702414e-22,True,6.24970256099169e-21,sim,sim
+V4b,Repasse se completa depois,soma defasagens -0.0798,0.0002539670145331315,False,0.0015238020871987889,nao,nao
+V6,Realização de ganhos: ágio segue caindo depois,soma defasagens -0.0798,0.0002539670145331315,True,0.0015238020871987889,sim,sim
+V5,Choques externos isolados reduzem o ágio,CAR externos -0.614 (n=15),0.0348,True,0.10439999999999999,sim,nao

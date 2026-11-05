@@ -101,7 +101,11 @@ def resumo(base: pd.DataFrame) -> str:
                ("num_negocios", "pressao_compradora", "ticket_medio_brl", "var_ptax_pct",
                     "usdt_oferta_bi")]
     for c in colunas:
-        linhas.append(f"  {c:32s} {antes[c].mean():>12.3f} {durante[c].mean():>12.3f}")
+        rotulo = f"{c} (USDT)" if c.startswith("volume_janela") else c
+        anterior, atual = antes[c].mean(), durante[c].mean()
+        variacao = (f"; variação {100 * (atual / anterior - 1):+.2f}%"
+                    if c.startswith("volume_janela") and anterior > 0 else "")
+        linhas.append(f"  {rotulo:40s} {anterior:>12.3f} {atual:>12.3f}{variacao}")
     duas = [c for c in base.columns if c.startswith("agio_janela_")]
     if len(duas) >= 2:
         d = durante[duas].dropna()

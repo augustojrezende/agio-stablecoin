@@ -1,0 +1,203 @@
+FFF..FFFFFFFFF.                                                          [100%]
+=================================== FAILURES ===================================
+__________________ test_aud21_minimo_dez_por_grupo[0-0-False] __________________
+
+n_dom = 0, n_ext = 0, elegivel = False
+
+    @pytest.mark.parametrize('n_dom,n_ext,elegivel',[(0,0,False),(2,2,False),(9,9,False),(10,10,True),(11,11,True),(9,20,False),(20,9,False),(0,20,False),(20,0,False)])
+    def test_aud21_minimo_dez_por_grupo(n_dom,n_ext,elegivel):
+        q=a.quadro_hipoteses(*entradas(n_dom,n_ext)).set_index('hipotese')
+        esperado='sim' if elegivel else 'inconclusivo'
+>       assert q.loc['V1','confirma']==esperado
+E       AssertionError: assert 'sim' == 'inconclusivo'
+E         
+E         - inconclusivo
+E         + sim
+
+tests/test_aud002_hipoteses.py:27: AssertionError
+__________________ test_aud21_minimo_dez_por_grupo[2-2-False] __________________
+
+n_dom = 2, n_ext = 2, elegivel = False
+
+    @pytest.mark.parametrize('n_dom,n_ext,elegivel',[(0,0,False),(2,2,False),(9,9,False),(10,10,True),(11,11,True),(9,20,False),(20,9,False),(0,20,False),(20,0,False)])
+    def test_aud21_minimo_dez_por_grupo(n_dom,n_ext,elegivel):
+        q=a.quadro_hipoteses(*entradas(n_dom,n_ext)).set_index('hipotese')
+        esperado='sim' if elegivel else 'inconclusivo'
+>       assert q.loc['V1','confirma']==esperado
+E       AssertionError: assert 'sim' == 'inconclusivo'
+E         
+E         - inconclusivo
+E         + sim
+
+tests/test_aud002_hipoteses.py:27: AssertionError
+__________________ test_aud21_minimo_dez_por_grupo[9-9-False] __________________
+
+n_dom = 9, n_ext = 9, elegivel = False
+
+    @pytest.mark.parametrize('n_dom,n_ext,elegivel',[(0,0,False),(2,2,False),(9,9,False),(10,10,True),(11,11,True),(9,20,False),(20,9,False),(0,20,False),(20,0,False)])
+    def test_aud21_minimo_dez_por_grupo(n_dom,n_ext,elegivel):
+        q=a.quadro_hipoteses(*entradas(n_dom,n_ext)).set_index('hipotese')
+        esperado='sim' if elegivel else 'inconclusivo'
+>       assert q.loc['V1','confirma']==esperado
+E       AssertionError: assert 'sim' == 'inconclusivo'
+E         
+E         - inconclusivo
+E         + sim
+
+tests/test_aud002_hipoteses.py:27: AssertionError
+_________________ test_aud21_minimo_dez_por_grupo[9-20-False] __________________
+
+n_dom = 9, n_ext = 20, elegivel = False
+
+    @pytest.mark.parametrize('n_dom,n_ext,elegivel',[(0,0,False),(2,2,False),(9,9,False),(10,10,True),(11,11,True),(9,20,False),(20,9,False),(0,20,False),(20,0,False)])
+    def test_aud21_minimo_dez_por_grupo(n_dom,n_ext,elegivel):
+        q=a.quadro_hipoteses(*entradas(n_dom,n_ext)).set_index('hipotese')
+        esperado='sim' if elegivel else 'inconclusivo'
+>       assert q.loc['V1','confirma']==esperado
+E       AssertionError: assert 'sim' == 'inconclusivo'
+E         
+E         - inconclusivo
+E         + sim
+
+tests/test_aud002_hipoteses.py:27: AssertionError
+_________________ test_aud21_minimo_dez_por_grupo[20-9-False] __________________
+
+n_dom = 20, n_ext = 9, elegivel = False
+
+    @pytest.mark.parametrize('n_dom,n_ext,elegivel',[(0,0,False),(2,2,False),(9,9,False),(10,10,True),(11,11,True),(9,20,False),(20,9,False),(0,20,False),(20,0,False)])
+    def test_aud21_minimo_dez_por_grupo(n_dom,n_ext,elegivel):
+        q=a.quadro_hipoteses(*entradas(n_dom,n_ext)).set_index('hipotese')
+        esperado='sim' if elegivel else 'inconclusivo'
+>       assert q.loc['V1','confirma']==esperado
+E       AssertionError: assert 'sim' == 'inconclusivo'
+E         
+E         - inconclusivo
+E         + sim
+
+tests/test_aud002_hipoteses.py:27: AssertionError
+_________________ test_aud21_minimo_dez_por_grupo[0-20-False] __________________
+
+n_dom = 0, n_ext = 20, elegivel = False
+
+    @pytest.mark.parametrize('n_dom,n_ext,elegivel',[(0,0,False),(2,2,False),(9,9,False),(10,10,True),(11,11,True),(9,20,False),(20,9,False),(0,20,False),(20,0,False)])
+    def test_aud21_minimo_dez_por_grupo(n_dom,n_ext,elegivel):
+        q=a.quadro_hipoteses(*entradas(n_dom,n_ext)).set_index('hipotese')
+        esperado='sim' if elegivel else 'inconclusivo'
+>       assert q.loc['V1','confirma']==esperado
+E       AssertionError: assert 'sim' == 'inconclusivo'
+E         
+E         - inconclusivo
+E         + sim
+
+tests/test_aud002_hipoteses.py:27: AssertionError
+_________________ test_aud21_minimo_dez_por_grupo[20-0-False] __________________
+
+n_dom = 20, n_ext = 0, elegivel = False
+
+    @pytest.mark.parametrize('n_dom,n_ext,elegivel',[(0,0,False),(2,2,False),(9,9,False),(10,10,True),(11,11,True),(9,20,False),(20,9,False),(0,20,False),(20,0,False)])
+    def test_aud21_minimo_dez_por_grupo(n_dom,n_ext,elegivel):
+        q=a.quadro_hipoteses(*entradas(n_dom,n_ext)).set_index('hipotese')
+        esperado='sim' if elegivel else 'inconclusivo'
+>       assert q.loc['V1','confirma']==esperado
+E       AssertionError: assert 'sim' == 'inconclusivo'
+E         
+E         - inconclusivo
+E         + sim
+
+tests/test_aud002_hipoteses.py:27: AssertionError
+___________________ test_aud21_grupo_ausente_nao_usa_so_juro ___________________
+
+    def test_aud21_grupo_ausente_nao_usa_so_juro():
+        args=list(entradas());args[3]=None
+        row=a.quadro_hipoteses(*args).set_index('hipotese').loc['V1']
+>       assert row.confirma=='inconclusivo'
+E       AssertionError: assert 'nao' == 'inconclusivo'
+E         
+E         - inconclusivo
+E         + nao
+
+tests/test_aud002_hipoteses.py:34: AssertionError
+________________ test_aud21_contagens_vem_dos_eventos_elegiveis ________________
+
+    def test_aud21_contagens_vem_dos_eventos_elegiveis():
+        b=pd.DataFrame({'data':pd.bdate_range('2020-01-01',periods=180),'agio_anormal':np.sin(np.arange(180))})
+        ev=pd.DataFrame({'data':b.data.iloc[[20,45,70,90,110,179]].to_numpy(),
+                         'tipo':['fiscal','politico','externo','monetario','regulatorio','externo'],'descricao':list('abcdef')})
+        _,_,comp=a.estudo_evento(b,ev,n_perm=20)
+>       assert comp['n_domesticos']==2 and comp['n_externos']==1
+               ^^^^^^^^^^^^^^^^^^^^
+E       KeyError: 'n_domesticos'
+
+tests/test_aud002_hipoteses.py:44: KeyError
+_________ test_aud22_familia_fixa_v5_indisponivel_sem_p_ficticio[none] _________
+
+ausencia = 'none'
+
+    @pytest.mark.parametrize('ausencia',['none','sem_externo','p_nan'])
+    def test_aud22_familia_fixa_v5_indisponivel_sem_p_ficticio(ausencia):
+        args=list(entradas())
+        if ausencia=='none':args[4]=None
+        elif ausencia=='sem_externo':args[4]=args[4].assign(tipo='fiscal')
+        else:args[4]=args[4].assign(p_valor_permutacao=np.nan)
+        q=a.quadro_hipoteses(*args).set_index('hipotese')
+>       assert set(q.index)=={'V1','V2','V3','V4a','V4b','V5','V6'}
+E       AssertionError: assert {'V1', 'V2', ..., 'V4b', 'V6'} == {'V1', 'V2', ...b', 'V5', ...}
+E         
+E         Extra items in the right set:
+E         'V5'
+E         Use -v to get more diff
+
+tests/test_aud002_hipoteses.py:54: AssertionError
+_____ test_aud22_familia_fixa_v5_indisponivel_sem_p_ficticio[sem_externo] ______
+
+ausencia = 'sem_externo'
+
+    @pytest.mark.parametrize('ausencia',['none','sem_externo','p_nan'])
+    def test_aud22_familia_fixa_v5_indisponivel_sem_p_ficticio(ausencia):
+        args=list(entradas())
+        if ausencia=='none':args[4]=None
+        elif ausencia=='sem_externo':args[4]=args[4].assign(tipo='fiscal')
+        else:args[4]=args[4].assign(p_valor_permutacao=np.nan)
+        q=a.quadro_hipoteses(*args).set_index('hipotese')
+>       assert set(q.index)=={'V1','V2','V3','V4a','V4b','V5','V6'}
+E       AssertionError: assert {'V1', 'V2', ..., 'V4b', 'V6'} == {'V1', 'V2', ...b', 'V5', ...}
+E         
+E         Extra items in the right set:
+E         'V5'
+E         Use -v to get more diff
+
+tests/test_aud002_hipoteses.py:54: AssertionError
+________ test_aud22_familia_fixa_v5_indisponivel_sem_p_ficticio[p_nan] _________
+
+ausencia = 'p_nan'
+
+    @pytest.mark.parametrize('ausencia',['none','sem_externo','p_nan'])
+    def test_aud22_familia_fixa_v5_indisponivel_sem_p_ficticio(ausencia):
+        args=list(entradas())
+        if ausencia=='none':args[4]=None
+        elif ausencia=='sem_externo':args[4]=args[4].assign(tipo='fiscal')
+        else:args[4]=args[4].assign(p_valor_permutacao=np.nan)
+        q=a.quadro_hipoteses(*args).set_index('hipotese')
+        assert set(q.index)=={'V1','V2','V3','V4a','V4b','V5','V6'}
+>       assert pd.isna(q.loc['V5','p_valor']) and pd.isna(q.loc['V5','p_holm'])
+E       assert (True and False)
+E        +  where True = <function isna at 0x1084f6770>(np.float64(nan))
+E        +    where <function isna at 0x1084f6770> = pd.isna
+E        +  and   False = <function isna at 0x1084f6770>(np.float64(1.0))
+E        +    where <function isna at 0x1084f6770> = pd.isna
+
+tests/test_aud002_hipoteses.py:55: AssertionError
+=========================== short test summary info ============================
+FAILED tests/test_aud002_hipoteses.py::test_aud21_minimo_dez_por_grupo[0-0-False]
+FAILED tests/test_aud002_hipoteses.py::test_aud21_minimo_dez_por_grupo[2-2-False]
+FAILED tests/test_aud002_hipoteses.py::test_aud21_minimo_dez_por_grupo[9-9-False]
+FAILED tests/test_aud002_hipoteses.py::test_aud21_minimo_dez_por_grupo[9-20-False]
+FAILED tests/test_aud002_hipoteses.py::test_aud21_minimo_dez_por_grupo[20-9-False]
+FAILED tests/test_aud002_hipoteses.py::test_aud21_minimo_dez_por_grupo[0-20-False]
+FAILED tests/test_aud002_hipoteses.py::test_aud21_minimo_dez_por_grupo[20-0-False]
+FAILED tests/test_aud002_hipoteses.py::test_aud21_grupo_ausente_nao_usa_so_juro
+FAILED tests/test_aud002_hipoteses.py::test_aud21_contagens_vem_dos_eventos_elegiveis
+FAILED tests/test_aud002_hipoteses.py::test_aud22_familia_fixa_v5_indisponivel_sem_p_ficticio[none]
+FAILED tests/test_aud002_hipoteses.py::test_aud22_familia_fixa_v5_indisponivel_sem_p_ficticio[sem_externo]
+FAILED tests/test_aud002_hipoteses.py::test_aud22_familia_fixa_v5_indisponivel_sem_p_ficticio[p_nan]
+12 failed, 3 passed in 2.95s

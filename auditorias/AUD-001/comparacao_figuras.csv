@@ -1,0 +1,12 @@
+figura,dimensao,pixels_iguais,sha_igual
+01_serie_agio.png,"(1350, 540)",True,True
+02_janela_vs_fechamento.png,"(690, 630)",True,True
+03_agio_por_corretora.png,"(1350, 480)",True,True
+04_agio_anormal_eventos.png,"(1350, 540)",True,True
+05_dolar_e_agio.png,"(690, 630)",True,True
+06_trajetoria_agio.png,"(1350, 480)",True,True
+07_trajetoria_negocios.png,"(1350, 480)",True,True
+08_robustez.png,"(1350, 570)",True,True
+09_buscas_dolar.png,"(1350, 480)",True,True
+09_buscas_usdt.png,"(1350, 480)",True,True
+episodio_20260601_20260815.png,"(1350, 1125)",False,False

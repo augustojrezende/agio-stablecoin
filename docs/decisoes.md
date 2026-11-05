@@ -226,3 +226,15 @@ Fontes: [Resolução 574](https://www.letsmoney.com.br/noticias/bc-adia-novembro
 - **Agora:** "O ágio da stablecoin em reais: reação a choques domésticos e externos no Brasil (2020–2026)".
 - **Antes:** "Medo fiscal ou medo global? O ágio da stablecoin em reais diante de choques domésticos e externos (2020–2026)".
 - **Motivo:** títulos acadêmicos evitam interrogação, e "medo fiscal" e "medo global" são a interpretação do resultado, não o objeto do estudo. O título passa a nomear o objeto (o ágio) e o que se compara (choques domésticos e externos). Hipóteses, testes e pré-registro não mudam.
+
+## 2026-11-05 — Auditorias, versão corrigida e congelamento
+
+- **Auditorias (02/11/2026):** AUD-001 (diagnóstico), AUD-002 (correção numa cópia separada) e AUD-003 (parecer final, aprovado com ressalvas). Relatórios em `auditorias/`. Parecer independente sobre as três em 05/11/2026, também aprovado com ressalvas.
+- **Incorporação:** a versão corrigida (V2) entra no repositório com os caminhos de sempre (`dados/resultados`, `dados/manual/eventos.csv`, `docs/figuras`). A versão original fica na tag `descoberta-v1`.
+- **Sete erros corrigidos:** robustez com índices duplicados, calendário das sobreposições, mínimo de eventos da V1, família de Holm, mediana da Figura 1, n das trajetórias e unidade do volume. Nenhum mudou a regressão principal, a robustez ou a decisão das hipóteses. A lista isolada passou de 62 para 60 eventos.
+- **Calendário das sobreposições pela PTAX:** `scripts/montar_eventos.py` passou a usar os dias com PTAX publicada (`calendario_ptax`), e não `base_teste.csv`, que só existe depois de rodar o teste. Gera a mesma lista da V2 (conferido: 158 eventos idênticos).
+- **Rótulo da V6:** "Ágio segue caindo após alta do dólar". O teste não muda.
+- **Placebos temporais na lista corrigida:** com rótulos embaralhados dentro de cada ano, p = 0,091 (ajustado) e 0,135 (anormal); com deslocamento das séries dentro do ano, p = 0,086 e 0,107. O contraste dos isolados (p = 0,031 e 0,043) não resiste. Diagnóstico, não nova especificação.
+- **Reprodução:** com os caminhos de sempre, `agio testar` e `agio robustez` geram resultados idênticos aos da V2 auditada (só o rótulo da V6 muda); 64 testes passam.
+- **Testes sem os dados coletados:** os dois testes que conferem a lista de eventos e os lotes horários com os dados reais são pulados num clone sem dados; o teste da regra dos eventos usa um calendário sintético.
+- **Decisão (aprovada pelo pesquisador):** adendo 2 ao pré-registro (P1 a P5) e congelamento na tag `congelamento-v2`.

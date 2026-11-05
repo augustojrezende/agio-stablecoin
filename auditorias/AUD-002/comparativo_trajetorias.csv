@@ -1,0 +1,13 @@
+figura,tipo,n_v1,n_v2_min,n_v2_max,medias_faixas_identicas
+06_trajetoria_agio,fiscal,47,46,47,True
+06_trajetoria_agio,externo,54,53,53,True
+06_trajetoria_agio,monetario,48,47,47,True
+07_trajetoria_negocios,fiscal,47,46,47,True
+07_trajetoria_negocios,externo,54,53,53,True
+07_trajetoria_negocios,monetario,48,47,47,True
+09_buscas_dolar,fiscal,47,46,47,True
+09_buscas_dolar,externo,54,53,53,True
+09_buscas_dolar,monetario,48,47,47,True
+09_buscas_usdt,fiscal,47,46,47,True
+09_buscas_usdt,externo,54,53,53,True
+09_buscas_usdt,monetario,48,47,47,True

@@ -1,0 +1,320 @@
+Aviso: 'comprar dólar' tem só 2 dias com busca na sobreposição perto de 2021-04-01; termo fora da série (volume baixo demais).
+Ágio alinhado à janela da PTAX (10h-13h): 1520 dias úteis.
+Correlação alinhado x fechamento: 0.535
+Dias em que o horário mais mudou o resultado:
+      data  agio_pct  agio_pct_fechamento
+2025-04-09 -0.041084            -3.510158
+2024-08-05  3.448005             0.282705
+2025-10-10  0.070877             2.894843
+2021-01-12  1.591295            -1.110969
+2021-03-24  0.882327             3.506235
+2020-11-06  1.423111            -1.180554
+2025-12-05  0.127529             2.526262
+2021-02-25  0.618104             2.985348
+Painel diário (ágio + comportamento): 1520 dias.
+      data      agio  agio_pct  n_fontes  num_negocios  pressao_compradora  ticket_medio_brl  busca_usdt  busca_dólar  agio_fechamento_pct
+2026-10-19  0.000673  0.067311       2.0       37561.0            0.499545      11023.600726   86.425024    51.288811            -0.165779
+2026-10-20  0.001356  0.135627       2.0       43766.0            0.506860      10577.983099   81.876339    45.590054             0.506807
+2026-10-21  0.000558  0.055759       2.0       41691.0            0.473718      10084.829857   77.327653    45.590054             0.290985
+2026-10-22  0.001193  0.119273       2.0       40800.0            0.525329       9566.281483   81.876339    45.590054             0.498157
+2026-10-23  0.000778  0.077815       2.0       46625.0            0.550661      10282.708964   90.973710    45.590054            -0.420900
+2026-10-26 -0.005532 -0.553242       2.0      105376.0            0.454738       6213.736861  454.868548   569.875678            -2.118850
+2026-10-27 -0.000007 -0.000709       2.0       45317.0            0.492840       8389.108710  150.106621   250.745298             0.457651
+2026-10-28  0.000709  0.070897       2.0       44434.0            0.533804       9777.894821  127.363193   136.770163             0.292502
+2026-10-29  0.000592  0.059202       2.0       70827.0            0.559542       7003.991220  122.814508    96.878865             0.120723
+2026-10-30 -0.004431 -0.443123       2.0       57042.0            0.516745       2672.256960  154.655306    85.481352            -0.647385
+
+=== Regressão: Ágio anormal (p.p.) ===
+                            OLS Regression Results                            
+==============================================================================
+Dep. Variable:           agio_anormal   R-squared:                       0.095
+Model:                            OLS   Adj. R-squared:                  0.092
+Method:                 Least Squares   F-statistic:                     20.51
+Date:                Mon, 02 Nov 2026   Prob (F-statistic):           7.60e-20
+Time:                        18:59:57   Log-Likelihood:                -445.34
+No. Observations:                1490   AIC:                             902.7
+Df Residuals:                    1484   BIC:                             934.5
+Df Model:                           5                                         
+Covariance Type:                  HAC                                         
+===============================================================================
+                  coef    std err          z      P>|z|      [0.025      0.975]
+-------------------------------------------------------------------------------
+Intercept      -0.5229      0.289     -1.807      0.071      -1.090       0.044
+d_dolar        -0.1290      0.013     -9.589      0.000      -0.155      -0.103
+d_juro_bp       0.0019      0.001      1.708      0.088      -0.000       0.004
+d_vix           0.0212      0.011      1.988      0.047       0.000       0.042
+d_vix_ant       0.0156      0.006      2.659      0.008       0.004       0.027
+log_mercado     0.0294      0.017      1.713      0.087      -0.004       0.063
+==============================================================================
+Omnibus:                      520.365   Durbin-Watson:                   0.987
+Prob(Omnibus):                  0.000   Jarque-Bera (JB):             9773.014
+Skew:                           1.140   Prob(JB):                         0.00
+Kurtosis:                      15.338   Cond. No.                         278.
+==============================================================================
+
+Notes:
+[1] Standard Errors are heteroscedasticity and autocorrelation robust (HAC) using 5 lags and without small sample correction
+
+=== Regressão: Número de negócios anormal (log) ===
+                            OLS Regression Results                            
+==============================================================================
+Dep. Variable:       negocios_anormal   R-squared:                       0.260
+Model:                            OLS   Adj. R-squared:                  0.258
+Method:                 Least Squares   F-statistic:                     11.99
+Date:                Mon, 02 Nov 2026   Prob (F-statistic):           2.11e-11
+Time:                        18:59:57   Log-Likelihood:                -569.67
+No. Observations:                1490   AIC:                             1151.
+Df Residuals:                    1484   BIC:                             1183.
+Df Model:                           5                                         
+Covariance Type:                  HAC                                         
+===============================================================================
+                  coef    std err          z      P>|z|      [0.025      0.975]
+-------------------------------------------------------------------------------
+Intercept       3.5419      0.485      7.299      0.000       2.591       4.493
+d_dolar         0.0103      0.013      0.772      0.440      -0.016       0.036
+d_juro_bp       0.0015      0.001      1.048      0.294      -0.001       0.004
+d_vix           0.0076      0.005      1.383      0.167      -0.003       0.018
+d_vix_ant       0.0075      0.005      1.586      0.113      -0.002       0.017
+log_mercado    -0.2056      0.029     -7.209      0.000      -0.261      -0.150
+==============================================================================
+Omnibus:                       52.389   Durbin-Watson:                   0.344
+Prob(Omnibus):                  0.000   Jarque-Bera (JB):               57.281
+Skew:                           0.459   Prob(JB):                     3.64e-13
+Kurtosis:                       3.284   Cond. No.                         278.
+==============================================================================
+
+Notes:
+[1] Standard Errors are heteroscedasticity and autocorrelation robust (HAC) using 5 lags and without small sample correction
+
+=== Regressão: Ticket médio anormal (log) ===
+                            OLS Regression Results                            
+==============================================================================
+Dep. Variable:         ticket_anormal   R-squared:                       0.018
+Model:                            OLS   Adj. R-squared:                  0.014
+Method:                 Least Squares   F-statistic:                     1.997
+Date:                Mon, 02 Nov 2026   Prob (F-statistic):             0.0763
+Time:                        18:59:57   Log-Likelihood:                 431.15
+No. Observations:                1490   AIC:                            -850.3
+Df Residuals:                    1484   BIC:                            -818.5
+Df Model:                           5                                         
+Covariance Type:                  HAC                                         
+===============================================================================
+                  coef    std err          z      P>|z|      [0.025      0.975]
+-------------------------------------------------------------------------------
+Intercept      -0.3357      0.135     -2.483      0.013      -0.601      -0.071
+d_dolar        -0.0119      0.006     -2.010      0.044      -0.024      -0.000
+d_juro_bp       0.0004      0.001      0.614      0.539      -0.001       0.002
+d_vix           0.0016      0.003      0.573      0.566      -0.004       0.007
+d_vix_ant       0.0012      0.002      0.507      0.612      -0.003       0.006
+log_mercado     0.0222      0.008      2.720      0.007       0.006       0.038
+==============================================================================
+Omnibus:                       65.579   Durbin-Watson:                   0.726
+Prob(Omnibus):                  0.000   Jarque-Bera (JB):              177.574
+Skew:                          -0.173   Prob(JB):                     2.76e-39
+Kurtosis:                       4.656   Cond. No.                         278.
+==============================================================================
+
+Notes:
+[1] Standard Errors are heteroscedasticity and autocorrelation robust (HAC) using 5 lags and without small sample correction
+
+=== Repasse do câmbio: ágio anormal ~ dólar no dia e 3 dias antes ===
+   variavel  coeficiente  erro_padrao       t  p_valor
+  Intercept      -0.5142       0.2944 -1.7462   0.0808
+    d_dolar      -0.1257       0.0130 -9.6991   0.0000
+ d_dolar_l1      -0.0573       0.0125 -4.6042   0.0000
+ d_dolar_l2      -0.0245       0.0091 -2.6832   0.0073
+ d_dolar_l3       0.0020       0.0104  0.1955   0.8450
+  d_juro_bp       0.0015       0.0011  1.3661   0.1719
+      d_vix       0.0211       0.0109  1.9413   0.0522
+  d_vix_ant       0.0191       0.0059  3.2178   0.0013
+log_mercado       0.0289       0.0175  1.6532   0.0983
+Soma das defasagens (volta do ágio nos dias seguintes): soma_defasagens=-0.0798, erro_padrao=0.0218, p_valor=0.0003
+
+=== Estudo de evento: agio_anormal ===
+Datas placebo disponíveis: 654
+        tipo   n  car_medio      t  p_valor_t  p_valor_permutacao
+     externo  53     -0.202 -1.147      0.256               0.498
+      fiscal  46     -0.133 -0.824      0.415               0.800
+   monetario  47     -0.224 -1.636      0.109               0.430
+    politico   4     -0.105 -0.204      0.852               0.966
+ regulatorio   4      0.204  0.418      0.704               0.509
+       todos 154     -0.175 -1.965      0.051               0.363
+agendado=nao  13     -0.006 -0.013      0.990               0.778
+agendado=sim 141     -0.191 -2.145      0.034               0.307
+Domésticos x externos: car_domesticos=-0.131, car_externos=-0.202, n_domesticos=50.000, n_externos=53.000, diferenca=0.072, p_valor_permutacao=0.766
+
+=== Estudo de evento: agio_ajustado_dolar ===
+Datas placebo disponíveis: 654
+        tipo   n  car_medio      t  p_valor_t  p_valor_permutacao
+     externo  53     -0.075 -0.433      0.667               0.442
+      fiscal  46      0.056  0.372      0.712               0.979
+   monetario  47     -0.093 -0.679      0.500               0.396
+    politico   4     -0.125 -0.438      0.691               0.668
+ regulatorio   4      0.383  0.669      0.551               0.461
+       todos 154     -0.031 -0.354      0.724               0.384
+agendado=nao  13      0.234  0.555      0.589               0.547
+agendado=sim 141     -0.055 -0.635      0.526               0.276
+Domésticos x externos: car_domesticos=0.042, car_externos=-0.075, n_domesticos=50.000, n_externos=53.000, diferenca=0.116, p_valor_permutacao=0.602
+
+=== Estudo de evento: negocios_anormal ===
+Datas placebo disponíveis: 654
+        tipo   n  car_medio     t  p_valor_t  p_valor_permutacao
+     externo  53      0.542 2.131      0.038               0.899
+      fiscal  46      0.252 1.253      0.217               0.406
+   monetario  47      0.443 1.759      0.085               0.847
+    politico   4      0.977 2.048      0.133               0.655
+ regulatorio   4      0.132 0.352      0.748               0.720
+       todos 154      0.426 3.240      0.001               0.631
+agendado=nao  13      0.861 2.075      0.060               0.531
+agendado=sim 141      0.385 2.789      0.006               0.489
+Domésticos x externos: car_domesticos=0.310, car_externos=0.542, n_domesticos=50.000, n_externos=53.000, diferenca=-0.232, p_valor_permutacao=0.490
+
+=== Estudo de evento: agio_anormal (sem sobrepostos) ===
+Datas placebo disponíveis: 1015
+        tipo  n  car_medio      t  p_valor_t  p_valor_permutacao
+     externo 14     -0.838 -2.075      0.058               0.022
+      fiscal 30      0.005  0.025      0.980               0.606
+   monetario 14     -0.449 -1.911      0.078               0.237
+    politico  2     -0.069 -0.787      0.576               0.943
+       todos 60     -0.300 -1.943      0.057               0.197
+agendado=nao  7     -0.790 -1.725      0.135               0.117
+agendado=sim 53     -0.235 -1.439      0.156               0.400
+Domésticos x externos: car_domesticos=0.000, car_externos=-0.838, n_domesticos=32.000, n_externos=14.000, diferenca=0.838, p_valor_permutacao=0.043
+
+=== Estudo de evento: agio_ajustado_dolar (sem sobrepostos) ===
+Datas placebo disponíveis: 1015
+        tipo  n  car_medio      t  p_valor_t  p_valor_permutacao
+     externo 14     -0.671 -1.696      0.114               0.024
+      fiscal 30      0.218  1.132      0.267               0.372
+   monetario 14     -0.280 -1.217      0.245               0.277
+    politico  2     -0.328 -4.375      0.143               0.480
+       todos 60     -0.124 -0.832      0.409               0.284
+agendado=nao  7     -0.483 -1.182      0.282               0.207
+agendado=sim 53     -0.076 -0.478      0.635               0.474
+Domésticos x externos: car_domesticos=0.184, car_externos=-0.671, n_domesticos=32.000, n_externos=14.000, diferenca=0.855, p_valor_permutacao=0.031
+
+=== Estudo de evento: negocios_anormal (sem sobrepostos) ===
+Datas placebo disponíveis: 1015
+        tipo  n  car_medio     t  p_valor_t  p_valor_permutacao
+     externo 14      0.869 1.203      0.250               0.416
+      fiscal 30      0.491 1.883      0.070               0.909
+   monetario 14      0.501 0.810      0.433               0.933
+    politico  2      0.858 0.791      0.574               0.731
+       todos 60      0.594 2.341      0.023               0.567
+agendado=nao  7      0.973 1.639      0.152               0.452
+agendado=sim 53      0.544 1.961      0.055               0.737
+Domésticos x externos: car_domesticos=0.514, car_externos=0.869, n_domesticos=32.000, n_externos=14.000, diferenca=-0.355, p_valor_permutacao=0.569
+
+=== Hipóteses do pré-registro (alfa = 5%; ver docs/pre-registro.md) ===
+hipotese                                      descricao                 estimativa  p_valor  sinal_previsto  estimavel  p_holm confirma confirma_holm
+      V1                   Estresse fiscal eleva o ágio juro 0.0019; dom−ext 0.072   0.7656            True       True  1.0000      nao           nao
+      V2                   Crises elevam a participação         CAR negócios 0.426   0.6310           False       True  1.0000      nao           nao
+      V3                       Medo global eleva o ágio        VIX anterior 0.0156   0.0078            True       True  0.0313      sim           sim
+     V4a                      Repasse incompleto no dia              dólar -0.1290   0.0000            True       True  0.0000      sim           sim
+     V4b                     Repasse se completa depois    soma defasagens -0.0798   0.0003           False       True  0.0015      nao           nao
+      V6 Realização de ganhos: ágio segue caindo depois    soma defasagens -0.0798   0.0003            True       True  0.0015      sim           sim
+      V5       Choques externos isolados reduzem o ágio CAR externos -0.671 (n=14)   0.0240            True       True  0.0720      sim           nao
+Amostra completa: V3 a V5 são exploratórias aqui; a confirmação é na amostra de validação.
+
+Resultados salvos em /Users/augustojrezende/Projetos/agio-stablecoin_v2/dados/resultados_v2
+=== Robustez: ágio anormal (coeficiente e p-valor) ===
+                                  especificacao    n  d_juro_bp_coef  d_juro_bp_p  d_vix_coef  d_vix_p  d_vix_ant_coef  d_vix_ant_p  d_dolar_coef  d_dolar_p
+1. Principal (janela 10h-13h, MQO + Newey-West) 1490          0.0019       0.0876      0.0212   0.0468          0.0156       0.0078       -0.1290     0.0000
+                          2. Winsorizado 1%/99% 1490          0.0015       0.1706      0.0113   0.0615          0.0111       0.0275       -0.1214     0.0000
+                   3. Regressão robusta (Huber) 1490          0.0014       0.0552      0.0072   0.0172          0.0087       0.0039       -0.0977     0.0000
+                    4. Ágio de fechamento (21h) 1490         -0.0071       0.0010      0.1006   0.0000          0.0212       0.0158       -0.0399     0.0822
+                                  5. Só binance 1490          0.0019       0.0893      0.0214   0.0463          0.0159       0.0071       -0.1295     0.0000
+                           5. Só mercadobitcoin  884         -0.0005       0.7531      0.0139   0.3778          0.0073       0.3668       -0.0908     0.0000
+                        6a. Antes de 04/05/2026 1363          0.0019       0.1415      0.0227   0.0402          0.0170       0.0047       -0.1360     0.0000
+                     6b. A partir de 04/05/2026  127         -0.0013       0.6705     -0.0123   0.5975         -0.0047       0.8454       -0.0607     0.1107
+  7. Janela 10h-14h (inclui a consulta das 13h) 1490          0.0006       0.5903      0.0247   0.0066          0.0124       0.0266       -0.1052     0.0000
+
+Resultados salvos em /Users/augustojrezende/Projetos/agio-stablecoin_v2/dados/resultados_v2/robustez.csv
+=== EXPLORATÓRIO (fora do pré-registro): ágio anormal e oferta global de USDT ===
+var_oferta_usdt = variação % da oferta em 5 dias, com 1 dia de defasagem; sinal esperado: negativo.
+                            OLS Regression Results                            
+==============================================================================
+Dep. Variable:           agio_anormal   R-squared:                       0.110
+Model:                            OLS   Adj. R-squared:                  0.106
+Method:                 Least Squares   F-statistic:                     17.75
+Date:                Mon, 02 Nov 2026   Prob (F-statistic):           5.98e-20
+Time:                        18:59:59   Log-Likelihood:                -433.12
+No. Observations:                1490   AIC:                             880.2
+Df Residuals:                    1483   BIC:                             917.4
+Df Model:                           6                                         
+Covariance Type:                  HAC                                         
+===================================================================================
+                      coef    std err          z      P>|z|      [0.025      0.975]
+-----------------------------------------------------------------------------------
+Intercept          -0.8617      0.278     -3.096      0.002      -1.407      -0.316
+d_dolar            -0.1283      0.013     -9.645      0.000      -0.154      -0.102
+d_juro_bp           0.0018      0.001      1.564      0.118      -0.000       0.004
+d_vix               0.0216      0.011      2.007      0.045       0.001       0.043
+d_vix_ant           0.0157      0.006      2.648      0.008       0.004       0.027
+log_mercado         0.0487      0.016      2.956      0.003       0.016       0.081
+var_oferta_usdt     0.0313      0.016      1.949      0.051      -0.000       0.063
+==============================================================================
+Omnibus:                      511.788   Durbin-Watson:                   1.006
+Prob(Omnibus):                  0.000   Jarque-Bera (JB):            10104.221
+Skew:                           1.098   Prob(JB):                         0.00
+Kurtosis:                      15.567   Cond. No.                         310.
+==============================================================================
+
+Notes:
+[1] Standard Errors are heteroscedasticity and autocorrelation robust (HAC) using 5 lags and without small sample correction
+
+Oferta de USDT no fim de cada mês de 2026 (US$ bi):
+data
+2026-01-31    185.6
+2026-02-28    183.6
+2026-03-31    184.2
+2026-04-30    189.6
+2026-05-31    188.4
+2026-06-30    185.0
+2026-07-31    183.5
+2026-08-31    183.5
+2026-09-30    183.8
+2026-10-31    180.5
+Freq: ME
+=== EXPLORATÓRIO (fora do pré-registro): atenção do público (Google Trends) ===
+
+--- Eventos: busca_usdt_anormal (log; janela −1 a +3; média placebo 0.625) ---
+        tipo   n  car_medio     t  p_valor_t  p_valor_permutacao
+     externo  53      0.427 1.743      0.087               0.623
+      fiscal  46      0.320 1.753      0.086               0.475
+   monetario  47      0.321 1.247      0.219               0.480
+    politico   4      1.120 2.223      0.113               0.635
+ regulatorio   4      0.325 0.690      0.540               0.787
+       todos 154      0.378 2.955      0.004               0.293
+agendado=nao  13      0.882 2.815      0.016               0.784
+agendado=sim 141      0.332 2.432      0.016               0.235
+Domésticos x externos: car_domesticos=0.384, car_externos=0.427, n_domesticos=50.000, n_externos=53.000, diferenca=-0.043, p_valor_permutacao=0.893
+
+--- Eventos: busca_dolar_anormal (log; janela −1 a +3; média placebo 0.053) ---
+        tipo   n  car_medio     t  p_valor_t  p_valor_permutacao
+     externo  53      0.383 2.016      0.049               0.013
+      fiscal  46      0.068 0.411      0.683               0.918
+   monetario  47      0.210 1.178      0.245               0.257
+    politico   4      3.012 2.391      0.097               0.000
+ regulatorio   4      0.106 0.307      0.779               0.900
+       todos 154      0.297 2.735      0.007               0.002
+agendado=nao  13      1.119 2.257      0.043               0.000
+agendado=sim 141      0.221 2.050      0.042               0.036
+Domésticos x externos: car_domesticos=0.304, car_externos=0.383, n_domesticos=50.000, n_externos=53.000, diferenca=-0.080, p_valor_permutacao=0.781
+
+--- Regressão: ágio anormal ~ controles + buscas anormais do dia anterior ---
+               variavel  coeficiente  erro_padrao       t  p_valor
+              Intercept      -0.7973       0.2823 -2.8241   0.0047
+                d_dolar      -0.1301       0.0133 -9.7682   0.0000
+              d_juro_bp       0.0018       0.0011  1.5860   0.1127
+                  d_vix       0.0210       0.0107  1.9560   0.0505
+              d_vix_ant       0.0159       0.0059  2.7077   0.0068
+            log_mercado       0.0455       0.0169  2.6996   0.0069
+ busca_usdt_anormal_ant       0.0669       0.0440  1.5191   0.1287
+busca_dolar_anormal_ant      -0.0613       0.0485 -1.2638   0.2063
+n = 1489
+
+Figuras em /Users/augustojrezende/Projetos/agio-stablecoin_v2/docs/v2/figuras: 09_buscas_usdt.png, 09_buscas_dolar.png
+Gerando figuras...
+8 figuras em /Users/augustojrezende/Projetos/agio-stablecoin_v2/docs/v2/figuras
+Tabelas em /Users/augustojrezende/Projetos/agio-stablecoin_v2/docs/v2/resultados_tabelas.md

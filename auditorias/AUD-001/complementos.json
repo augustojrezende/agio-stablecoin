@@ -1,0 +1,25 @@
+{
+  "robustez_maxdiff": 0.0,
+  "robustez_cli": "falha; n\u00fameros recalculados por fun\u00e7\u00f5es, reset_index apenas em mem\u00f3ria de auditoria",
+  "base_colunas_novas": [
+    "busca_dolar_anormal",
+    "busca_d\u00f3lar",
+    "busca_usdt",
+    "busca_usdt_anormal"
+  ],
+  "base_comum_maxdiff": 0.0,
+  "calendario_real_agio_anormal": {
+    "car_domesticos": 0.0004901686362169325,
+    "car_externos": -0.8379702984337564,
+    "diferenca": 0.8384604670699733,
+    "p_valor_permutacao": 0.0434
+  },
+  "calendario_real_agio_ajustado_dolar": {
+    "car_domesticos": 0.18373118236166042,
+    "car_externos": -0.6710641133415,
+    "diferenca": 0.8547952957031604,
+    "p_valor_permutacao": 0.0306
+  },
+  "volume_brl_estimado_antes": 87234859.16424939,
+  "volume_brl_estimado_durante": 134355265.61532
+}

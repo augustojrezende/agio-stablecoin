@@ -1,0 +1,22 @@
+[
+  [
+    "/Users/augustojrezende/Projetos/agio-stablecoin_v2/.venv/bin/python",
+    "-m",
+    "pytest",
+    "-q",
+    "-p",
+    "no:cacheprovider"
+  ],
+  [
+    "/Users/augustojrezende/Projetos/agio-stablecoin_v2/.venv/bin/agio",
+    "robustez"
+  ],
+  [
+    "/Users/augustojrezende/Projetos/agio-stablecoin_v2/.venv/bin/agio",
+    "episodio",
+    "--inicio",
+    "2026-06-01",
+    "--fim",
+    "2026-08-15"
+  ]
+]

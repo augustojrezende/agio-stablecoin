@@ -122,7 +122,44 @@ def _linha(anuncio: date, depois: bool, tipo: str, descricao: str, fonte: str, a
             "agendado": "sim" if agendado else "nao", "fonte": fonte}
 
 
-def montar() -> pd.DataFrame:
+def marcar_sobreposicoes(eventos: pd.DataFrame, calendario) -> pd.DataFrame:
+    """V2: interseção de janelas −1,+3 nas datas efetivamente observadas.
+
+    Preserva a regra de comparar apenas tipos diferentes. Eventos após o
+    fim da base não possuem janela observada; nenhuma data é inventada.
+    """
+    from agio.analise import JANELA_EVENTO
+
+    datas = pd.DatetimeIndex(pd.to_datetime(calendario))
+    if datas.empty or datas.hasnans or datas.has_duplicates or not datas.is_monotonic_increasing:
+        raise ValueError("O calendário efetivo deve ser ordenado, único, não vazio e sem NaT")
+    posicoes = datas.searchsorted(pd.to_datetime(eventos["data"]))
+    janelas = [set(range(max(0, p + JANELA_EVENTO[0]),
+                         min(len(datas), p + JANELA_EVENTO[1] + 1)))
+               if p < len(datas) else set() for p in posicoes]
+    tipos = eventos["tipo"].to_numpy()
+    saida = eventos.copy()
+    saida["sobreposto"] = [
+        "sim" if any(tipos[i] != tipos[j] and bool(janela & outra)
+                     for j, outra in enumerate(janelas)) else "nao"
+        for i, janela in enumerate(janelas)
+    ]
+    return saida
+
+
+def calendario_ptax(fim: date = FIM_DADOS) -> pd.Series:
+    """Dias com PTAX publicada até `fim`: o calendário das sobreposições.
+
+    Vem dos dados de câmbio, não de resultados do teste. Assim a lista de
+    eventos da validação pode ser fechada antes de rodar `agio testar`
+    (adendo 2 ao pré-registro, P4).
+    """
+    caminho = SAIDA.parents[1] / "tratado" / "ptax.csv"
+    datas = pd.to_datetime(pd.read_csv(caminho, usecols=["data"])["data"])
+    return datas[datas <= pd.Timestamp(fim)].drop_duplicates().sort_values().reset_index(drop=True)
+
+
+def montar(calendario=None) -> pd.DataFrame:
     linhas = []
     for s in COPOM:
         d = _d(s)
@@ -151,15 +188,9 @@ def montar() -> pd.DataFrame:
     ev = pd.DataFrame(linhas)
     ev = ev[ev["data"] <= FIM_DADOS].sort_values(["data", "tipo"]).reset_index(drop=True)
 
-    # Sobreposição: outro evento de tipo diferente a até 4 dias úteis (janelas -1 a +3 se cruzam).
-    datas = pd.to_datetime(ev["data"])
-    sobreposto = []
-    for i, (d, t) in enumerate(zip(datas, ev["tipo"])):
-        outros = ev.index[(ev["tipo"] != t)]
-        dist = [abs(len(pd.bdate_range(min(d, datas[j]), max(d, datas[j]))) - 1) for j in outros
-                if abs((datas[j] - d).days) <= 7]
-        sobreposto.append("sim" if any(x <= 4 for x in dist) else "nao")
-    ev["sobreposto"] = sobreposto
+    if calendario is None:
+        calendario = calendario_ptax()
+    ev = marcar_sobreposicoes(ev, calendario)
     return ev[["data", "tipo", "descricao", "data_anuncio", "agendado", "sobreposto", "fonte"]]
 
 

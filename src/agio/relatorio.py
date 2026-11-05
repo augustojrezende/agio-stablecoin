@@ -69,7 +69,9 @@ def fig_serie(plt, figs):
                 label="Fechamento (21h), comparação")
     ax.plot(alinhado["data"], alinhado["agio_pct"], color="#1a5276", lw=0.7,
             label="Janela da PTAX (10h-13h), medida principal")
-    med = alinhado.set_index("data")["agio_pct"].rolling(60, min_periods=30).median()
+    from agio.analise import JANELA_NORMAL, MINIMO_NORMAL
+    med = (alinhado.set_index("data")["agio_pct"].shift(1)
+           .rolling(JANELA_NORMAL, min_periods=MINIMO_NORMAL).median())
     ax.plot(med.index, med.values, color="#e67e22", lw=1.4, label="Mediana móvel de 60 dias úteis")
     ax.axhline(0, color="black", lw=0.6)
     ax.set_ylabel("Ágio sobre a PTAX (%)")
@@ -179,12 +181,22 @@ def fig_trajetorias(plt, figs, base, eventos, coluna, nome, titulo, ylabel, lege
         ax.axvspan(-1, 3, color="#f9e79f", alpha=0.35, zorder=0)
         ax.axvline(0, color="black", lw=0.6)
         ax.axhline(0, color="black", lw=0.4)
-        ax.set_title(f"{NOMES_TIPO[tipo]} (n = {int(tr['n_eventos'].iloc[0])})")
+        n_min, n_max = int(tr["n_eventos"].min()), int(tr["n_eventos"].max())
+        rotulo_n = str(n_min) if n_min == n_max else f"{n_min}–{n_max}"
+        ax.set_title(f"{NOMES_TIPO[tipo]} (n válido = {rotulo_n})", pad=35)
+        contagens = ax.secondary_xaxis("top")
+        contagens.set_xticks(tr["dia"], [str(int(n)) for n in tr["n_eventos"]])
+        contagens.tick_params(labelsize=6, length=2, pad=1)
+        contagens.set_xlabel("n válido por dia", fontsize=6, labelpad=2)
+        FIGURAS.mkdir(parents=True, exist_ok=True)
+        tr.to_csv(FIGURAS / f"{Path(nome).stem}_{tipo}.csv", index=False)
         ax.set_xlabel("Dias úteis em relação ao evento")
     np.atleast_1d(eixos)[0].set_ylabel(ylabel)
     np.atleast_1d(eixos)[0].legend(frameon=False, fontsize=7, loc="lower left")
     fig.suptitle(titulo)
-    _salvar(fig, nome, legenda, figs)
+    _salvar(fig, nome, legenda + " n válido por dia indicado acima de cada ponto; "
+            "pode variar por dados ausentes. Contagens, médias e faixas nos CSVs por tipo. "
+            "O número nominal de datas do sorteio placebo foi preservado.", figs)
     plt.close(fig)
 
 
@@ -230,7 +242,7 @@ def _tabela_md(df: pd.DataFrame, casas: int = 4) -> str:
 
 
 def tabelas() -> str:
-    partes = [f"# Tabelas de resultados\n\n*Gerado por `agio relatorio` em {date.today():%d/%m/%Y}. "
+    partes = [f"# Tabelas de resultados — V2 (AUD-002)\n\n*Gerado por `agio relatorio` em {date.today():%d/%m/%Y}. "
               "Não edite: rode o comando de novo. A interpretação está em `resultados.md`.*\n"]
     titulos = {"agio_anormal": "Ágio anormal (p.p.)",
                "negocios_anormal": "Número de negócios anormal (log)",
