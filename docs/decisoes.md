@@ -261,3 +261,15 @@ Fontes: [Resolução 574](https://www.letsmoney.com.br/noticias/bc-adia-novembro
 - **Exposição:** o painel mostra o nível do ágio também nos dias da amostra de validação (a partir de 02/11/2026). Não mostra regressões, estudos de evento nem decisões sobre as hipóteses. Nenhum comando de análise roda sobre a validação fora das datas do pré-registro (out/2027 descritiva e out/2028 decisão).
 - **Por que registrar:** ver o nível do ágio não muda nenhuma regra fixada, mas a exposição a dados novos deve ficar documentada, como em `congelamento.md`.
 
+## 2026-11-07 — Eventos agendados até 2027 (validação)
+
+- **O que entrou em `scripts/montar_eventos.py`:**
+  - **Copom:** decisões de 04/11/2026 e 09/12/2026 e as oito reuniões de 2027 (27/01, 17/03, 28/04, 16/06, 04/08, 22/09, 27/10 e 08/12), pelo calendário que o Banco Central divulgou em 23/06/2026.
+  - **Fed:** decisão de 09/12/2026 e as oito reuniões de 2027 (27/01, 17/03, 28/04, 09/06, 28/07, 15/09, 27/10 e 08/12), pelo calendário do Fed. As datas são provisórias até a reunião anterior; mudanças entram aqui com data e motivo.
+  - **Fiscais por regra:** PLDO 2028, PLOA 2028 e os relatórios bimestrais de 2027, pelo mesmo prazo legal usado na descoberta.
+- **Por quê:** o adendo 2 (P4) prevê a inclusão dos calendários da validação pela mesma regra. É inclusão de dados prevista, não mudança de método.
+- **O que não muda:** `FIM_DADOS` continua em 30/10/2026, então `dados/manual/eventos.csv` (158 eventos) não muda e o hash dele em `congelamento.md` continua valendo. Conferido: o script antigo e o novo geram a mesma lista; 62 testes passam e 2 são pulados num clone sem dados.
+- **Hash novo do script:** `montar_eventos.py` passa a ter SHA-256 `34c1a45cd5747c70ff242cafc98bef2690eb21da4a07f2d59fb6809d551f5e5d` (antes `c3926d7f…`). Registrado em `congelamento.md`.
+- **Prévia da validação de 2027 (até 29/10/2027):** 24 eventos agendados (9 Copom, 8 Fed e 7 fiscais), antes dos não agendados. Domésticos (fiscais e políticos) ficam abaixo de 10, como o adendo 2 já previa para a leitura de 2027.
+- **Pendente para o fechamento da lista (out/2027):** decidir, antes de rodar o teste, como gerar a lista da validação sem mudar a da descoberta. Ao estender `FIM_DADOS`, eventos do fim de out/2026 podem passar a contar como sobrepostos a eventos de nov/2026. Opção natural: um arquivo próprio para a validação (por exemplo, `eventos_validacao.csv`), deixando `eventos.csv` como está. A decisão entra aqui antes de qualquer análise.
+
