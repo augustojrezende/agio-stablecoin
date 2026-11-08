@@ -273,3 +273,15 @@ Fontes: [Resolução 574](https://www.letsmoney.com.br/noticias/bc-adia-novembro
 - **Prévia da validação de 2027 (até 29/10/2027):** 24 eventos agendados (9 Copom, 8 Fed e 7 fiscais), antes dos não agendados. Domésticos (fiscais e políticos) ficam abaixo de 10, como o adendo 2 já previa para a leitura de 2027.
 - **Pendente para o fechamento da lista (out/2027):** decidir, antes de rodar o teste, como gerar a lista da validação sem mudar a da descoberta. Ao estender `FIM_DADOS`, eventos do fim de out/2026 podem passar a contar como sobrepostos a eventos de nov/2026. Opção natural: um arquivo próprio para a validação (por exemplo, `eventos_validacao.csv`), deixando `eventos.csv` como está. A decisão entra aqui antes de qualquer análise.
 
+## 2026-11-07 — Como a lista da validação entra (aprovado pelo pesquisador)
+
+- **Problema:** ao estender `FIM_DADOS`, eventos do fim de out/2026 podem passar a contar como sobrepostos a eventos de nov/2026, o que mudaria a lista da descoberta.
+- **Proposta descartada:** um arquivo próprio para a validação (`eventos_validacao.csv`), sugerido no registro anterior. `agio testar` só lê `dados/manual/eventos.csv` e recorta por `--inicio` e `--fim`; ler outro arquivo exigiria mudar `src/agio/cli.py`, que está congelado.
+- **Decisão:** `eventos.csv` só cresce por acréscimo no fim.
+  - As 158 linhas da descoberta ficam idênticas às da tag `congelamento-v2`, inclusive a coluna `sobreposto`.
+  - As linhas da validação entram depois delas. A sobreposição de cada nova linha considera todos os eventos, inclusive os de out/2026 cuja janela alcança novembro.
+  - Um teste confere que as 158 primeiras linhas continuam iguais às da tag.
+  - Nenhum código congelado muda; o recorte por datas do `testar` já separa as amostras.
+- **Efeito colateral aceito:** `agio testar` sem datas passa a misturar descoberta e validação. Os resultados da descoberta ficam na tag `congelamento-v2` e em `resultados.md`.
+- **Quando:** a implementação entra no fechamento da lista de 2027 (até 15/09/2027, com os não agendados até 29/10/2027), sempre antes de qualquer análise da validação.
+
