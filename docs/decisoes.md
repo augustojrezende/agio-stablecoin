@@ -146,7 +146,7 @@ R² = 0,095; curtose dos resíduos = 15,3 (poucos dias extremos pesam muito).
 - **Sobreposição:** 93 eventos têm outro evento de tipo diferente a até 4 dias úteis (sobretudo Copom e Fed na mesma semana). O teste roda com a lista completa e sem os sobrepostos.
 - **Placebo:** a exclusão em torno dos eventos passa de 10 para 4 dias úteis (o mínimo para a janela placebo não cruzar a de um evento); com 10, quase não sobrariam datas para sortear.
 - **Correções da lista provisória:** a pausa nas tarifas dos EUA foi anunciada às 14h de 09/04/2025, depois da janela, e passa para 10/04. O evento de 04/05/2026 era o início previsto das obrigações de informação da Resolução 521; a Resolução 574 (18/06/2026) adiou o reporte de operações com ativos virtuais no câmbio para 03/11/2026. O corte de robustez em 04/05/2026 continua, mas deve ser lido como "início previsto", não como mudança efetiva.
-- **Pendente de conferência:** as datas do PLDO, do PLOA e dos relatórios bimestrais seguem o prazo legal; a data efetiva de cada um ainda precisa ser conferida (a janela de −1 a +3 tolera pequenas diferenças).
+- **Pendente de conferência:** as datas do PLDO, do PLOA e dos relatórios bimestrais seguem o prazo legal; a data efetiva de cada um ainda precisa ser conferida (a janela de −1 a +3 tolera pequenas diferenças). *Conferida por amostragem no mesmo dia; registro em 2026-11-07.*
 - **Compromisso:** rodar `agio testar` uma vez com esta lista e aceitar o resultado. Mudanças posteriores na lista precisam de registro aqui, com o motivo.
 
 ## 2026-11-01 — Resultado da lista fechada e validação fora da amostra
@@ -245,3 +245,19 @@ Fontes: [Resolução 574](https://www.letsmoney.com.br/noticias/bc-adia-novembro
 - **Motivo:** permitir a leitura por pesquisadores de fora do Brasil e preparar artigos.
 - **Regras:** o português continua sendo a versão oficial, e cada tradução diz isso no início. Nenhum arquivo congelado foi alterado; os hashes de `congelamento.md` continuam valendo. Gráficos e tabelas automáticas ficam em português, porque são gerados pelo código congelado.
 - **Fica só em português:** este diário, `resultados_tabelas.md` e os relatórios das auditorias.
+
+## 2026-11-07 — Conferência dos eventos e painel público
+
+**Conferência por amostragem (pelo pesquisador, 01/11/2026)**
+- **O que foi conferido:** 17 eventos de nov/2020 a nov/2022 (relatórios bimestrais, PLDO, PLOA, teto/Auxílio Brasil e PEC da Transição), com a data efetiva de publicação.
+- **Resultado:** todas as datas agendadas bateram com a regra do prazo legal. Quando o dia 22 cai no fim de semana, o relatório sai na sexta anterior, o que a janela de −1 a +3 já cobre.
+- **Única divergência:** a fala de Guedes sobre a "licença para gastar" foi em 20/10/2021, à tarde, depois da janela da PTAX. A data do evento continua 21/10/2021, primeiro dia em que a janela pode reagir.
+- **O que não muda:** na versão congelada, a coluna `data_anuncio` desse evento ficou com 21/10/2021. Essa coluna não entra em nenhum cálculo (só num teste de consistência), então nenhum resultado muda. Para não alterar arquivos congelados (`eventos.csv` e `montar_eventos.py`, com hash em `congelamento.md`), a correção fica registrada só aqui.
+- **Por que só agora:** o registro foi feito em 01/11/2026 na branch `eventos-fechados`, que não chegou a virar PR. `resultados.md` (seção 7) e `manual.md` já citavam a conferência; este diário ainda dizia "pendente". A branch pode ser apagada.
+
+**Painel público (repositório `agio-painel`)**
+- **O que é:** página estática no GitHub Pages com o nível diário do ágio, na janela da PTAX e no fechamento, atualizada toda semana.
+- **Como lê os dados:** um script no repositório do painel lê `dados/tratado/agio_diario.csv` e `agio_fechamento_diario.csv`, gravados por `agio calcular` na coleta semanal. Nenhum arquivo deste repositório muda.
+- **Exposição:** o painel mostra o nível do ágio também nos dias da amostra de validação (a partir de 02/11/2026). Não mostra regressões, estudos de evento nem decisões sobre as hipóteses. Nenhum comando de análise roda sobre a validação fora das datas do pré-registro (out/2027 descritiva e out/2028 decisão).
+- **Por que registrar:** ver o nível do ágio não muda nenhuma regra fixada, mas a exposição a dados novos deve ficar documentada, como em `congelamento.md`.
+
