@@ -17,6 +17,9 @@ from pathlib import Path
 import pandas as pd
 
 SAIDA = Path(__file__).resolve().parents[1] / "dados" / "manual" / "eventos.csv"
+# Fim da amostra de descoberta. Os eventos de 2026-11 em diante já estão nas
+# listas abaixo, mas este corte os deixa fora de dados/manual/eventos.csv até o
+# fechamento da lista da validação (adendo 2, P4), registrado em docs/decisoes.md.
 FIM_DADOS = date(2026, 10, 30)
 
 FONTES_COPOM = {
@@ -27,6 +30,7 @@ FONTES_COPOM = {
     2024: "https://wp.ufpel.edu.br/superavit/2023/10/13/expectativa-na-queda-dos-juros-confira-o-cronograma-do-copom-o-final-do-ano-e-2024/",
     2025: "https://clubedospoupadores.com/selic/copom",
     2026: "https://investidor10.com.br/noticias/copom-em-2026-tera-oito-reunioes-veja-o-cronograma-divulgado-pelo-bc-113749/",
+    2027: "https://euqueroinvestir.com/economia/copom-tera-oito-reunioes-em-2027",
 }
 # Segundo dia de cada reunião (decisão divulgada por volta das 18h30).
 COPOM = [
@@ -36,7 +40,9 @@ COPOM = [
     "2023-02-01", "2023-03-22", "2023-05-03", "2023-06-21", "2023-08-02", "2023-09-20", "2023-11-01", "2023-12-13",
     "2024-01-31", "2024-03-20", "2024-05-08", "2024-06-19", "2024-07-31", "2024-09-18", "2024-11-06", "2024-12-11",
     "2025-01-29", "2025-03-19", "2025-05-07", "2025-06-18", "2025-07-30", "2025-09-17", "2025-11-05", "2025-12-10",
-    "2026-01-28", "2026-03-18", "2026-04-29", "2026-06-17", "2026-08-05", "2026-09-16",
+    "2026-01-28", "2026-03-18", "2026-04-29", "2026-06-17", "2026-08-05", "2026-09-16", "2026-11-04", "2026-12-09",
+    # Validação (adendo 2, P4): calendário de 2027 divulgado pelo BC em 23/06/2026.
+    "2027-01-27", "2027-03-17", "2027-04-28", "2027-06-16", "2027-08-04", "2027-09-22", "2027-10-27", "2027-12-08",
 ]
 
 FONTE_FOMC = "https://www.federalreserve.gov/monetarypolicy/fomccalendars.htm"
@@ -49,7 +55,9 @@ FOMC = [
     "2023-02-01", "2023-03-22", "2023-05-03", "2023-06-14", "2023-07-26", "2023-09-20", "2023-11-01", "2023-12-13",
     "2024-01-31", "2024-03-20", "2024-05-01", "2024-06-12", "2024-07-31", "2024-09-18", "2024-11-07", "2024-12-18",
     "2025-01-29", "2025-03-19", "2025-05-07", "2025-06-18", "2025-07-30", "2025-09-17", "2025-10-29", "2025-12-10",
-    "2026-01-28", "2026-03-18", "2026-04-29", "2026-06-17", "2026-07-29", "2026-09-16", "2026-10-28",
+    "2026-01-28", "2026-03-18", "2026-04-29", "2026-06-17", "2026-07-29", "2026-09-16", "2026-10-28", "2026-12-09",
+    # Validação (adendo 2, P4): calendário de 2027 do Fed (provisório até a reunião anterior).
+    "2027-01-27", "2027-03-17", "2027-04-28", "2027-06-09", "2027-07-28", "2027-09-15", "2027-10-27", "2027-12-08",
 ]
 
 FONTE_ADCT = ("Prazo constitucional (ADCT, art. 35, §2º) - conferir data de envio: "
@@ -168,12 +176,12 @@ def montar(calendario=None) -> pd.DataFrame:
         d = _d(s)
         linhas.append(_linha(d, True, "externo", "Decisão do Fed (FOMC)",
                              FONTE_FOMC_2020 if d.year == 2020 else FONTE_FOMC, True))
-    for ano in range(2021, 2027):
+    for ano in range(2021, 2028):
         pldo = _ultimo_util_ate(date(ano, 4, 15))
         ploa = _ultimo_util_ate(date(ano, 8, 31))
         linhas.append(_linha(pldo, True, "fiscal", f"Envio do PLDO {ano + 1} (metas fiscais)", FONTE_ADCT, True))
         linhas.append(_linha(ploa, True, "fiscal", f"Envio do PLOA {ano + 1}", FONTE_ADCT, True))
-    bimestres = [(2020, 11)] + [(a, m) for a in range(2021, 2027) for m in (3, 5, 7, 9, 11)]
+    bimestres = [(2020, 11)] + [(a, m) for a in range(2021, 2028) for m in (3, 5, 7, 9, 11)]
     for ano, mes in bimestres:
         d = _ultimo_util_ate(date(ano, mes, 22))
         n = {3: 1, 5: 2, 7: 3, 9: 4, 11: 5}[mes]

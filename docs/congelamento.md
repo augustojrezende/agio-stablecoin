@@ -46,6 +46,14 @@
 
 Os hashes de `docs/pre-registro.md` e deste arquivo não se aplicam a adendos futuros, que entram no fim do pré-registro com data.
 
+### Atualizações previstas no adendo 2 (P4)
+
+Inclusão de calendários da validação, registrada em `decisoes.md`. A versão original de cada arquivo continua na tag `congelamento-v2`.
+
+| Data | Arquivo | SHA-256 novo | Motivo |
+| --- | --- | --- | --- |
+| 07/11/2026 | `scripts/montar_eventos.py` | `34c1a45cd5747c70ff242cafc98bef2690eb21da4a07f2d59fb6809d551f5e5d` | Copom e Fed de nov/dez 2026 e 2027; fiscais por regra de 2027. `eventos.csv` não muda |
+
 ## Dependências
 
 `pyproject.toml` fixa versões mínimas (pandas ≥ 2.1, statsmodels ≥ 0.14, scipy ≥ 1.11, matplotlib ≥ 3.8, requests ≥ 2.31). Os resultados da descoberta foram reproduzidos de forma idêntica em dois ambientes:
