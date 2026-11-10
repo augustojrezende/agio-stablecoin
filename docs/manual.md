@@ -329,7 +329,7 @@ Cada janela exportada vem normalizada de 0 a 100. As janelas sobrepostas são re
 - **Separação explícita** entre análises confirmatórias e exploratórias nas saídas do programa.
 - **Auditorias independentes** (`auditorias/`): diagnóstico, correção e parecer final em nov/2026; sete erros corrigidos, nenhum mudou a decisão de uma hipótese.
 - **Histórico completo no Git:** cada mudança entrou por pull request, com descrição. A versão original da descoberta está na tag `descoberta-v1`.
-- **Licenças:** código sob MIT; dados derivados (séries do ágio) sob Creative Commons Atribuição 4.0 (CC BY 4.0). Os dados de origem seguem os termos de cada fonte.
+- **Licenças:** código sob MIT; dados derivados (séries do ágio) sob Creative Commons Atribuição-NãoComercial-CompartilhaIgual 4.0 (CC BY-NC-SA 4.0), por causa dos termos de uso da Binance. Os dados de origem seguem os termos de cada fonte.
 
 ## Limitações e próximos passos
 

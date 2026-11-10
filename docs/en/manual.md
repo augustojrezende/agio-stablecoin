@@ -332,7 +332,7 @@ Each exported window is normalised from 0 to 100. Overlapping windows are rescal
 - **Explicit separation** between confirmatory and exploratory analyses in the program output.
 - **Independent audits** (`auditorias/`, in Portuguese): diagnosis, correction and final opinion in Nov/2026; seven errors corrected, none changed the decision on any hypothesis.
 - **Full history in Git:** every change went in through a pull request with a description. The original discovery version is under the tag `descoberta-v1`, and the version frozen for validation under `congelamento-v2`.
-- **Licences:** code under MIT; derived data (premium series) under Creative Commons Attribution 4.0 (CC BY 4.0). Source data remain subject to the terms of each source.
+- **Licences:** code under MIT; derived data (premium series) under Creative Commons Attribution-NonCommercial-ShareAlike 4.0 (CC BY-NC-SA 4.0), because of Binance's terms of use. Source data remain subject to the terms of each source.
 
 ## Limitations and next steps
 
