@@ -4,6 +4,8 @@
 
 Indicador diário do ágio do USDT negociado em reais sobre o dólar oficial (PTAX) e sua reação a choques domésticos e externos (2020–2026). Código e dados abertos do TCC em Economia *O ágio da stablecoin em reais: reação a choques domésticos e externos no Brasil (2020–2026)*.
 
+**[Painel público do ágio](https://augustojrezende.github.io/agio-painel/)**: a série diária na janela da PTAX e no fechamento, atualizada toda semana, com explicação para quem está começando.
+
 **[Manual completo do programa](docs/manual.md)**: o que faz, conceitos, tecnologias, todos os comandos e parâmetros, arquivos gerados e métodos.
 
 ## Em poucas palavras
