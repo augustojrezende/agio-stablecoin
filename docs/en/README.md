@@ -4,6 +4,8 @@
 
 A daily indicator of the premium of USDT traded in Brazilian reais over the official dollar rate (PTAX), and its reaction to domestic and external shocks (2020–2026). Open code and data for the undergraduate thesis in Economics *O ágio da stablecoin em reais: reação a choques domésticos e externos no Brasil (2020–2026)* [The stablecoin premium in reais: reaction to domestic and external shocks in Brazil (2020–2026)].
 
+**[Public premium dashboard](https://augustojrezende.github.io/agio-painel/)** (in Portuguese): the daily series in the PTAX window and at the close, updated weekly, with explanations for newcomers.
+
 **[Full program manual](manual.md)**: what it does, concepts, technologies, all commands and parameters, output files and methods.
 
 ## In a nutshell
