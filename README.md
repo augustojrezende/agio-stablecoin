@@ -82,7 +82,7 @@ Banco Central (PTAX e Selic), Binance e Mercado Bitcoin (USDT/BRL), Tesouro Tran
 ## Licenças
 
 - **Código:** MIT (arquivo `LICENSE`).
-- **Dados derivados** em `dados/tratado/` (séries de preços consolidadas e do ágio): [Creative Commons Atribuição 4.0 (CC BY 4.0)](https://creativecommons.org/licenses/by/4.0/deed.pt-br) (arquivo `LICENSE-DADOS.md`).
+- **Dados derivados** em `dados/tratado/` (séries de preços consolidadas e do ágio): [Creative Commons Atribuição-NãoComercial-CompartilhaIgual 4.0 (CC BY-NC-SA 4.0)](https://creativecommons.org/licenses/by-nc-sa/4.0/deed.pt-br) (arquivo `LICENSE-DADOS.md`).
 - Os dados de origem continuam sujeitos aos termos de cada fonte.
 
 ## Como citar

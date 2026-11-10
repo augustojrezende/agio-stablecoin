@@ -285,3 +285,10 @@ Fontes: [Resolução 574](https://www.letsmoney.com.br/noticias/bc-adia-novembro
 - **Efeito colateral aceito:** `agio testar` sem datas passa a misturar descoberta e validação. Os resultados da descoberta ficam na tag `congelamento-v2` e em `resultados.md`.
 - **Quando:** a implementação entra no fechamento da lista de 2027 (até 15/09/2027, com os não agendados até 29/10/2027), sempre antes de qualquer análise da validação.
 
+## 2026-11-10 — Licença dos dados: CC BY 4.0 → CC BY-NC-SA 4.0
+
+- **O que muda:** os dados derivados de `dados/tratado/` passam de CC BY 4.0 para CC BY-NC-SA 4.0 (`LICENSE-DADOS.md`, `LICENSE-DATA.md`, READMEs e manuais). O código continua sob MIT.
+- **Por quê:** os termos de uso do Binance Vision pedem que dados derivados dos seus conjuntos de dados sejam redistribuídos sob CC BY-NC-SA 4.0. O projeto usa a API pública de mercado (`data-api.binance.vision`), e não está claro se esses termos se aplicam a ela; por prudência, a licença segue a mais restritiva. O painel público (`agio-painel`) já usava a mesma licença.
+- **Efeito:** nenhum para o TCC, artigos ou uso acadêmico. Uso comercial passa a depender de autorização. As séries não estão versionadas no GitHub (`dados/tratado/` só tem `.gitkeep`); a licença vale para quando forem distribuídas.
+- **Congelamento:** nenhum arquivo com hash em `congelamento.md` muda.
+

@@ -85,7 +85,7 @@ Available only in Portuguese: the decision log (`docs/decisoes.md`), the automat
 ## Licences
 
 - **Code:** MIT (file `LICENSE`).
-- **Derived data** in `dados/tratado/` (consolidated price series and premium series): [Creative Commons Attribution 4.0 (CC BY 4.0)](https://creativecommons.org/licenses/by/4.0/) (file `LICENSE-DATA.md`).
+- **Derived data** in `dados/tratado/` (consolidated price series and premium series): [Creative Commons Attribution-NonCommercial-ShareAlike 4.0 (CC BY-NC-SA 4.0)](https://creativecommons.org/licenses/by-nc-sa/4.0/) (file `LICENSE-DATA.md`).
 - Source data remain subject to the terms of each source.
 
 ## How to cite
