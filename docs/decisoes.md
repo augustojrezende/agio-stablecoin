@@ -292,3 +292,12 @@ Fontes: [Resolução 574](https://www.letsmoney.com.br/noticias/bc-adia-novembro
 - **Efeito:** nenhum para o TCC, artigos ou uso acadêmico. Uso comercial passa a depender de autorização. As séries não estão versionadas no GitHub (`dados/tratado/` só tem `.gitkeep`); a licença vale para quando forem distribuídas.
 - **Congelamento:** nenhum arquivo com hash em `congelamento.md` muda.
 
+## 2026-11-10 — Mercado Bitcoin bloqueado; validação segue com a Binance
+
+- **O que aconteceu:** a API pública do Mercado Bitcoin (`api.mercadobitcoin.net/api/v4/candles`) passou a responder 403. A resposta é a página "Attention Required! | Cloudflare", ou seja, um bloqueio do serviço de proteção da corretora. O bloqueio aparece também em outra rede (5G de celular) e pelo navegador; não é do IP do pesquisador nem do programa.
+- **Desde quando:** primeira falha na coleta de 02/11/2026 (a primeira da validação), repetida em 09/11 e 10/11/2026. Os dias da descoberta, até 30/10/2026, ficaram com as duas corretoras (`n_fontes` = 2).
+- **O que o programa faz:** segue com as fontes que respondem, como já previsto no código. Os dias da validação ficam com o ágio só da Binance (`n_fontes` = 1).
+- **Efeito medido na descoberta** (dias com as duas corretoras, 11/03/2023 a 30/10/2026, 914 dias): correlação de 0,999 entre o ágio consolidado e o só da Binance; diferença média de −0,004 p.p. (mediana 0,000); em 95% dos dias a diferença absoluta fica abaixo de 0,028 p.p.; máximo de 0,18 p.p. Antes de 11/03/2023 o indicador já era só da Binance, e a robustez da descoberta ("5. Só binance") manteve os resultados do dólar e do VIX.
+- **Decisão:** nenhuma série é trocada e nenhum método muda, então não há adendo (pré-registro, "Coleta durante a validação" e P4). A mudança de composição fica registrada aqui e entra como limitação no texto.
+- **Acompanhamento:** a coleta continua tentando o Mercado Bitcoin toda semana. Se voltar, os dias recuperados entram normalmente e isso é registrado aqui. Não haverá tentativa de contornar o bloqueio (proxy ou troca de identificação).
+
